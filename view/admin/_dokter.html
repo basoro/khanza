@@ -1,0 +1,140 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table>
+			<tr>
+				<td width="100"><span style="float:right;">Dokter</span></td>
+				<td colspan="3">: <input name="kd_dokter_Dokter" id="kd_dokter_Dokter" class="easyui-textbox" style="width:80px;"></input> <input name="nm_dokter_Dokter" id="nm_dokter_Dokter" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Agama</span></td>
+				<td>: 
+                    <select class="easyui-combobox" name="agama_Dokter" id="agama_Dokter" style="width:142px;">
+                        <option value="ISLAM">ISLAM</option>
+                        <option value="KRISTEN">KRISTEN</option>
+                    </select>
+                </td>
+				<td width="100"><span style="float:right;">Stts. Nikah</span></td>
+				<td>: 
+                    <select class="easyui-combobox" name="stts_nikah_Dokter" id="stts_nikah_Dokter" style="width:180px;">
+                        <option value="BELUM MENIKAH">BELUM MENIKAH</option>
+                        <option value="MENIKAH">MENIKAH</option>
+                    </select>
+                </td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_Dokter" class="easyui-datagrid" footer="#toolbar_Dokter">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_Dokter" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Dokter()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Dokter()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Dokter()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Dokter()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Dokter()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Dokter()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<div id="klik_kanan" class="easyui-menu" style="width:250px;">
+    <div onclick="getKartu()">Kartu Pasien</div>
+    <div onclick="getDlgDefault()">Label Rekam Medis</div>
+    <div>Identitas Pasien</div>
+    <div>
+        <span>BPJS</span>
+        <div>
+            <div onclick="cek_nik_bpjs()">Cek NIK Peserta</div>
+            <div onclick="cek_peserta_bpjs()">Cek Nomor Peserta</div>
+        </div>
+    </div>
+    <div>Data Kelahiran Bayi</div>
+    <div>Riwayat Perawatan</div>
+    <div>
+        <span>Berkas Rekam Medis</span>
+        <div>
+            <div>Lembar Rawat Jalan</div>
+            <div>Formulir Pendaftaran Pasien</div>
+            <div>Laporan IGD</div>
+            <div>Lembar Anamnesa</div>
+            <div>Pengantar Hemodialisa</div>
+            <div onclick="getCoverRM()">Cover Rekam Medis</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url;
+    $('#dg_Dokter').datagrid({
+      url:'{?=url()?}/{?=ADMIN?}/khanza/dokter/?act=data&t={?=$_SESSION['token']?}',
+      rownumbers:true,
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kd_dokter',title:'Kode Dokter',sortable:true},
+        { field:'nm_dokter',title:'Nama Dokter',sortable:true}, 
+        { field:'jk',title:'Jenis Kelamin',sortable:true}, 
+        { field:'tmp_lahir',title:'Tempat Lahir',sortable:true}, 
+        { field:'tgl_lahir',title:'Tanggal Lahir',sortable:true}, 
+        { field:'gol_drh',title:'Gol. Darah',sortable:true}, 
+        { field:'agama',title:'Agama',sortable:true}, 
+        { field:'stts_nikah',title:'Status Nikah',sortable:true}
+      ]],
+      onRowContextMenu:function(e,index,row){
+          e.preventDefault();
+          $('#klik_kanan').menu('show', {
+            left: e.pageX,
+            top: e.pageY
+          });
+      },
+      onClickRow: function(){
+        var row = $('#dg_Dokter').datagrid('getSelected');
+        $('#kd_dokter_Dokter').textbox('setValue',row.kd_dokter);
+        $('#nm_dokter_Dokter').textbox('setValue',row.nm_dokter);
+        $('#kd_dokter_RegPeriksa').textbox('setValue',row.kd_dokter);
+        $('#nm_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
+        $('#agama_Dokter').combobox('setValue',row.agama);
+        $('#stts_nikah_Dokter').combobox('setValue',row.stts_nikah);
+        var dlg = $("#dlg_window").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            if(dlg.options.title == 'Cari Dokter') {
+                $('#dlg_window').dialog('close', 'Dokter')
+            }
+        }
+	  },
+    });
+
+    function baru_Dokter(){
+        alert('Form Baru');
+    }
+
+    function simpan_Dokter(){
+        alert('Form Simpan');
+    }
+
+    function ubah_Dokter(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Dokter(){
+        alert('Form Hapus');
+    }
+
+    function keluar_Dokter(){
+        $('#wu-tabs').tabs('close','Dokter');
+        $('#dlg_window').dialog('close', 'Cari Dokter')
+    }
+
+</script>

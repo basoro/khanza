@@ -1,0 +1,294 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+	<div data-options="region:'north'" border="true" style="padding:10px 0;margin:0px 0;height:140px;">
+		<form id="fm_RegPeriksa" method="post" novalidate style="margin:0;padding:15px">
+		<table>
+			<tr>
+				<td width="110"><span style="float:right;">Registrasi</span></td>
+				<td>: <input name="no_reg" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:80px;" value="{$set_no_reg}"></input> </td>
+				<td><input name="tgl_registrasi" id="tgl_registrasi_RegPeriksa" class="easyui-datetimebox" data-options="formatter:datetimeformatter,parser:datetimeparser" style="width:200px;" value="{?=date('Y-m-d H:i:s')?}"></input> </td>
+				<td><input name="no_rawat" id="no_rawat_RegPeriksa" class="easyui-textbox" style="width:157px;" value="{$set_no_rawat}"></input> </td>
+				<td width="140"><span style="float:right;">Pasien</span></td>
+				<td>: <input name="no_rkm_medis" id="no_rkm_medis_RegPeriksa" class="easyui-textbox" style="width:100px;"></input> </td>
+				<td><input name="nm_pasien_RegPeriksa" id="nm_pasien_RegPeriksa" class="easyui-textbox" style="width:240px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pasien_RegPeriksa()"></a> </td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td width="110"><span style="float:right;">Dokter</span></td>
+				<td colspan="3">: <input name="kd_dokter" id="kd_dokter_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <input name="nm_dokter_RegPeriksa" id="nm_dokter_RegPeriksa" class="easyui-textbox" style="width:326px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Dokter_RegPeriksa()"></a></td>
+				<td width="140"><span style="float:right;">Jenis Bayar</span></td>
+				<td>: <input name="kd_pj" id="kd_pj_RegPeriksa" class="easyui-textbox" style="width:100px;"></input> </td>
+				<td><input name="png_jawab_RegPeriksa" id="png_jawab_RegPeriksa" class="easyui-textbox" style="width:240px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Penjab_RegPeriksa()"></a> </td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td width="110"><span style="float:right;">Unit/Poli</span></td>
+				<td colspan="3">: <input name="kd_poli" id="kd_poli_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <input name="nm_poli_RegPeriksa" id="nm_poli_RegPeriksa" class="easyui-textbox" style="width:241px;"></input> <input name="registrasi_RegPeriksa" id="registrasi_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Poliklinik_RegPeriksa()"></a></td>
+				<td width="140"><span style="float:right;">Asal Rujukan</span></td>
+				<td>: <input name="asal_rujukan" id="asal_rujukan_RegPeriksa" class="easyui-textbox" style="width:344px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick=""></a> </td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<div data-options="region:'center'" border="thin">
+		<table id="dg_RegPeriksa" class="easyui-datagrid" footer="#toolbar_RegPeriksa">
+		</table>
+	</div>
+</div>
+
+<div id="toolbar_RegPeriksa" style="padding:8px 0;">
+	<div style="color: #000;padding: 0 30px 10px 6px;">
+		<label style="margin-left: 24px;"><span style="width: 120px;">Dokter : </span></label>
+		<input class="easyui-textbox" id="cari_nama_dokter_RegPeriksa" style="width:210px">
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+		<label style="margin-left: 19px;">Poliklinik : </label>
+		<input class="easyui-textbox" id="cari_nama_poli_RegPeriksa" style="width:210px">
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+	</div>
+	<div style="float: left; color: #000;padding: 0 40px 0 10px;">
+		<label style="margin-left: 16px;">Periode : </label>
+		<input class="easyui-datebox" id="cari_tgl_registrasi_start_RegPeriksa" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px">
+		<input class="easyui-datebox" id="cari_tgl_registrasi_end_RegPeriksa" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px">
+		<label style="margin-left: 20px;">Keyword : </label>
+		<input class="easyui-textbox" id="cari_keyword_RegPeriksa" style="width:120px">
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch_RegPeriksa()"></a> 
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="doSemua_RegPeriksa()"></a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-no',plain:true" style="margin:0 2px;" onclick="baru_RegPeriksa()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 2px;" onclick="simpan_RegPeriksa()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 2px;" onclick="ubah_RegPeriksa()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 2px;" onclick="hapus_RegPeriksa()">Hapus</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 2px;" onclick="cetak_RegPeriksa()">Cetak</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="removeTab_RegPeriksa()" style="margin:0 2px;">Keluar</a>
+	</div>
+</div>
+
+<div id="klik_kanan_RegPeriksa" class="easyui-menu" style="width:250px;">
+	<div>Permintaan</div>
+	<div onclick="kamar_inap_RegPeriksa()">Kamar Inap</div>
+</div>
+
+<div id="help_pasien_window" class="easyui-dialog" style="width:90%;height:90%;" title="Bantuan" data-options="closed:true,modal:true,border:'thin'">
+</div>
+
+<div id="dlg_window_input_kamar_inap" class="easyui-dialog" style="width:760px;height:280px;" title="Dialog Window" data-options="closed:true,modal:true,border:'thin'"></div>
+
+<script type="text/javascript">
+	var url;
+	
+	$('#dg_RegPeriksa').datagrid({
+	  url:'{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=data&t={?=$_SESSION['token']?}',
+	  singleSelect:true,
+	  pageSize:20,
+	  pagination:true,
+	  remoteFilter:false,
+	  remoteSort:false,
+	  multiSort:false,
+	  fitColumns:false,
+	  fit:true,
+	  columns:[[
+		{ field:'ck',checkbox:true},
+		{ field:'no_rawat',title:'Nomor Rawat',sortable:true},
+		{ field:'kd_dokter',title:'Kode Dokter',sortable:true},
+		{ field:'nm_dokter',title:'Dokter Dituju',sortable:true},
+		{ field:'no_rkm_medis',title:'No. RM',sortable:true},
+		{ field:'nm_pasien',title:'Pasien',sortable:true},
+		{ field:'nm_poli',title:'Poliklinik',sortable:true},
+		{ field:'png_jawab',title:'Penanggung Jawab',sortable:true},
+		{ field:'tgl_registrasi',title:'Tanggal',sortable:true},
+		{ field:'jam_reg',title:'Jam',sortable:true},
+		{ field:'no_reg',title:'No.Reg',sortable:true},
+		{ field:'umur',title:'Umur',sortable:true}
+	  ]],
+	  onRowContextMenu:function(e,index,row){
+		e.preventDefault();
+		$('#klik_kanan_RegPeriksa').menu('show', {
+		  left: e.pageX,
+		  top: e.pageY
+		});
+	  }, 
+	  onClickRow: function(){
+		var row = $('#dg_RegPeriksa').datagrid('getSelected');
+		$('#no_reg_RegPeriksa').textbox('setValue',row.no_reg);
+		$('#tgl_registrasi_RegPeriksa').datetimebox('setValue',row.tgl_registrasi + ' ' + row.jam_reg);
+		$('#no_rawat_RegPeriksa').textbox('setValue',row.no_rawat);
+		$('#no_rkm_medis_RegPeriksa').textbox('setValue',row.no_rkm_medis);
+		$('#nm_pasien_RegPeriksa').textbox('setValue',row.nm_pasien);
+		$('#kd_dokter_RegPeriksa').textbox('setValue',row.kd_dokter);
+		$('#nm_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
+		$('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
+	    $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
+	    $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
+	    $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
+	  }  
+	});
+
+	function doSearch_RegPeriksa(){
+		$('#dg_RegPeriksa').datagrid('load',{
+		  cari_nama_poli: $('#cari_nama_poli_RegPeriksa').val(), 
+		  cari_nama_dokter: $('#cari_nama_dokter_RegPeriksa').val(), 
+		  cari_keyword: $('#cari_keyword_RegPeriksa').val(), 
+		  cari_stts: $('#cari_stts_RegPeriksa').val(), 
+		  cari_status_bayar: $('#cari_status_bayar_RegPeriksa').val(), 
+		  cari_tgl_registrasi_start: $('#cari_tgl_registrasi_start_RegPeriksa').val(), 
+		  cari_tgl_registrasi_end: $('#cari_tgl_registrasi_end_RegPeriksa').val() 
+		});
+	}
+
+	function doSemua_RegPeriksa(){
+	  $('#cari_nama_poli_RegPeriksa').textbox('clear');
+	  $('#cari_nama_dokter_RegPeriksa').textbox('clear');
+	  $('#cari_keyword_RegPeriksa').textbox('clear');
+	  $('#cari_stts_RegPeriksa').combobox('setValue', 'Semua');
+	  $('#cari_status_bayar_RegPeriksa').combobox('setValue', 'Semua');
+	  $('#cari_tgl_registrasi_start_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
+	  $('#cari_tgl_registrasi_end_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
+	  doSearch();
+	}
+
+	function simpan_RegPeriksa()
+	{
+		url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=simpan&t={?=$_SESSION['token']?}'; 
+		// alert(url);
+		$('#fm_RegPeriksa').form('submit',{
+              url: url,
+              iframe: false,
+              onSubmit: function(){
+                  return $(this).form('validate');
+              },
+              success: function(result){
+                  var result = eval('('+result+')');
+                  if (result.errorMsg){
+                      $.messager.show({
+                          title: 'Error',
+                          msg: result.errorMsg
+                      });
+                      var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                      audio.play();
+                  } else {
+                      $.messager.show({
+                          title: 'Sukses',
+                          msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah disimpan dengan nomor rawat ' + result.no_rawat
+                      });
+                      $('#dg_RegPeriksa').datagrid('reload');    // reload the user data
+                  }
+              }
+          });
+	}
+
+	function cari_Pasien_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Data Pasien');
+		$('#dlg_window').dialog({
+			title: 'Cari Pasien',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','pasien'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Dokter_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Data Dokter');
+		$('#dlg_window').dialog({
+			title: 'Cari Dokter',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','dokter'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Poliklinik_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Poliklinik');
+		$('#dlg_window').dialog({
+			title: 'Cari Poliklinik',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','poliklinik'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Penjab_RegPeriksa()
+	{
+        $('#wu-tabs').tabs('close','Penjab');
+		$('#dlg_window').dialog({
+			title: 'Cari Penjab',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','penjab'])?}',
+			modal: true
+		});
+	}
+
+	function kamar_inap_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Rawat Inap');
+		var row = $('#dg_RegPeriksa').datagrid('getSelected');
+		$('#wu-tabs').tabs('add',{
+			title: 'Rawat Inap',
+			href: '{?=url([ADMIN,'khanza','rawatinap'])?}',
+			closable: true
+		});
+		$('#dlg_window_input_kamar_inap').dialog({
+			title: 'Input Kamar Inap',
+			closed: false,
+			cache: false,
+			href: '{?=url()?}/{?=ADMIN?}/khanza/rawatinap/?act=input&no_rawat=' + row.no_rawat + '&t={?=$_SESSION['token']?}',
+			modal: true
+		});
+	}
+
+	function baru_RegPeriksa()
+	{
+		var date = new Date();
+		var h = date.getHours();
+		var M = date.getMinutes();
+		var s = date.getSeconds();
+		function _ff(v) {
+			return (v < 10 ? '0' : '') + v;
+		};
+		var tgl_registrasi = _ff(date.getFullYear())+'-'+_ff(date.getMonth()+1)+'-'+_ff(date.getDate())+' '+ _ff(h)+':'+_ff(M)+':'+_ff(s);		
+
+		$('#fm_RegPeriksa').form('clear');
+		var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_rawat&t={?=$_SESSION['token']?}';
+		$.post(url,{tgl_registrasi: '{?=date('Y-m-d')?}'}, function(data) {
+			$('#no_rawat_RegPeriksa').textbox('setValue',data);
+		});
+		$('#tgl_registrasi_RegPeriksa').datetimebox('setValue',tgl_registrasi);
+		$('#no_reg_RegPeriksa').textbox('setValue','001');
+	}
+
+	$('#tgl_registrasi_RegPeriksa').datetimebox({
+		onSelect: function(date){
+			var y = date.getFullYear();
+			var m = date.getMonth()+1;
+			var d = date.getDate();
+			var tgl_registrasi = y + '-' + (m<10?('0'+m):m) + '-' + (d<10?('0'+d):d);		
+			var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_rawat&t={?=$_SESSION['token']?}';
+			$.post(url,{tgl_registrasi: tgl_registrasi}, function(data) {
+				$('#no_rawat_RegPeriksa').textbox('setValue',data);
+			});
+		}
+	})
+
+	$('#kd_dokter_RegPeriksa').textbox({
+		onChange: function(value){
+			var kd_poli = $('#kd_dokter_RegPeriksa').val();
+			var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_reg&t={?=$_SESSION['token']?}';
+			$.post(url,{kd_dokter: value, kd_poli: kd_poli}, function(data) {
+				$('#no_reg_RegPeriksa').textbox('setValue',data);
+			});
+		}
+	})
+
+	$('#kd_poli_RegPeriksa').textbox({
+		onChange: function(value){
+			var kd_dokter = $('#kd_dokter_RegPeriksa').val();
+			var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_reg&t={?=$_SESSION['token']?}';
+			$.post(url,{kd_dokter: kd_dokter, kd_poli: value}, function(data) {
+				$('#no_reg_RegPeriksa').textbox('setValue',data);
+			});
+		}
+	})
+
+</script>

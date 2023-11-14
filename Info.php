@@ -1,0 +1,20 @@
+<?php
+
+return [
+    'name'          =>  'Khanza D2W',
+    'description'   =>  'Modul SIMRS Khanza desktop ke web',
+    'author'        =>  'Basoro',
+    'version'       =>  '1.0',
+    'compatibility' =>  '2023',
+    'icon'          =>  'desktop',
+    'install'       =>  function () use ($core) {
+      $core->db()->pdo()->exec("INSERT INTO `settings` (`module`, `field`, `value`) VALUES ('khanza', 'host', '')");
+      $core->db()->pdo()->exec("INSERT INTO `settings` (`module`, `field`, `value`) VALUES ('khanza', 'database', '')");
+      $core->db()->pdo()->exec("INSERT INTO `settings` (`module`, `field`, `value`) VALUES ('khanza', 'port', '')");
+      $core->db()->pdo()->exec("INSERT INTO `settings` (`module`, `field`, `value`) VALUES ('khanza', 'username', '')");
+      $core->db()->pdo()->exec("INSERT INTO `settings` (`module`, `field`, `value`) VALUES ('khanza', 'password', '')");
+    },
+    'uninstall'     =>  function() use($core)
+    {
+    }
+];

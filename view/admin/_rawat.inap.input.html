@@ -1,0 +1,56 @@
+<div style="padding:10px">
+    <table>
+        <tr>
+            <td width="80"><span style="float:right;">No. Rawat</span></td>
+            <td>: <input name="no_reg_RegPeriksa" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:180px;" value="{$reg_periksa.no_rawat}"></input> 
+            <input name="no_rawat_RegPeriksa" id="no_rawat_RegPeriksa" class="easyui-textbox" style="width:100px;" value="{$reg_periksa.no_rkm_medis}"></input> 
+            <input name="no_rkm_medis_RegPeriksa" id="no_rkm_medis_RegPeriksa" class="easyui-textbox" style="width:280px;" value="{$reg_periksa.nm_pasien}"></input> 
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pasien_RawatInapInput()"></a> </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td width="80"><span style="float:right;">Kamar</span></td>
+            <td>: <input name="" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:60px;"></input> 
+            <input name="no_rawat_RegPeriksa" id="no_rawat_RegPeriksa" class="easyui-textbox" style="width:100px;"></input> 
+            <input name="no_rkm_medis_RegPeriksa" id="no_rkm_medis_RegPeriksa" class="easyui-textbox" style="width:160px;"></input> 
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pasien_RawatInapInput()"></a> </td>
+            <td width="100"><span style="float:right;">Stts. Kamar</span></td>
+            <td>: <input name="no_reg_RegPeriksa" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:123px;"></input> </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td width="80"><span style="float:right;">Tanggal</span></td>
+            <td>: <input name="" id="" class="easyui-datetimebox" style="width:220px;"></input> </td>
+            <td width="218"><span style="float:right;">Diagnosa awal/masuk</span></td>
+            <td>: <input name="no_reg_RegPeriksa" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:150px;"></input> </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td width="80"><span style="float:right;">Biaya</span></td>
+            <td>: <input name="" id="no_reg_RegPeriksa" class="easyui-textbox" style="width:150px;"></input> X 
+            <input name="no_rawat_RegPeriksa" id="no_rawat_RegPeriksa" class="easyui-textbox" style="width:150px;"></input> = 
+            <input name="no_rkm_medis_RegPeriksa" id="no_rkm_medis_RegPeriksa" class="easyui-textbox" style="width:264px;"></input> </td>    
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td width="80"><span style="float:right;">Proses</span></td>
+            <td>: Masuk/Checkin</td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td><hr></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">Simpan</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="editUser()">Batal</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="destroyUser()" style="float: right;">Tutup</a>            
+            </td>
+        </tr>
+    </table>
+</div>

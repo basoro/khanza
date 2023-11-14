@@ -1,0 +1,131 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table>
+			<tr>
+				<td width="120"><span style="float:right;">Kode Unit/Poli</span></td>
+				<td>: <input name="kd_poli_Poliklinik" id="kd_poli_Poliklinik" class="easyui-textbox" style="width:80px;"></input></td>
+				<td width="120"><span style="float:right;">Nama Unit/Poli</span></td>
+				<td>: <input name="nm_poli_Poliklinik" id="nm_poli_Poliklinik" class="easyui-textbox" style="width:160px;"></input> </td>
+				<td width="120"><span style="float:right;">Registrasi Baru</span></td>
+				<td>: <input name="registrasi_Poliklinik" id="registrasi_Poliklinik" class="easyui-textbox" style="width:80px;"></input></td>
+				<td width="120"><span style="float:right;">Registrasi Lama</span></td>
+				<td>: <input name="registrasi_lama_Poliklinik" id="registrasi_lama_Poliklinik" class="easyui-textbox" style="width:80px;"></input></td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_Poliklinik" class="easyui-datagrid" footer="#toolbar_Poliklinik">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_Poliklinik" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Dokter()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Dokter()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Dokter()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Dokter()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Dokter()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Poliklinik()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<div id="klik_kanan" class="easyui-menu" style="width:250px;">
+    <div onclick="getKartu()">Kartu Pasien</div>
+    <div onclick="getDlgDefault()">Label Rekam Medis</div>
+    <div>Identitas Pasien</div>
+    <div>
+        <span>BPJS</span>
+        <div>
+            <div onclick="cek_nik_bpjs()">Cek NIK Peserta</div>
+            <div onclick="cek_peserta_bpjs()">Cek Nomor Peserta</div>
+        </div>
+    </div>
+    <div>Data Kelahiran Bayi</div>
+    <div>Riwayat Perawatan</div>
+    <div>
+        <span>Berkas Rekam Medis</span>
+        <div>
+            <div>Lembar Rawat Jalan</div>
+            <div>Formulir Pendaftaran Pasien</div>
+            <div>Laporan IGD</div>
+            <div>Lembar Anamnesa</div>
+            <div>Pengantar Hemodialisa</div>
+            <div onclick="getCoverRM()">Cover Rekam Medis</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url;
+    $('#dg_Poliklinik').datagrid({
+      url:'{?=url()?}/{?=ADMIN?}/khanza/poliklinik/?act=data&t={?=$_SESSION['token']?}',
+      rownumbers:true,
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kd_poli',title:'Kode Poli',sortable:true},
+        { field:'nm_poli',title:'Nama Poli',sortable:true}, 
+        { field:'registrasi',title:'Registrasi',sortable:true}, 
+        { field:'registrasi_lama',title:'Registrasi Lama',sortable:true}, 
+        { field:'status',title:'Status',sortable:true}
+      ]],
+      onRowContextMenu:function(e,index,row){
+          e.preventDefault();
+          $('#klik_kanan').menu('show', {
+            left: e.pageX,
+            top: e.pageY
+          });
+      },
+      onClickRow: function(){
+        var row = $('#dg_Poliklinik').datagrid('getSelected');
+        $('#kd_poli_Poliklinik').textbox('setValue',row.kd_poli);
+        $('#nm_poli_Poliklinik').textbox('setValue',row.nm_poli);
+        $('#registrasi_Poliklinik').textbox('setValue',row.registrasi);
+        $('#registrasi_lama_Poliklinik').textbox('setValue',row.registrasi_lama);
+        $('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
+        $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
+        $('#registrasi_RegPeriksa').textbox('setValue',row.registrasi);
+        var dlg = $("#dlg_window").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            // console.log(dlg);
+            if(dlg.options.title == 'Cari Poliklinik') {
+                $('#dlg_window').dialog('close', 'Poliklinik')
+            }
+        }
+      }
+    });
+
+    function baru_Dokter(){
+        alert('Form Baru');
+    }
+
+    function simpan_Dokter(){
+        alert('Form Simpan');
+    }
+
+    function ubah_Dokter(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Dokter(){
+        alert('Form Hapus');
+    }
+
+    function keluar_Poliklinik(){
+        $('#wu-tabs').tabs('close','Poliklinik');
+        $('#dlg_window').dialog('close', 'Cari Poliklinik')
+    }
+
+</script>

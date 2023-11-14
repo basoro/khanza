@@ -1,0 +1,324 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 5px;margin:10px 0;">
+        <table id="dlgBillingRalanForm">
+            <tr>
+                <td>Nomor Rawat : </td>
+                <td><input name="no_rawat_billing_ralan" id="no_rawat_billing_ralan" value="{$reg_periksa.no_rawat}" class="easyui-textbox" style="width:200px;"></input></td>
+                <td><input name="no_rkm_medis_billing_ralan" id="no_rkm_medis_billing_ralan" value="{$reg_periksa.no_rkm_medis}" class="easyui-textbox" style="width:100px;"></input></td>
+                <td><input name="nm_pasien_billing_ralan" id="nm_pasien_billing_ralan" value="{$reg_periksa.nm_pasien}" class="easyui-textbox" style="width:300px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick=""></a> </td>
+                <td> Tanggal : <input name="tgl_registrasi_billing_ralan" id="tgl_registrasi_billing_ralan" value="{?=date('Y-m-d H:i:s')?}" class="easyui-datetimebox" data-options="formatter:datetimeformatter,parser:datetimeparser" style="width:190px;"></input></td>
+            </tr>
+        </table>
+    </div>
+    <div data-options="region:'center'" border="thin" style="padding:2px;">
+      <div class="easyui-panel" style="width:100%;height:100%;">
+        <div class="easyui-layout" fit="true">
+          <div region="south" border="false" style="padding:6px 5px;background:#efefef;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="getSelections()">Simpan</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="notaBillingRalan()">Nota</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" style="margin:0 5px;" onclick="">Lihat</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="" style="margin:0 15px;">Keluar</a>
+          </div>
+          <div region="center" border="false">
+              <div id="tt" class="easyui-tabs" fit="true">
+                  <div title="Data Tagihan" style="display:none;padding:1px;">
+                      <table id="dg_billing_ralan" class="easyui-datagrid" border="false">
+                        <form id="fm" method="post" novalidate style="margin:0;padding:15px">
+                        </form>
+                      </table>
+                  </div>
+                  <div title="Pembayaran" style="overflow:auto;display:none;padding:10px;">
+                      <table id="dlgBillingRalanPembayaran">
+                          <tr>
+                              <td><input class="easyui-checkbox" name="laboratorium" value="laboratorium" label="Laboratorium" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="radiologi" value="radiologi" label="Radiologi" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="tarif_dokter" value="tarif_dokter" label="Tarif Dokter" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="tambahan" value="tambahan" label="Tambahan" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="potongan" value="potongan" label="Potongan" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="obat" value="obat" label="Obat" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="tarif_paramedis" value="tarif_paramedis" label="Tarif Paramedis" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="administrasi" value="administrasi" label="Administrasi" labelPosition="after" labelWidth="100" checked></td>
+                              <td><input class="easyui-checkbox" name="sarpras" value="sarpras" label="Sarpras" labelPosition="after" labelWidth="100" checked></td>
+                          </tr>
+                          <tr>
+                            <td>Total tagihan : </td>
+                            <td colspan="4">Rp. <input name="" id="total_tagihan" class="easyui-textbox" style="width:300px;" value=""></input></td>
+                            <td>Total + PPN : </td>
+                            <td colspan="3">Rp. <input name="" id="" class="easyui-textbox" style="width:285px;"></input></td>
+                          </tr>
+                          <tr>
+                            <td>Uang muka : </td>
+                            <td colspan="8">Rp. <input name="" id="" class="easyui-textbox" style="width:870px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick=""></a></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td colspan="8">
+                              <table id="dg_billing_ralan_nota" style="width:930px;height:150px">
+                                  <thead>
+                                      <tr>
+                                          <th data-options="field:'nama_bayar',width:150">Nama Akun</th>
+                                          <th data-options="field:'bayar',width:100,editor:'text'">Bayar</th>
+                                          <th data-options="field:'ppn',width:50">PPN(%)</th>
+                                          <th data-options="field:'ppnrp',width:100">PPN(Rp)</th>
+                                      </tr>
+                                  </thead>
+                              </table>
+                              <br>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Piutang : </td>
+                            <td colspan="8">Rp. <input name="" id="" class="easyui-textbox" style="width:870px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick=""></a></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td colspan="8">
+                              <table id="dg_billing_ralan_nota_piutang" style="width:930px;height:150px;">
+                                  <thead>
+                                      <tr>
+                                          <th data-options="field:'nama_bayar',width:150">Nama Akun</th>
+                                          <th data-options="field:'piutang',width:100,editor:'text'">Piutang</th>
+                                          <th data-options="field:'jatuh_tempo',width:50">Jatuh Tempo</th>
+                                      </tr>
+                                  </thead>
+                              </table>
+                              <br>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Kekurangan : </td>
+                            <td colspan="8">Rp. <input name="" id="" class="easyui-textbox" style="width:400px;"></input></td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="toolbar_billing_ralan" style="padding:8px 0;">
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="getSelections()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="notaBillingRalan()">Nota</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" style="margin:0 5px;" onclick="">Lihat</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<div id="dlg_billing_ralan_nota" class="easyui-dialog" style="width:300px;height:200px;padding:10px;" data-options="closed:true,modal:true,border:'thin'">
+  Silahkan pilih nota yang mau dicetak!<br>
+  <div style="margin:20px">
+    <select class="easyui-combobox" name="" data-options="panelHeight:null" style="width:130px">
+      <option value="">Nota</option>
+      <option value="">Kwitansi</option>
+      <option value="">Nota + Kwitansi</option>
+    </select>
+  </div>
+  <div class="" style="margin-top:20px;float:right;">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="notaBillingRalanCetak()">Cetak</a>
+  </div>
+</div>
+
+<div id="dlg_billing_ralan_nota_cetak" class="easyui-dialog" style="width:95%;height:90%;" data-options="closed:true,modal:true,border:'thin'">
+</div>
+<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/datagrid-cellediting.js"></script>
+<script type="text/javascript">
+    var url;
+    function pagerFilter(data){
+      if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array
+        data = {
+          total: data.length,
+          rows: data
+        }
+      }
+      var dg = $(this);
+      var opts = dg.datagrid('options');
+      var pager = dg.datagrid('getPager');
+      pager.pagination({
+        onSelectPage:function(pageNum, pageSize){
+          opts.pageNumber = pageNum;
+          opts.pageSize = pageSize;
+          pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});
+          dg.datagrid('loadData',data);
+        }
+      });
+      if (!data.originalRows){
+        data.originalRows = (data.rows);
+      }
+      var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
+      var end = start + parseInt(opts.pageSize);
+      data.rows = (data.originalRows.slice(start, end));
+      return data;
+    }
+
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/billingralan/{$convert_no_rawat}/?act=data&t={?=$_SESSION['token']?}';
+
+    $('#dg_billing_ralan').datagrid({
+      url:url,
+      method:'get',
+      // loadFilter:pagerFilter,
+      // rownumbers:true,
+      singleSelect:false,
+      pageSize:1000,
+      pagination:false,
+      remoteFilter:true,
+      remoteSort:true,
+      multiSort:true,
+      fitColumns:true,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'no',title:'Keterangan',width:150},
+        { field:'nm_perawatan',title:'Tagihan/Tindakan/Terapi',width:350},
+        { field:'pemisah',title:'',width:10},
+        { field:'satu',title:'Biaya',width:180},
+        { field:'dua',title:'Jml',width:20},
+        { field:'tiga',title:'Tambahan',width:180},
+        { field:'empat',title:'Total Biaya',width:180}
+      ]],
+      onRowContextMenu:function(e,index,row){
+        e.preventDefault();
+        $('#klik_kanan').menu('show', {
+          left: e.pageX,
+          top: e.pageY
+        });
+      }, 
+      onLoadSuccess: function (data) {
+        for (i = 0; i < data.rows.length; ++i) {
+          $(this).datagrid('checkRow', i);
+        }
+	    } 
+    });
+
+    function doSearch(){
+        $('#dg_kasir_ralan').datagrid('load',{
+            cari_keyword: $('#cari_pasien').val()
+        });
+    }
+
+    function bantuan(){
+      $('#help_pasien_window').dialog({
+        title: 'Cetak Data Pasien',
+        closed: false,
+        cache: false,
+        content: '<embed width="100%" height="100%" src="{?=url([ADMIN,'dashboard','help','pasien'])?}"></embed>',
+        modal: true
+      });
+    }
+
+    function notaBillingRalan(){
+      $('#dlg_billing_ralan_nota').dialog({
+        title: 'Cetak Nota Pasien',
+        closed: false,
+        cache: false,
+        modal: true
+      });
+    }
+
+    function notaBillingRalanCetak(){
+      $('#dlg_billing_ralan_nota').dialog('close');
+      window.open("{?=url([ADMIN,'khanza','cetakbillingralan',$convert_no_rawat])?}", "Cetak Billing");
+    }
+
+    var data_akunbayar = '{?=url([ADMIN,'khanza','akunbayar'])?}';
+    $(function(){
+        var akunbayar = $('#dg_billing_ralan_nota').datagrid({
+            url: data_akunbayar, method: 'get', fitColumns:true
+        });
+        akunbayar.datagrid('enableCellEditing').datagrid('gotoCell', {
+            index: 1,
+            field: 'bayar'
+        });
+    });
+
+    var data_akunpiutang = '{?=url([ADMIN,'khanza','akunpiutang'])?}';
+    $(function(){
+        var akunpiutang = $('#dg_billing_ralan_nota_piutang').datagrid({
+            url: data_akunpiutang, method: 'get', fitColumns:true
+        });
+        akunpiutang.datagrid('enableCellEditing').datagrid('gotoCell', {
+            index: 1,
+            field: 'bayar'
+        });
+    });
+
+// result array
+$.getJSON(url, function(data) {
+  const resultArr = [];
+
+  // grouping by location and resulting with an object using Array.reduce() method
+  const groupByLocation = data.reduce((group, item) => {
+    const { status } = item;
+    group[status] = group[status] ?? [];
+    group[status].push(item.empat);
+    return group;
+  }, {});
+
+  // Finally calculating the sum based on the location array we have.
+  Object.keys(groupByLocation).forEach((item) => {
+      groupByLocation[item] = groupByLocation[item].reduce((a, b) => a + b);
+      resultArr.push({
+        'status': item,
+        'empat': groupByLocation[item]
+      })
+  })
+
+  total = 0; 
+  taxes = resultArr; 
+  // console.log(resultArr);
+  for (i = 0; i < taxes.length; i++) { 
+      total += taxes[i].empat;  
+  }  
+  $('#total_tagihan').textbox('setValue',total);
+
+
+});
+
+function getSelections(){
+  var ids = [];
+  var rows = $('#dg_billing_ralan').datagrid('getSelections');
+  var no_rawat = $('#no_rawat_billing_ralan').val();
+  var tgl_bayar = $('#tgl_registrasi_billing_ralan').val();
+  for(var i=0; i<rows.length; i++){
+    ids.push({
+      no: rows[i].no, 
+      nm_perawatan: rows[i].nm_perawatan, 
+      pemisah: rows[i].pemisah, 
+      satu: rows[i].satu, 
+      dua: rows[i].dua, 
+      tiga: rows[i].tiga, 
+      empat: rows[i].empat, 
+      status: rows[i].status
+    });
+  }
+  console.log(JSON.stringify(ids));
+  
+  $.ajax({
+    type: "POST",
+    url: "{?=url([ADMIN,'khanza','simpanbilling'])?}",
+    data: {'billing': JSON.stringify(ids), 'no_rawat': no_rawat, 'tgl_bayar': tgl_bayar},
+    success: function(result) {
+      var result = eval('('+result+')');
+      if (result.errorMsg){
+          $.messager.show({
+              title: 'Error',
+              msg: result.errorMsg
+          });
+          var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+          audio.play();
+      } else {
+          $.messager.show({
+              title: 'Sukses',
+              msg: 'Billing Pasien dengan ' + result.no_rawat + ' telah disimpan'
+          });
+      }
+    }
+  });
+  
+}
+
+
+</script>

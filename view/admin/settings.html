@@ -1,0 +1,34 @@
+<div class="row">
+    <form action="{?=url(ADMIN.'/khanza/saveSettings')?}" method="POST">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{$settings.title}</h3>
+                </div>
+            	  <div class="panel-body">
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input type="text" name="khanza[host]" class="form-control" value="{$settings.khanza.host}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="text" name="khanza[port]" class="form-control" value="{$settings.khanza.port}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Database</label>
+                        <input type="text" name="khanza[database]" class="form-control" value="{$settings.khanza.database}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="khanza[username]" class="form-control" value="{$settings.khanza.username}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" name="khanza[password]" class="form-control" value="{$settings.khanza.password}" />
+                    </div>
+                    <input type="submit" name="save" class="btn btn-primary" value="Simpan" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

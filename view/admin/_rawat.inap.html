@@ -1,0 +1,168 @@
+    <div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+        <div data-options="region:'north'" border="false" style="padding:10px 0;margin:0px 0;">
+            <table id="dlg_RawatInap">
+                <tr>
+                    <td>No. Rawat : <input name="no_rawat_RawatInap" id="no_rawat_RawatInap" class="easyui-textbox" style="width:180px;"></input> </td>
+                    <td><input name="no_reg_RawatInap" id="no_reg_RawatInap" class="easyui-textbox" style="width:80px;"></input> </td>
+                    <td><input name="no_rkm_medis_RawatInap" id="no_rkm_medis_RawatInap" class="easyui-textbox" style="width:280px;"></input> </td>
+                    <td width="120"><span style="float:right;">Stts. Bayar : </span></td>
+                    <td>
+                      <select class="easyui-combobox" name="status_bayar" id="cari_status_bayar" data-options="panelHeight:null" style="width:130px">
+                        <option>Semua</option>
+                        <option>Sudah Bayar</option>
+                        <option>Belum Bayar</option>
+                      </select> 
+                    </td> 
+                </tr>
+            </table>
+        </div>
+        <div data-options="region:'center'" border="thin">
+            <table id="dg_RawatInap" class="easyui-datagrid" footer="#toolbar_RawatInap">
+            </table>
+        </div>
+    </div>
+
+    <div id="toolbar_RawatInap" style="padding:8px 0;">
+        <div style="color: #000;padding: 0 30px 10px 6px;">
+            <label style="margin-left: 20px;">Periode</label>
+            <input class="easyui-datebox" id="cari_tgl_registrasi_start" value="{?=date('d-m-Y')?}" style="width:150px">
+            <input class="easyui-datebox" id="cari_tgl_registrasi_end" value="{?=date('d-m-Y')?}" style="width:150px">
+            <label style="margin-left: 20px;">Status Periksa</label>
+            <select class="easyui-combobox" name="stss" id="cari_stts" data-options="panelHeight:null" style="width:118px">
+              <option>Semua</option>
+              <option>Belum</option>
+              <option>Sudah</option>
+              <option>Batal</option>
+              <option>Berkas Diterima</option>
+              <option>Dirujuk</option>
+              <option>Meninggal</option>
+              <option>Dirawat</option>
+            </select>
+            <label style="margin-left: 20px;">Status Bayar</label>
+            <select class="easyui-combobox" name="status_bayar" id="cari_status_bayar" data-options="panelHeight:null" style="width:118px">
+              <option>Semua</option>
+              <option>Sudah Bayar</option>
+              <option>Belum Bayar</option>
+            </select>
+        </div>
+        <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+            <label style="margin-left: 20px;">Dokter</label>
+            <input class="easyui-textbox" id="cari_nama_dokter" style="width:150px">
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+            <label style="margin-left: 20px;">Poliklinik</label>
+            <input class="easyui-textbox" id="cari_nama_poli" style="width:150px">
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+            <label style="margin-left: 20px;">Keyword</label>
+            <input class="easyui-textbox" id="cari_keyword" style="width:150px">
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch()"></a> 
+            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="doSemua()"></a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="getPasien()">Cetak</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="removeTab()" style="margin:0 15px;">Keluar</a>
+        </div>
+    </div>
+
+    <div id="klik_kanan_RawatInap" class="easyui-menu" style="width:250px;">
+        <div>Permintaan</div>
+        <div>Kamar Inap</div>
+        <div>
+            <span>Billing/Pembayaran Pasien</span>
+            <div>
+                <div onclick="billing_ranap_total()">Billing Total</div>
+                <div>Billing Parsial</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="help_pasien_window" class="easyui-dialog" style="width:90%;height:90%;" title="Bantuan" data-options="closed:true,modal:true,border:'thin'">
+    </div>
+
+    <script type="text/javascript">
+        var url;
+  
+        $('#dg_RawatInap').datagrid({
+          url:'{?=url()?}/{?=ADMIN?}/khanza/rawatinap/?act=data&t={?=$_SESSION['token']?}',
+          // rownumbers:true,
+          singleSelect:true,
+          pageSize:20,
+          pagination:true,
+          remoteFilter:true,
+          remoteSort:true,
+          multiSort:true,
+          fitColumns:false,
+          fit:true,
+          columns:[[
+            { field:'ck',checkbox:true},
+            { field:'kd_dokter',title:'Kode Dokter',width:100},
+            { field:'nm_dokter',title:'Dokter Dituju',width:180},
+            { field:'no_rkm_medis',title:'No. RM',width:180},
+            { field:'nm_pasien',title:'Pasien',width:180},
+            { field:'nm_poli',title:'Bangsal/Kamar',width:180},
+            { field:'png_jawab',title:'Penanggung Jawab',width:180},
+            { field:'tgl_registrasi',title:'Tanggal',width:180,sortable:true},
+            { field:'jam_reg',title:'Jam',width:180,sortable:true},
+            { field:'no_reg',title:'No.Reg',width:180,sortable:true},
+            { field:'umur',title:'Umur',width:100}
+          ]],
+          onRowContextMenu:function(e,index,row){
+            e.preventDefault();
+            $('#klik_kanan_RawatInap').menu('show', {
+              left: e.pageX,
+              top: e.pageY
+            });
+          }, 
+          onClickRow: function(){
+            var row = $('#dg_RawatInap').datagrid('getSelected');
+            $('#no_rawat_RawatInap').textbox('setValue',row.no_rawat);
+            $('#no_reg_RawatInap').textbox('setValue',row.no_reg);
+            $('#no_rkm_medis_RawatInap').textbox('setValue',row.no_rkm_medis);
+            $('#nm_pasien_RawatInap').textbox('setValue',row.nm_pasien);
+      	  }
+        });
+
+        function doSearch(){
+            $('#dg_RawatInap').datagrid('load',{
+              cari_nama_poli: $('#cari_nama_poli').val(), 
+              cari_nama_dokter: $('#cari_nama_dokter').val(), 
+              cari_keyword: $('#cari_keyword').val(), 
+              cari_stts: $('#cari_stts').val(), 
+              cari_status_bayar: $('#cari_status_bayar').val(), 
+              cari_tgl_registrasi_start: $('#cari_tgl_registrasi_start').val(), 
+              cari_tgl_registrasi_end: $('#cari_tgl_registrasi_end').val() 
+            });
+        }
+
+        function doSemua(){
+          $('#cari_nama_poli').textbox('clear');
+          $('#cari_nama_dokter').textbox('clear');
+          $('#cari_keyword').textbox('clear');
+          $('#cari_stts').combobox('setValue', 'Semua');
+          $('#cari_status_bayar').combobox('setValue', 'Semua');
+          $('#cari_tgl_registrasi_start').datebox('setValue','{?=date('d-m-Y')?}');
+          $('#cari_tgl_registrasi_end').datebox('setValue','{?=date('d-m-Y')?}');
+          doSearch();
+        }
+
+        function bantuan(){
+          $('#help_pasien_window').dialog({
+            title: 'Cetak Data Pasien',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url([ADMIN,'dashboard','help','pasien'])?}"></embed>',
+            modal: true
+          });
+        }
+
+        function billing_ranap_total()
+        {
+          var row = $('#dg_RawatInap').datagrid('getSelected');
+          var no_rawat = row.no_rawat.replace(/\//g, '');
+          $('#help_pasien_window').dialog({
+            title: 'Cek Biling Pasien Ralan',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/billingralan/' + no_rawat + '?t='+msimrs.token+'"></embed>',
+            modal: true
+          });
+        }
+
+    </script>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>mLITE Desktop - SIM Kesehatan Aman, Ringan & Modular</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/easyui.css">
+	<link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/color.css">
+	<link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/icon.css">
+	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/jquery.min.js"></script>
+	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/default.js"></script>
+  <style media="screen">
+    html
+    {
+       font-size: 14px !important;
+       color: #000 !important;
+       font-family: Verdana !important;
+       min-width: 1024px;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white !important;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+
+    a,
+    a:link { text-decoration:none; outline:none;}
+    a:hover,
+    a:focus { text-decoration:none;}
+
+    .pd3 { padding:3px;}
+    .pd5 { padding:5px;}
+    .pd10 { padding:10px;}
+
+    label,
+    button,
+    input,
+    select,
+    textarea { font-size:12px; vertical-align: middle;}
+
+    input,
+    button,
+    select,
+    textarea { font-family: Verdana !important;}
+
+    select,
+    button,
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"],
+    input[type="radio"],
+    input[type="checkbox"] { cursor: pointer;}
+
+    .tabs-tool { border-top:0;}
+    .wu-text,
+    .wu-textarea { padding:10px; border:1px #95b8e7 solid; width:260px;}
+    .wu-text { height:14px; line-height:14px; }
+
+    .wu-header { height:130px; position:relative; z-index:0; overflow:hidden; border-bottom:2px #dddddd solid;}
+    .wu-header  .easyui-linkbutton .l-btn-text, .wu-header .easyui-menubutton .l-btn-text {padding: 7px; }
+    .wu-header-top { position:absolute; z-index:1; left:10px; top:0;}
+    .wu-header-top h1 { font:20px/20px Verdana; color:#fff;}
+    .wu-header-right { position:absolute; z-index:1; right:5px; top:56px; text-align:right;}
+    .wu-header-right p { line-height:0.7em;}
+    .wu-header-right a { margin:0 5px; color: #333;}
+
+		.mlite_menu a { color: #333;}
+
+    .wu-sidebar { width:160px;}
+    .wu-side-tree .tree-node { padding:3px 0px; }
+    .wu-side-tree a { display:block;}
+    .wu-side-tree .tree-node-selecte wu-datagrid { padding:2px 0; border:1px #fade23 solid;}
+
+    .wu-toolbar-button,
+    .wu-toolbar-search { padding:3px 5px;}
+
+    .wu-footer { height:40px; padding:10px; text-align:left; overflow:hidden;}
+		.wu-footer a {color:#333;}
+    .mlite-card {
+      background-color: dodgerblue;
+      color: white;
+      padding: 1rem;
+      height: 4rem;
+    }
+
+    .mlite-cards {
+      max-width: 1024px;
+      margin: 0 auto;
+      display: grid;
+      grid-gap: 1rem;
+    }
+
+    .dashboard_wall {
+      position: fixed;
+      bottom: 120px;
+      left: 80px;
+      width: 100%;
+      color: #000 !important;
+    }
+
+    p.title {
+      position: absolute;
+      bottom: 10px;
+      left: 140px;
+      font-size: 32px !important;
+      text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+    }
+
+    p.alamat {
+      position: absolute;
+      bottom: 0px;
+      left: 140px;
+      font-size: 16px !important;
+      text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+    }
+
+    .bg {
+      background: url('{?=url()?}/assets/img/wallpaper.jpg') no-repeat center center fixed;
+      height: 100%;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .text-red {
+        color: #980000 !important;
+    }
+
+  </style>
+	<script>
+			var msimrs = {token:"{$_SESSION['token']}", url:"{?=url()?}", admin:"{?=ADMIN?}"};
+	</script>
+</head>
+<body class="easyui-layout">
+	<!-- begin of header -->
+	<div class="wu-header" data-options="region:'north',border:false,split:false">
+      <div class="easyui-panel" style="padding:0px;">
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm0',iconCls:'icon-mlite'">mLITE</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">Pasien</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">Layanan</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">Manajemen</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'">Farmasi</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm5'">Inventory</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm6'">Bridging</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm7'">Laporan</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm8'">Keuangan</a>
+          <a href="#" class="easyui-menubutton" data-options="menu:'#mm9'">About</a>
+      </div>
+
+      <div id="mm0" class="mm" style="width:200px;">
+          <div>
+              <span>Pengaturan</span>
+              <div class="sub_mm">
+                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'pengaturan','manage'])?}" iframe="0">Set Aplikasi</div>
+                  <div>Set PJ Penunjang</div>
+                  <div>Set Oto Lokasi</div>
+                  <div>Set Kamar Inap</div>
+                  <div>Set Harga Kamar</div>
+                  <div>Set Embalase & Tuslah</div>
+                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'pengguna','manage'])?}" iframe="0">Set Pengguna</div>
+                  <div>Tracker Login</div>
+                  <div>Set Harga Obat</div>
+                  <div>Set Obat Ranap</div>
+                  <div>Set Penggunaan Tarif</div>
+                  <div>Set Oto Ralan</div>
+                  <div>Biaya Harian</div>
+                  <div>Biaya Masuk Sekali</div>
+                  <div>Set Rekam Medik</div>
+                  <div>Set Billing</div>
+                  <div>Closing Kasir</div>
+                  <div>Set Keterlambatan Presensi</div>
+              </div>
+          </div>
+		  		<div class="mlite_menu"><a href="{?=url([ADMIN,'dashboard','main'])?}">Dashboard mLITE</a></div>
+      </div>
+      <div id="mm1" class="mm" style="width:200px;">
+          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','pasien'])?}" iframe="0">Data Pasien</div>
+          <div class="mm_item">Kelahiran Bayi</div>
+          <div class="mm_item">Pasien Meninggal</div>
+          <div class="mm_item">Diagnosa Pasien</div>
+          <div class="mm_item">Riwayat Perawatan</div>
+          <div class="mm_item">Retensi Rekam Medik</div>
+      </div>
+      <div id="mm2" class="mm" style="width:200px;">
+          <div>
+              <span>Rawat Jalan</span>
+              <div class="sub_mm">
+                  <div>Registrasi</div>
+                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'khanza','poliklinik'])?}" iframe="0">Poliklinik</div>
+                  <div>Tindakan Rawat Jalan</div>
+              </div>
+          </div>
+          <div>
+              <span>Rawat Inap</span>
+              <div class="sub_mm">
+                  <div>Kamar Inap</div>
+                  <div>DPJP Ranap</div>
+                  <div>Tindakan Rawat Inap</div>
+              </div>
+          </div>
+          <div>
+              <span>Rujukan</span>
+              <div class="sub_mm">
+                  <div>Rujukan Masuk</div>
+                  <div>Rujukan Keluar</div>
+              </div>
+          </div>
+          <div class="mm_item">Informasi Kamar</div>
+          <div class="mm_item">IGD / UGD</div>
+          <div class="mm_item">Jadwal Dokter</div>
+          <div class="mm_item">Operasi / VK</div>
+          <div>
+              <span>Obat</span>
+              <div class="sub_mm">
+                  <div>Pemberian Obat</div>
+                  <div>Resep Obat</div>
+                  <div>Resep Pulang</div>
+              </div>
+          </div>
+          <div class="mm_item">Diet Pasien</div>
+          <div class="mm_item">Periksa Laboratorium</div>
+          <div class="mm_item">Periksa Radiologi</div>
+          <div>
+              <span>Kasir</span>
+              <div class="sub_mm">
+                  <div>Kasir Rawat Jalan</div>
+                  <div>Deposit Pasien</div>
+                  <div>Piutang Pasien</div>
+              </div>
+          </div>
+          <div class="mm_item">Booking Operasi</div>
+          <div class="mm_item">Booking Registrasi</div>
+          <div class="mm_item">Booking Periksa</div>
+          <div class="mm_item">Surat Kontrol</div>
+      </div>
+      <div id="mm3" class="mm" style="width:200px;">
+          <div>Pegawai</div>
+          <div class="mm_item" data-link="{?=url([ADMIN,'khanza','dokter'])?}" iframe="0">Dokter</div>
+          <div>Petugas</div>
+          <div>SIM Kepegawaian</div>
+          <div>SIM Surat</div>
+          <div>
+              <span>Presensi</span>
+              <div class="sub_mm">
+                  <div>Barcode Presensi</div>
+                  <div>Jam Presensi</div>
+                  <div>Presensi Harian</div>
+                  <div>Presensi Bulanan</div>
+                  <div>Temporary Presensi</div>
+                  <div>Rekap Kehadiran</div>
+              </div>
+          </div>
+          <div>Sidik Jari</div>
+          <div>
+              <span>Jadwal</span>
+              <div class="sub_mm">
+                  <div>Jadwal Pegawai</div>
+                  <div>Jadwal Tambahan</div>
+              </div>
+          </div>
+          <div>Kepegawaian & Gaji</div>
+      </div>
+      <div id="mm4" style="width:200px;">
+          <div>
+              <span>Suplier</span>
+              <div class="sub_mm">
+                  <div>Industri Farmasi</div>
+                  <div>Suplier Obat/Alkes/BHP</div>
+              </div>
+          </div>
+          <div>Satuan Barang</div>
+          <div>Konversi Satuan</div>
+          <div>
+              <span>Inventory Obat</span>
+              <div class="sub_mm">
+                  <div>Jenis Obat/Alkes/BHP</div>
+                  <div>Data Obat/Alkes/BHP</div>
+                  <div>Stok Opname Obat & BHP</div>
+                  <div>Mutasi Obat & BHP</div>
+                  <div>Data Pengguna Obat/Alkes/BHP</div>
+                  <div>Stok Obat Pasien</div>
+                  <div>Pengadaan Obat & BHP</div>
+                  <div>Pemesanan Obat & BHP</div>
+                  <div>Penjualan Obat & BHP</div>
+                  <div>Piutang Obat & BHP</div>
+              </div>
+          </div>
+          <div>
+              <span>Retur</span>
+              <div class="sub_mm">
+                  <div>Retur Ke Suplier</div>
+                  <div>Retur Dari Pembeli</div>
+                  <div>Retur Obat Rawat Inap</div>
+                  <div>Retur Piutang Pembeli</div>
+              </div>
+          </div>
+          <div>
+              <span>Keuntungan</span>
+              <div class="sub_mm">
+                  <div>Keuntungan Penjualan</div>
+                  <div>Keuntungan Beri Obat</div>
+              </div>
+          </div>
+          <div>Sirkulasi Obat/Alkes/BHP</div>
+          <div>Riwayat Obat/Alkes/BHP</div>
+          <div>Darurat Stok</div>
+      </div>
+      <div id="mm5" style="width:200px;">
+          <div>Satuan Barang</div>
+          <div>Jenis Barang</div>
+          <div>Data Barang</div>
+          <div>Suplier Non Medis</div>
+          <div>Pengadaan Barang</div>
+          <div>Stok Keluar</div>
+          <div>Biaya Pengadaan</div>
+          <div>
+              <span>Rekap</span>
+              <div class="sub_mm">
+                  <div>Rekap Pengadaan</div>
+                  <div>Rekap Stok Keluar</div>
+              </div>
+          </div>
+      </div>
+      <div id="mm6" style="width:200px;">
+          <div>Data Bridging BPJS</div>
+          <div>Rujukan Keluar</div>
+          <div>Program PRB</div>
+          <div>mJKN Batal Daftar</div>
+          <div>mJKN Referensi Daftar</div>
+          <div>
+              <span>BPJS</span>
+              <div class="sub_mm">
+                  <div>Monitoring Klaim BPJS</div>
+                  <div>Histori Pelayanan BPJS</div>
+                  <div>Mapping Poli</div>
+                  <div>Mapping Dokter DPJP</div>
+                  <div class="menu-sep"></div>
+                  <div>Cek Nomor SEP</div>
+                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'bpjs_cek_kartu','manage'])?}" iframe="0">BPJS Cek No Kartu</div>
+                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'bpjs_cek_nik','manage'])?}" iframe="0">BPJS Cek NIK</div>
+                  <div>Cek No. Rujukan PCare</div>
+                  <div>Cek No. Rujukan RS</div>
+                  <div>Cek Rujukan Kartu PCare</div>
+                  <div>Cek Rujukan Kartu RS</div>
+                  <div>Cek SKDP</div>
+                  <div>Cek Suplesi Jasa Raharja</div>
+                  <div>Cek Tanggal Rujukan</div>
+                  <div>Cek Riwayat Rujukan PCare</div>
+                  <div>Cek Riwayat Rujukan RS</div>
+                  <div>
+                      <span>Cek Referensi VClaim</span>
+                      <div>
+                          <div>Diagnosa Pasien</div>
+                          <div>Poli BPJS</div>
+                          <div>Poli HFIS</div>
+                          <div>Fakses BPJS</div>
+                          <div>Cara Keluar</div>
+                          <div>Diagnosa PRB</div>
+                          <div>Dokter</div>
+                          <div>Dokter PJP</div>
+                          <div>Dokter HFIS</div>
+                          <div>Dokter Kontrol</div>
+                          <div>Jadwal HFIS</div>
+                          <div>Kecamatan</div>
+                          <div>Kabupaten</div>
+                          <div>Propinsi</div>
+                          <div>Kelas Rawat</div>
+                          <div>Obat PRB</div>
+                          <div>Pasca Pulang</div>
+                          <div>Penyakit</div>
+                          <div>Prosedur</div>
+                          <div>Ruang Rawat</div>
+                          <div>Spesialistik</div>
+                          <div>Spesialistik Kontrol</div>
+                      </div>
+                  </div>
+                  <div>SPRI</div>
+                  <div>Surat Kontrol VClaim</div>
+              </div>
+          </div>
+          <div>
+              <span>JKN Mobile</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Mandiri InHealth</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Satu Sehat</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Laboratorium</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Radiologi</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Apotek Online</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+      </div>
+      <div id="mm7" style="width:200px;">
+          <div>
+              <span>Obat</span>
+              <div>
+                  <div>Obat Per Poli</div>
+                  <div>Obat Per Kamar</div>
+                  <div>Obat Per Dokter Ralan</div>
+                  <div>Obat Per Dokter Ranap</div>
+                  <div>Obat Per Dokter Peresep</div>
+                  <div>Obat Per Cara Bayar</div>
+              </div>
+          </div>
+          <div>Detail JM Dokter</div>
+          <div>
+              <span>Rekap Harian</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Rekap Bulanan</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Rekap Fee</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>
+              <span>Pembayaran</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>Tagihan Masuk</div>
+          <div>Tambahan Biaya Pasien</div>
+          <div>Deposit Pasien</div>
+          <div>Rekap Uang Pershift</div>
+          <div>Payment Point</div>
+          <div>
+              <span>Diagnosa & Prosedur</span>
+              <div>
+                  <div>New Menu</div>
+                  <div class="menu-sep"></div>
+                  <div>New Other Menu...</div>
+              </div>
+          </div>
+          <div>Kunjungan Ralan</div>
+          <div>Kunjungan Ranap</div>
+          <div>Sensus Harian Poli</div>
+      </div>
+      <div id="mm8" style="width:200px;">
+          <div>Jurnal Harian</div>
+          <div>Buku Besar</div>
+          <div>Cash Flow</div>
+          <div>Neraca Rugi Laba</div>
+      </div>
+      <div id="mm9" class="menu-content" style="background:#f0f0f0;padding:10px;text-align:left">
+          <img src="{?=url()?}/favicon.png" style="width:60px;height:60px">
+          <p>The awesome SIMRS Khanza alternate<br>
+            <b>Successor of KhanzaLITE</b><br>
+            Clean, Light and Modular Medical Management Systems</p>
+          <p>Made with <i class="fa fa-heart text-danger"></i> and <i class="fa fa-coffee text-primary"></i> by <a href="https://basoro.id/" target="_blank"><b>drg. F. Basoro</b></a> & Friends.</p>
+      </div>
+
+    	<div class="wu-header-top" style="padding:7px 0px; margin:42px 0;">
+            <!-- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','pasien'])?}" iframe="0" title="Pasien" style="padding:0 10px;">Pasien</a> -->
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-clipart',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','regperiksa'])?}" iframe="0" title="Registrasi" style="padding:0 10px;">Registrasi</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" style="padding:0 10px;">IGD</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','rawatjalan'])?}" iframe="0" title="Rawat Jalan" style="padding:0 10px;">Rawat Jalan</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','rawatinap'])?}" iframe="0" title="Rawat Inap" style="padding:0 10px;">Rawat Inap</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" style="padding:0 10px;">Laboratorium</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'" style="padding:0 10px;">Radiologi</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" style="padding:0 10px;">Apotek</a>
+      </div>
+      <div class="wu-header-right">
+				<p>Hai <strong class="easyui-tooltip" title="2 unread messages">drg. FAISOL BASORO</strong>!</p>
+        <p><a href="#" id="editPass">Ubah Password</a>|<a href="#" id="loginOut">Keluar</a></p>
+      </div>
+  </div>
+    <!-- end of header -->
