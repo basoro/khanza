@@ -1,2 +1,2 @@
-# khanza2web
+# Khanza2Web
 Khanza to Web
