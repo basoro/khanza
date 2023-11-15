@@ -54,12 +54,12 @@
 		<input class="easyui-textbox" id="cari_keyword_RegPeriksa" style="width:120px">
 		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch_RegPeriksa()"></a> 
 		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="doSemua_RegPeriksa()"></a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-no',plain:true" style="margin:0 2px;" onclick="baru_RegPeriksa()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 2px;" onclick="baru_RegPeriksa()">Baru</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 2px;" onclick="simpan_RegPeriksa()">Simpan</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 2px;" onclick="ubah_RegPeriksa()">Ubah</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 2px;" onclick="hapus_RegPeriksa()">Hapus</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 2px;" onclick="cetak_RegPeriksa()">Cetak</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="removeTab_RegPeriksa()" style="margin:0 2px;">Keluar</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_RegPeriksa()" style="margin:0 2px;">Keluar</a>
 	</div>
 </div>
 
@@ -123,27 +123,24 @@
 	  }  
 	});
 
-	function doSearch_RegPeriksa(){
-		$('#dg_RegPeriksa').datagrid('load',{
-		  cari_nama_poli: $('#cari_nama_poli_RegPeriksa').val(), 
-		  cari_nama_dokter: $('#cari_nama_dokter_RegPeriksa').val(), 
-		  cari_keyword: $('#cari_keyword_RegPeriksa').val(), 
-		  cari_stts: $('#cari_stts_RegPeriksa').val(), 
-		  cari_status_bayar: $('#cari_status_bayar_RegPeriksa').val(), 
-		  cari_tgl_registrasi_start: $('#cari_tgl_registrasi_start_RegPeriksa').val(), 
-		  cari_tgl_registrasi_end: $('#cari_tgl_registrasi_end_RegPeriksa').val() 
-		});
-	}
+	function baru_RegPeriksa()
+	{
+		var date = new Date();
+		var h = date.getHours();
+		var M = date.getMinutes();
+		var s = date.getSeconds();
+		function _ff(v) {
+			return (v < 10 ? '0' : '') + v;
+		};
+		var tgl_registrasi = _ff(date.getFullYear())+'-'+_ff(date.getMonth()+1)+'-'+_ff(date.getDate())+' '+ _ff(h)+':'+_ff(M)+':'+_ff(s);		
 
-	function doSemua_RegPeriksa(){
-	  $('#cari_nama_poli_RegPeriksa').textbox('clear');
-	  $('#cari_nama_dokter_RegPeriksa').textbox('clear');
-	  $('#cari_keyword_RegPeriksa').textbox('clear');
-	  $('#cari_stts_RegPeriksa').combobox('setValue', 'Semua');
-	  $('#cari_status_bayar_RegPeriksa').combobox('setValue', 'Semua');
-	  $('#cari_tgl_registrasi_start_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
-	  $('#cari_tgl_registrasi_end_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
-	  doSearch();
+		$('#fm_RegPeriksa').form('clear');
+		var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_rawat&t={?=$_SESSION['token']?}';
+		$.post(url,{tgl_registrasi: '{?=date('Y-m-d')?}'}, function(data) {
+			$('#no_rawat_RegPeriksa').textbox('setValue',data);
+		});
+		$('#tgl_registrasi_RegPeriksa').datetimebox('setValue',tgl_registrasi);
+		$('#no_reg_RegPeriksa').textbox('setValue','001');
 	}
 
 	function simpan_RegPeriksa()
@@ -174,6 +171,45 @@
                   }
               }
           });
+	}
+
+    function ubah_Pasien(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Pasien(){
+        alert('Form Hapus');
+    }
+
+    function cetak_Pasien(){
+        alert('Form Cetak');
+    }
+
+    function keluar_RegPeriksa(){
+        $('#wu-tabs').tabs('close','Registrasi');
+    }
+
+	function doSearch_RegPeriksa(){
+		$('#dg_RegPeriksa').datagrid('load',{
+		  cari_nama_poli: $('#cari_nama_poli_RegPeriksa').val(), 
+		  cari_nama_dokter: $('#cari_nama_dokter_RegPeriksa').val(), 
+		  cari_keyword: $('#cari_keyword_RegPeriksa').val(), 
+		  cari_stts: $('#cari_stts_RegPeriksa').val(), 
+		  cari_status_bayar: $('#cari_status_bayar_RegPeriksa').val(), 
+		  cari_tgl_registrasi_start: $('#cari_tgl_registrasi_start_RegPeriksa').val(), 
+		  cari_tgl_registrasi_end: $('#cari_tgl_registrasi_end_RegPeriksa').val() 
+		});
+	}
+
+	function doSemua_RegPeriksa(){
+	  $('#cari_nama_poli_RegPeriksa').textbox('clear');
+	  $('#cari_nama_dokter_RegPeriksa').textbox('clear');
+	  $('#cari_keyword_RegPeriksa').textbox('clear');
+	  $('#cari_stts_RegPeriksa').combobox('setValue', 'Semua');
+	  $('#cari_status_bayar_RegPeriksa').combobox('setValue', 'Semua');
+	  $('#cari_tgl_registrasi_start_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
+	  $('#cari_tgl_registrasi_end_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
+	  doSearch();
 	}
 
 	function cari_Pasien_RegPeriksa() {
@@ -236,26 +272,6 @@
 			href: '{?=url()?}/{?=ADMIN?}/khanza/rawatinap/?act=input&no_rawat=' + row.no_rawat + '&t={?=$_SESSION['token']?}',
 			modal: true
 		});
-	}
-
-	function baru_RegPeriksa()
-	{
-		var date = new Date();
-		var h = date.getHours();
-		var M = date.getMinutes();
-		var s = date.getSeconds();
-		function _ff(v) {
-			return (v < 10 ? '0' : '') + v;
-		};
-		var tgl_registrasi = _ff(date.getFullYear())+'-'+_ff(date.getMonth()+1)+'-'+_ff(date.getDate())+' '+ _ff(h)+':'+_ff(M)+':'+_ff(s);		
-
-		$('#fm_RegPeriksa').form('clear');
-		var url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=get_no_rawat&t={?=$_SESSION['token']?}';
-		$.post(url,{tgl_registrasi: '{?=date('Y-m-d')?}'}, function(data) {
-			$('#no_rawat_RegPeriksa').textbox('setValue',data);
-		});
-		$('#tgl_registrasi_RegPeriksa').datetimebox('setValue',tgl_registrasi);
-		$('#no_reg_RegPeriksa').textbox('setValue','001');
 	}
 
 	$('#tgl_registrasi_RegPeriksa').datetimebox({

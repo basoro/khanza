@@ -3,6 +3,7 @@ namespace Plugins\Khanza;
 
 use Systems\AdminModule;
 use Plugins\Khanza\MySQL;
+use Plugins\Khanza\Src\Blank;
 use Plugins\Khanza\Src\Pasien;
 use Plugins\Khanza\Src\RegPeriksa;
 use Plugins\Khanza\Src\RawatJalan;
@@ -10,10 +11,17 @@ use Plugins\Khanza\Src\RawatInap;
 use Plugins\Khanza\Src\Dokter;
 use Plugins\Khanza\Src\Penjab;
 use Plugins\Khanza\Src\BillingRalan;
+use Plugins\Khanza\Src\BillingRanap;
+use Plugins\Khanza\Src\Igd;
+use Plugins\Khanza\Src\Laboratorium;
+use Plugins\Khanza\Src\Radiologi;
+use Plugins\Khanza\Src\Apotek;
+use Plugins\Khanza\Src\SukuBangsa;
 
 class Admin extends AdminModule
 {
 
+  protected $blank;
   protected $pasien;
   protected $regperiksa;
   protected $rawatjalan;
@@ -21,9 +29,16 @@ class Admin extends AdminModule
   protected $dokter;
   protected $penjab;
   protected $billingralan;
+  protected $billingranap;
+  protected $igd;
+  protected $laboratorium;
+  protected $radiologi;
+  protected $apotek;
+  protected $sukubangsa;
 
     public function init()
     {
+      $this->blank = new Blank();
       $this->pasien = new Pasien();
       $this->regperiksa = new RegPeriksa();
       $this->rawatjalan = new RawatJalan();
@@ -31,6 +46,12 @@ class Admin extends AdminModule
       $this->dokter = new Dokter();
       $this->penjab = new Penjab();
       $this->billingralan = new BillingRalan();
+      $this->billingranap = new BillingRanap();
+      $this->igd = new Igd();
+      $this->laboratorium = new Laboratorium();
+      $this->radiologi = new Radiologi();
+      $this->apotek = new Apotek();
+      $this->sukubangsa = new SukuBangsa();
     }
     
     protected function db($table = NULL)
@@ -39,6 +60,47 @@ class Admin extends AdminModule
         return new MySQL($table);
     }
 
+    public function _getSession()
+    {
+      if(isset_or($_SESSION['mlite_user']) == '') {
+        $id = 1;
+      } else {
+        $id = $_SESSION['mlite_user'];
+      }
+      if($this->db('mlite_users')->where('id', $id)->oneArray()) {
+        $fullname = $this->core->getUserInfo('fullname', $id, true);
+        $access = $this->core->getUserInfo('access');
+        $this->assign['fullname'] = !empty($fullname) ? $fullname : $this->core->getUserInfo('username');
+      }
+    }
+    public function _getHeader()
+    {
+      $this->assign = $this->settings->get('settings');
+      $this->assign['powered'] = 'Powered by <a href="https://mlite.id/">mLITE</a>';
+      $this->assign['version'] = '4.0.0';
+      $this->_getSession();
+      echo $this->draw('header.html',['mlite' => $this->assign]);
+    }
+
+    public function _getFooter()
+    {
+      echo $this->draw('footer.html');
+    }    
+
+    public function getCss()
+    {
+        header('Content-type: text/css');
+        echo $this->draw(MODULES.'/khanza/css/admin/khanza.css');
+        exit();
+    }
+  
+    public function getJavascript()
+    {
+        header('Content-type: text/javascript');
+        echo $this->draw(MODULES.'/khanza/js/admin/khanza.js');
+        exit();
+    }
+  
     function convertNorawat($text)
     {
         setlocale(LC_ALL, 'en_EN');
@@ -110,38 +172,15 @@ class Admin extends AdminModule
     
     public function getManage()
     {
-      if(isset_or($_SESSION['msimrs_user']) == '') {
-        $id = 1;
-      } else {
-        $id = $_SESSION['msimrs_user'];
-      }
-      if($this->db('mlite_users')->where('id', $id)->oneArray()) {
-        $username = $this->core->getUserInfo('fullname', $id, true);
-        $access = $this->core->getUserInfo('access');
-        $this->assign['username']      = !empty($username) ? $username : $this->getUserInfo('username');
-      }
-      $this->assign['nama_instansi'] = $this->settings->get('settings.nama_instansi');
-      $this->assign['alamat'] = $this->settings->get('settings.alamat');
-      $this->assign['kota'] = $this->settings->get('settings.kota');
-      $this->assign['propinsi'] = $this->settings->get('settings.propinsi');
-      $this->assign['nomor_telepon'] = $this->settings->get('settings.nomor_telepon');
-      $this->assign['email'] = $this->settings->get('settings.email');
-      $this->assign['logo'] = $this->settings->get('settings.logo');
-      $this->assign['powered'] = 'Powered by <a href="https://mlite.id/">mLITE</a>';
-      $this->assign['version'] = '4.0.0';
-
-      echo $this->draw('manage.html', ['msimrs' => $this->assign]);
+      $this->_getHeader();
+      echo $this->draw('manage.html');
+      $this->_getFooter();
       exit();
     }
 
     public function getDashboard()
     {
-      $this->assign['nama_instansi'] = $this->settings->get('settings.nama_instansi');
-      $this->assign['alamat'] = $this->settings->get('settings.alamat');
-      $this->assign['kota'] = $this->settings->get('settings.kota');
-      $this->assign['propinsi'] = $this->settings->get('settings.propinsi');
-      $this->assign['logo'] = $this->settings->get('settings.logo');
-      echo $this->draw('dashboard.html', ['msimrs' => $this->assign]);
+      echo $this->draw('dashboard.html', ['mlite' => $this->settings->get('settings')]);
       exit();
     }
 
@@ -161,38 +200,16 @@ class Admin extends AdminModule
         redirect(url([ADMIN, 'khanza', 'settings']));
     }
 
-    public function _getHeader()
-    {
-      if(isset_or($_SESSION['msimrs_user']) == '') {
-        $id = 1;
-      } else {
-        $id = $_SESSION['msimrs_user'];
-      }
-      if($this->db('mlite_users')->where('id', $id)->oneArray()) {
-        $username = $this->core->getUserInfo('fullname', $id, true);
-        $access = $this->core->getUserInfo('access');
-        $this->assign['username'] = !empty($username) ? $username : $this->getUserInfo('username');
-      }
-      $this->assign['nama_instansi'] = $this->settings->get('settings.nama_instansi');
-      $this->assign['alamat'] = $this->settings->get('settings.alamat');
-      $this->assign['kota'] = $this->settings->get('settings.kota');
-      $this->assign['propinsi'] = $this->settings->get('settings.propinsi');
-      $this->assign['nomor_telepon'] = $this->settings->get('settings.nomor_telepon');
-      $this->assign['email'] = $this->settings->get('settings.email');
-      $this->assign['logo'] = $this->settings->get('settings.logo');
-      return;
-    }
-
     public function anyBlank()
     {
-      $this->_getHeader();
+      $this->_getSession();
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
           echo $this->draw('_blank.html');
         break;
         case "data":  
-          echo 'Ini data';
+          $this->blank->Data();
         break;    
       }
       exit();
@@ -200,11 +217,11 @@ class Admin extends AdminModule
 
     public function anyPasien()
     {
-      $this->_getHeader();
+      $this->_getSession();
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
-          echo $this->draw('_pasien.html', ['msimrs' => $this->assign]);
+          echo $this->draw('_pasien.html');
         break;
         case "data":
           $this->pasien->Data();
@@ -228,7 +245,8 @@ class Admin extends AdminModule
 
     public function anyRegPeriksa()
     {
-      $this->_getHeader();
+      $this->_getSession();
+
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -252,7 +270,7 @@ class Admin extends AdminModule
 
     public function anyRawatJalan()
     {
-      $this->_getHeader();
+      $this->_getSession();
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -267,7 +285,7 @@ class Admin extends AdminModule
 
     public function anyRawatInap()
     {
-      $this->_getHeader();
+      $this->_getSession();
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       $no_rawat = isset_or($_GET['no_rawat'], '');
       switch($show){
@@ -287,8 +305,9 @@ class Admin extends AdminModule
 
     public function getBillingRalan($no_rawat)
     {
+      $this->_getSession();
+
       $no_rawat = $this->revertNoRawat($no_rawat);
-      $this->_getHeader();
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -313,6 +332,8 @@ class Admin extends AdminModule
 
     public function postSimpanBilling()
     {
+      $this->_getSession();
+
       if(isset($_POST['billing'])) {
         $json = $_POST['billing'];
         $data = json_decode($json, true);
@@ -349,6 +370,8 @@ class Admin extends AdminModule
 
     public function getCetakBillingRalan($no_rawat)
     {
+      $this->_getSession();
+
       $no_rawat = $this->revertNoRawat($no_rawat);
       $setting = $this->db('setting')->oneArray();
       $rows = "select no,nm_perawatan, if(biaya<>0,biaya,null) as satu, if(jumlah<>0,jumlah,null) as dua, if(tambahan<>0,tambahan,null) as tiga, if(totalbiaya<>0,totalbiaya,null) as empat,pemisah,status from billing where no_rawat='$no_rawat' order by noindex";
@@ -363,6 +386,8 @@ class Admin extends AdminModule
 
     public function getAkunBayar()
     {
+      $this->_getSession();
+
       $rows = $this->db('akun_bayar')->toArray();
       $result = [];
       foreach ($rows as $row) {
@@ -378,6 +403,8 @@ class Admin extends AdminModule
 
     public function getAkunPiutang()
     {
+      $this->_getSession();
+
       $rows = $this->db('akun_piutang')->toArray();
       $result = [];
       foreach ($rows as $row) {
@@ -392,7 +419,8 @@ class Admin extends AdminModule
 
     public function anyDokter()
     {
-      $this->_getHeader();
+      $this->_getSession();
+
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -403,11 +431,76 @@ class Admin extends AdminModule
         break;
       }
       exit();
-    }    
+    }   
+    
+    public function anyIgd()
+    {
+      $this->_getSession();
+
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_igd.html');
+        break;
+        case "data":
+          $this->igd->Data();         
+        break;
+      }
+      exit();
+    }   
+
+    public function anyLaboratorium()
+    {
+      $this->_getSession();
+
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_laboratorium.html');
+        break;
+        case "data":
+          $this->laboratorium->Data();         
+        break;
+      }
+      exit();
+    }   
+
+    public function anyRadiologi()
+    {
+      $this->_getSession();
+
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_radiologi.html');
+        break;
+        case "data":
+          $this->radiologi->Data();         
+        break;
+      }
+      exit();
+    }   
+
+    public function anyApotek()
+    {
+      $this->_getSession();
+
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_apotek.html');
+        break;
+        case "data":
+          $this->apotek->Data();         
+        break;
+      }
+      exit();
+    }   
 
     public function anyPenjab()
     {
-      $this->_getHeader();
+      $this->_getSession();
+
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -422,7 +515,8 @@ class Admin extends AdminModule
 
     public function anyPoliklinik()
     {
-      $this->_getHeader();
+      $this->_getSession();
+
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
@@ -458,35 +552,15 @@ class Admin extends AdminModule
     
     public function anySukuBangsa()
     {
-      $this->_getHeader();
+      $this->_getSession();
+      
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       switch($show){
       	default:
           echo $this->draw('_suku.bangsa.html');
         break;
         case "data":
-          $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-          $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
-          $offset = ($page-1)*$rows;
-    
-          $keyword = isset($_POST['cari_keyword']) ? $_POST['cari_keyword'] : '';
-    
-          $row = $this->db('suku_bangsa')->select(['count' => 'COUNT(*)'])->oneArray();
-          $result["total"] = $row['count'];
-    
-          $items = array();
-          $pasien = "select * from suku_bangsa where id like '%$keyword%' or nama_suku_bangsa like '%$keyword%'
-          order by id asc LIMIT $offset,$rows";
-    
-          $rows = $this->db()->pdo()->prepare($pasien);
-          $rows->execute();
-          $rows = $rows->fetchAll();
-    
-          foreach ($rows as $row) {
-              array_push($items, $row);
-          }
-          $result["rows"] = $items;
-          echo json_encode($result);          
+          $this->sukubangsa->Data();        
         break;
       }
       exit();

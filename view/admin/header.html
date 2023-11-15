@@ -7,148 +7,12 @@
     <link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/easyui.css">
 	<link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/color.css">
 	<link rel="stylesheet" type="text/css" href="{?=url()?}/plugins/khanza/css/admin/icon.css">
+	<link rel="stylesheet" type="text/css" href="{?=url([ADMIN, 'khanza', 'css'])?}">
 	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/jquery.min.js"></script>
 	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="{?=url()?}/plugins/khanza/js/admin/default.js"></script>
-  <style media="screen">
-    html
-    {
-       font-size: 14px !important;
-       color: #000 !important;
-       font-family: Verdana !important;
-       min-width: 1024px;
-    }
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    li {
-      float: left;
-    }
-
-    li a {
-      display: block;
-      color: white !important;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-
-    li a:hover {
-      background-color: #111;
-    }
-
-    a,
-    a:link { text-decoration:none; outline:none;}
-    a:hover,
-    a:focus { text-decoration:none;}
-
-    .pd3 { padding:3px;}
-    .pd5 { padding:5px;}
-    .pd10 { padding:10px;}
-
-    label,
-    button,
-    input,
-    select,
-    textarea { font-size:12px; vertical-align: middle;}
-
-    input,
-    button,
-    select,
-    textarea { font-family: Verdana !important;}
-
-    select,
-    button,
-    input[type="button"],
-    input[type="reset"],
-    input[type="submit"],
-    input[type="radio"],
-    input[type="checkbox"] { cursor: pointer;}
-
-    .tabs-tool { border-top:0;}
-    .wu-text,
-    .wu-textarea { padding:10px; border:1px #95b8e7 solid; width:260px;}
-    .wu-text { height:14px; line-height:14px; }
-
-    .wu-header { height:130px; position:relative; z-index:0; overflow:hidden; border-bottom:2px #dddddd solid;}
-    .wu-header  .easyui-linkbutton .l-btn-text, .wu-header .easyui-menubutton .l-btn-text {padding: 7px; }
-    .wu-header-top { position:absolute; z-index:1; left:10px; top:0;}
-    .wu-header-top h1 { font:20px/20px Verdana; color:#fff;}
-    .wu-header-right { position:absolute; z-index:1; right:5px; top:56px; text-align:right;}
-    .wu-header-right p { line-height:0.7em;}
-    .wu-header-right a { margin:0 5px; color: #333;}
-
-		.mlite_menu a { color: #333;}
-
-    .wu-sidebar { width:160px;}
-    .wu-side-tree .tree-node { padding:3px 0px; }
-    .wu-side-tree a { display:block;}
-    .wu-side-tree .tree-node-selecte wu-datagrid { padding:2px 0; border:1px #fade23 solid;}
-
-    .wu-toolbar-button,
-    .wu-toolbar-search { padding:3px 5px;}
-
-    .wu-footer { height:40px; padding:10px; text-align:left; overflow:hidden;}
-		.wu-footer a {color:#333;}
-    .mlite-card {
-      background-color: dodgerblue;
-      color: white;
-      padding: 1rem;
-      height: 4rem;
-    }
-
-    .mlite-cards {
-      max-width: 1024px;
-      margin: 0 auto;
-      display: grid;
-      grid-gap: 1rem;
-    }
-
-    .dashboard_wall {
-      position: fixed;
-      bottom: 120px;
-      left: 80px;
-      width: 100%;
-      color: #000 !important;
-    }
-
-    p.title {
-      position: absolute;
-      bottom: 10px;
-      left: 140px;
-      font-size: 32px !important;
-      text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
-    }
-
-    p.alamat {
-      position: absolute;
-      bottom: 0px;
-      left: 140px;
-      font-size: 16px !important;
-      text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
-    }
-
-    .bg {
-      background: url('{?=url()?}/assets/img/wallpaper.jpg') no-repeat center center fixed;
-      height: 100%;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    .text-red {
-        color: #980000 !important;
-    }
-
-  </style>
 	<script>
-			var msimrs = {token:"{$_SESSION['token']}", url:"{?=url()?}", admin:"{?=ADMIN?}"};
+			var mlite = {token:"{$_SESSION['token']}", url:"{?=url()?}", admin:"{?=ADMIN?}"};
 	</script>
 </head>
 <body class="easyui-layout">
@@ -191,22 +55,25 @@
                   <div>Set Keterlambatan Presensi</div>
               </div>
           </div>
-		  		<div class="mlite_menu"><a href="{?=url([ADMIN,'dashboard','main'])?}">Dashboard mLITE</a></div>
+		  <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','blank'])?}" iframe="0">Blank</div>
+		  <div class="mlite_menu"><a href="{?=url([ADMIN,'dashboard','main'])?}">Dashboard mLITE</a></div>
       </div>
       <div id="mm1" class="mm" style="width:200px;">
-          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','pasien'])?}" iframe="0">Data Pasien</div>
+          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','pasien'])?}" iframe="0">Pasien</div>
           <div class="mm_item">Kelahiran Bayi</div>
           <div class="mm_item">Pasien Meninggal</div>
           <div class="mm_item">Diagnosa Pasien</div>
           <div class="mm_item">Riwayat Perawatan</div>
+          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','penjab'])?}" iframe="0">Cara Bayar</div>
+          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','sukubangsa'])?}" iframe="0">Suku Bangsa</div>
           <div class="mm_item">Retensi Rekam Medik</div>
       </div>
       <div id="mm2" class="mm" style="width:200px;">
           <div>
               <span>Rawat Jalan</span>
               <div class="sub_mm">
-                  <div>Registrasi</div>
-                  <div class="sub_mm_item" data-link="{?=url([ADMIN,'khanza','poliklinik'])?}" iframe="0">Poliklinik</div>
+                  <div class="sub_mm_item text-red" data-link="{?=url([ADMIN,'khanza','regperiksa'])?}" iframe="0">Registrasi</div>
+                  <div class="sub_mm_item text-red" data-link="{?=url([ADMIN,'khanza','poliklinik'])?}" iframe="0">Poliklinik</div>
                   <div>Tindakan Rawat Jalan</div>
               </div>
           </div>
@@ -255,7 +122,7 @@
       </div>
       <div id="mm3" class="mm" style="width:200px;">
           <div>Pegawai</div>
-          <div class="mm_item" data-link="{?=url([ADMIN,'khanza','dokter'])?}" iframe="0">Dokter</div>
+          <div class="mm_item text-red" data-link="{?=url([ADMIN,'khanza','dokter'])?}" iframe="0">Dokter</div>
           <div>Petugas</div>
           <div>SIM Kepegawaian</div>
           <div>SIM Surat</div>
@@ -526,15 +393,15 @@
     	<div class="wu-header-top" style="padding:7px 0px; margin:42px 0;">
             <!-- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','pasien'])?}" iframe="0" title="Pasien" style="padding:0 10px;">Pasien</a> -->
             <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-clipart',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','regperiksa'])?}" iframe="0" title="Registrasi" style="padding:0 10px;">Registrasi</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" style="padding:0 10px;">IGD</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','igd'])?}" iframe="0" title="Igd" style="padding:0 10px;">IGD</a>
             <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','rawatjalan'])?}" iframe="0" title="Rawat Jalan" style="padding:0 10px;">Rawat Jalan</a>
             <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'," data-link="{?=url([ADMIN,'khanza','rawatinap'])?}" iframe="0" title="Rawat Inap" style="padding:0 10px;">Rawat Inap</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" style="padding:0 10px;">Laboratorium</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'" style="padding:0 10px;">Radiologi</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" style="padding:0 10px;">Apotek</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','laboratorium'])?}" iframe="0" title="Laboratorium" style="padding:0 10px;">Laboratorium</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','radiologi'])?}" iframe="0" title="Radiologi" style="padding:0 10px;">Radiologi</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" data-link="{?=url([ADMIN,'khanza','apotek'])?}" iframe="0" title="Apotek" style="padding:0 10px;">Apotek</a>
       </div>
       <div class="wu-header-right">
-				<p>Hai <strong class="easyui-tooltip" title="2 unread messages">drg. FAISOL BASORO</strong>!</p>
+				<p>Hai <strong class="easyui-tooltip" title="2 unread messages">{$mlite.fullname}</strong>!</p>
         <p><a href="#" id="editPass">Ubah Password</a>|<a href="#" id="loginOut">Keluar</a></p>
       </div>
   </div>
