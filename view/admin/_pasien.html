@@ -19,6 +19,7 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Pasien()">Simpan</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Pasien()">Ubah</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Pasien()">Hapus</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_Pasien()">Cetak</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Pasien()" style="margin:0 15px;">Keluar</a>
             </div>
           </div>
@@ -251,9 +252,9 @@
             $('#nm_pasien_RegPeriksa').textbox('setValue',row.nm_pasien);
             var dlg = $("#dlg_window").data('dialog');
             if(typeof dlg !== 'undefined') {
-            if(dlg.options.title == 'Cari Pasien') {
-                $('#dlg_window').dialog('close', 'Pasien')
-            }
+                if(dlg.options.title == 'Cari Pasien') {
+                    $('#dlg_window').dialog('close', 'Pasien')
+                }
             }
         },
     });

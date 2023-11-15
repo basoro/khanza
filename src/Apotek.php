@@ -32,4 +32,9 @@ class Apotek
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

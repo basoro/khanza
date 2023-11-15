@@ -107,4 +107,9 @@ class RawatJalan
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

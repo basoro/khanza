@@ -357,4 +357,9 @@ class BillingRalan
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

@@ -31,4 +31,9 @@ class Igd {
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

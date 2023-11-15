@@ -55,4 +55,9 @@ class SukuBangsa
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

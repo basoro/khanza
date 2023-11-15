@@ -31,4 +31,9 @@ class Blank {
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

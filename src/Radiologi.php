@@ -32,4 +32,9 @@ class Radiologi
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

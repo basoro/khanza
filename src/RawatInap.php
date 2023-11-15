@@ -32,4 +32,9 @@ class RawatInap
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

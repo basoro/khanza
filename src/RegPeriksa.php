@@ -105,4 +105,9 @@ class RegPeriksa
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

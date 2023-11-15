@@ -20,11 +20,12 @@
         <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch_Penjab()"></a>
     </div>
     <div style="float: left;">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="newSukuBangsa()">Baru</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="saveSukuBangsa()">Simpan</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="editSukuBangsa()">Ubah</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="deleteSukuBangsa()">Hapus</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="removeTab_suku_bangsa()" style="margin:0 15px;">Keluar</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Penjab()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Penjab()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Penjab()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Penjab()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_Penjab()">Cetak</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Penjab()" style="margin:0 15px;">Keluar</a>
     </div>
 </div>
 
@@ -54,13 +55,35 @@
         $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
         var dlg = $("#dlg_window").data('dialog');
         if(typeof dlg !== 'undefined') {
-            // console.log(dlg);
             if(dlg.options.title == 'Cari Penjab') {
                 $('#dlg_window').dialog('close', 'Penjab')
             }
         }
-        // $('#dlg_Penjab').dialog('close');
 	  },
     });
+
+    function baru_Penjab(){
+        alert('Form Baru');
+    }
+
+    function simpan_Penjab(){
+        alert('Form Simpan');
+    }
+
+    function ubah_Penjab(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Penjab(){
+        alert('Form Hapus');
+    }
+
+    function cetak_Penjab(){
+        alert('Form Cetak');
+    }
+
+    function keluar_Penjab(){
+        $('#wu-tabs').tabs('close','Penjab');
+    }
 
 </script>

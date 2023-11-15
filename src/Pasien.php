@@ -157,4 +157,9 @@ class Pasien
         }
     }
 
+    public function Cetak()
+    {
+        
+    }
+
 }

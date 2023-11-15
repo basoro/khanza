@@ -61,4 +61,9 @@ class Penjab
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

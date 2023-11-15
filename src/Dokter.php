@@ -55,4 +55,9 @@ class Dokter
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

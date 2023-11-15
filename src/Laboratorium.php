@@ -32,4 +32,9 @@ class Laboratorium
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }

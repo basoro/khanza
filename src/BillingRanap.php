@@ -32,4 +32,9 @@ class BillingRanap
         
     }    
 
+    public function Cetak()
+    {
+        
+    }
+
 }
