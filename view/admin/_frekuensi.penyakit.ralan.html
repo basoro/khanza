@@ -1,0 +1,100 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table>
+			<tr>
+				<td width="100"><span style="float:right;">Unit/Poli</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Kota/Kab</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+			</tr>
+			<tr>
+				<td width="100"><span style="float:right;">Dokter</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Kecamatan</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+			</tr>
+			<tr>
+				<td width="100"><span style="float:right;">Cara Bayar</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Kelurahan</span></td>
+				<td>: <input name="kode_FrekuensiPenyakitRalan" id="kode_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_FrekuensiPenyakitRalan" id="nama_FrekuensiPenyakitRalan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_FrekuensiPenyakitRalan" class="easyui-datagrid" footer="#toolbar_FrekuensiPenyakitRalan">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_FrekuensiPenyakitRalan" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+		<label style="margin-left: 16px;">Periode : </label>
+		<input class="easyui-datebox" id="cari_tgl_registrasi_start_FrekuensiPenyakitRalan" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px">
+		<input class="easyui-datebox" id="cari_tgl_registrasi_end_FrekuensiPenyakitRalan" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_FrekuensiPenyakitRalan()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_FrekuensiPenyakitRalan()">Cetak</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_FrekuensiPenyakitRalan()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/frekuensipenyakitralan/?act=data&t={?=$_SESSION['token']?}';
+
+    $('#dg_FrekuensiPenyakitRalan').datagrid({
+      url:url,
+      singleSelect:true,
+      pagination:false,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kd_penyakit',title:'Kode',width:'100',sortable:true},
+        { field:'penyakit',title:'Nama Penyakit',width:'300',sortable:true}, 
+        { field:'diagnosa',title:'Diagnosa Lain',width:'100',sortable:true}, 
+        { field:'c',title:'L (Hidup)',width:'100',sortable:true}, 
+        { field:'d',title:'P (Hidup)',width:'100',sortable:true}, 
+        { field:'a',title:'L (Mati)',width:'100',sortable:true}, 
+        { field:'b',title:'P (Mati)',width:'100',sortable:true}, 
+        { field:'i',title:'Jumlah',width:'100',sortable:true}
+      ]],
+      onClickRow: function(){
+        var row = $('#dg_FrekuensiPenyakitRalan').datagrid('getSelected');
+        $('#kode_FrekuensiPenyakitRalan').textbox('setValue',row.kode);
+        $('#nama_FrekuensiPenyakitRalan').textbox('setValue',row.nama);
+        $('#status_FrekuensiPenyakitRalan').combobox('setValue',row.status);
+	  }
+    });
+
+    function baru_FrekuensiPenyakitRalan(){
+        alert('Form Baru');
+    }
+
+    function simpan_FrekuensiPenyakitRalan(){
+        alert('Form Simpan');
+    }
+
+    function ubah_FrekuensiPenyakitRalan(){
+        alert('Form Ubah');
+    }
+
+    function hapus_FrekuensiPenyakitRalan(){
+        alert('Form Hapus');
+    }
+
+    function cetak_FrekuensiPenyakitRalan(){
+        alert('Form Cetak');
+    }
+
+    function keluar_FrekuensiPenyakitRalan(){
+        $('#wu-tabs').tabs('close','Blank');
+    }
+
+</script>

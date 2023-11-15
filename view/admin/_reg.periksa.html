@@ -307,4 +307,16 @@
 		}
 	})
 
+	setInterval(function(){
+		var date = new Date();
+		var h = date.getHours();
+		var M = date.getMinutes();
+		var s = date.getSeconds();
+		function _ff(v) {
+			return (v < 10 ? '0' : '') + v;
+		};
+		var tgl_registrasi = _ff(date.getFullYear())+'-'+_ff(date.getMonth()+1)+'-'+_ff(date.getDate())+' '+ _ff(h)+':'+_ff(M)+':'+_ff(s);		
+		$('#tgl_registrasi_RegPeriksa').datetimebox('setValue',tgl_registrasi);
+	}, 1000);	
+
 </script>

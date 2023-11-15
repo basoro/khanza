@@ -17,6 +17,7 @@ use Plugins\Khanza\Src\Laboratorium;
 use Plugins\Khanza\Src\Radiologi;
 use Plugins\Khanza\Src\Apotek;
 use Plugins\Khanza\Src\SukuBangsa;
+use Plugins\Khanza\Src\FrekuensiPenyakitRalan;
 
 class Admin extends AdminModule
 {
@@ -35,6 +36,7 @@ class Admin extends AdminModule
   protected $radiologi;
   protected $apotek;
   protected $sukubangsa;
+  protected $frekuensipenyakitralan;
 
     public function init()
     {
@@ -52,6 +54,7 @@ class Admin extends AdminModule
       $this->radiologi = new Radiologi();
       $this->apotek = new Apotek();
       $this->sukubangsa = new SukuBangsa();
+      $this->frekuensipenyakitralan = new FrekuensiPenyakitRalan();
     }
     
     protected function db($table = NULL)
@@ -117,6 +120,14 @@ class Admin extends AdminModule
         $nomor = substr($text, 8, 6);
         $result = $tahun.'/'.$bulan.'/'.$tanggal.'/'.$nomor;
         return $result;
+    }
+
+    public function setNoRM()
+    {
+        $last_no_rm = $this->db('set_no_rkm_medis')->oneArray();
+        $last_no_rm = substr($last_no_rm['no_rkm_medis'], 0, 6);
+        $next_no_rm = sprintf('%06s', ($last_no_rm + 1));
+        return $next_no_rm;
     }
 
     public function setNoNotaRalan()
@@ -237,6 +248,10 @@ class Admin extends AdminModule
 
         case 'hapus':
           $this->pasien->Hapus();
+        break;
+
+        case "get_no_rkm_medis":  
+          echo $this->setNoRM();
         break;
 
       }
@@ -565,5 +580,20 @@ class Admin extends AdminModule
       }
       exit();
     }    
+
+    public function anyFrekuensiPenyakitRalan()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_frekuensi.penyakit.ralan.html');
+        break;
+        case "data":  
+          $this->frekuensipenyakitralan->Data();
+        break;    
+      }
+      exit();
+    }
 
 }
