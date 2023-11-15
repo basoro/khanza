@@ -48,7 +48,6 @@
 
     $('#dg_FrekuensiPenyakitRalan').datagrid({
       url:url,
-      singleSelect:true,
       pagination:false,
       remoteFilter:false,
       remoteSort:false,
@@ -56,7 +55,6 @@
       fitColumns:false,
       fit:true,
       columns:[[
-        { field:'ck',checkbox:true},
         { field:'kd_penyakit',title:'Kode',width:'100',sortable:true},
         { field:'penyakit',title:'Nama Penyakit',width:'300',sortable:true}, 
         { field:'diagnosa',title:'Diagnosa Lain',width:'100',sortable:true}, 
@@ -65,13 +63,7 @@
         { field:'a',title:'L (Mati)',width:'100',sortable:true}, 
         { field:'b',title:'P (Mati)',width:'100',sortable:true}, 
         { field:'i',title:'Jumlah',width:'100',sortable:true}
-      ]],
-      onClickRow: function(){
-        var row = $('#dg_FrekuensiPenyakitRalan').datagrid('getSelected');
-        $('#cari_kd_poli_FrekuensiPenyakitRalan').textbox('setValue',row.kode);
-        $('#cari_nm_poli_FrekuensiPenyakitRalan').textbox('setValue',row.nama);
-        $('#status_FrekuensiPenyakitRalan').combobox('setValue',row.status);
-	  }
+      ]]
     });
 
     function cari_FrekuensiPenyakitRalan(){
@@ -107,6 +99,17 @@
 			closed: false,
 			cache: false,
 			href: '{?=url([ADMIN,'khanza','dokter'])?}',
+			modal: true
+		});
+    }
+
+    function cari_Penjab_FrekuensiPenyakitRalan(){
+        $('#wu-tabs').tabs('close','Penjab');
+		$('#dlg_window').dialog({
+			title: 'Cari Penjab',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','penjab'])?}',
 			modal: true
 		});
     }

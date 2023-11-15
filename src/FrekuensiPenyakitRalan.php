@@ -49,9 +49,11 @@ class FrekuensiPenyakitRalan
         $rows->execute([$tgl_awal, $tgl_akhir, '%'.$poliklinik.'%', '%'.$dokter.'%', '%'.$penjab.'%', '%'.$nm_kab.'%', '%'.$nm_kec.'%', '%'.$nm_kel.'%', '%'.$keyword.'%', '%'.$keyword.'%']);
         $rows = $rows->fetchAll(\PDO::FETCH_ASSOC);
 
+        $this->db('temporary_surveilens_penyakit')->delete();
+        $diagnosa = '';
         $items = array();
         foreach ($rows as $row) {
-            $query2 = "select count(diagnosa_pasien.no_rawat) as jumlah from penyakit inner join diagnosa_pasien inner join reg_periksa ";
+            $query2 = "select diagnosa_pasien.no_rawat as jumlah from penyakit inner join diagnosa_pasien inner join reg_periksa ";
             $query2 .= "inner join dokter inner join pasien inner join poliklinik inner join penjab inner join kabupaten inner join kecamatan inner join kelurahan ";
             $query2 .= "on penyakit.kd_penyakit=diagnosa_pasien.kd_penyakit and reg_periksa.no_rawat=diagnosa_pasien.no_rawat and reg_periksa.kd_dokter=dokter.kd_dokter ";
             $query2 .= "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and reg_periksa.kd_pj=penjab.kd_pj and reg_periksa.kd_poli=poliklinik.kd_poli and ";
@@ -61,6 +63,26 @@ class FrekuensiPenyakitRalan
             $rows2->execute([$tgl_awal, $tgl_akhir, '%'.$poliklinik.'%', '%'.$dokter.'%', '%'.$penjab.'%', '%'.$nm_kab.'%', '%'.$nm_kec.'%', '%'.$nm_kel.'%', $row['kd_penyakit']]);
             $rows2 = $rows2->fetchAll();
 
+            foreach ($rows2 as $row2){
+                $diagnosa_pasien = $this->db('diagnosa_pasien')->select('kd_penyakit')->where('prioritas', '<>', '1')->where('status', 'Ralan')->where('no_rawat', $row2['jumlah'])->toArray();
+                foreach ($diagnosa_pasien as $row_diagnosa_pasien) {
+                    $this->db('temporary_surveilens_penyakit')->save([
+                        'kd_penyakit' => $row['kd_penyakit'], 
+                        'kd_penyakit2' => $row_diagnosa_pasien['kd_penyakit']
+                    ]);
+                }
+            }
+
+            if(count($rows2) > 0) {
+                $temporary_surveilens_penyakit = $this->db('temporary_surveilens_penyakit')->select('kd_penyakit2')->where('kd_penyakit', $row['kd_penyakit'])->group('kd_penyakit2')->toArray();
+                foreach ($temporary_surveilens_penyakit as $row_temporary_surveilens_penyakit) {
+                    if($diagnosa == '') {
+                        $diagnosa = $row_temporary_surveilens_penyakit['kd_penyakit2'];
+                    } else {
+                        $diagnosa = $diagnosa.', '.$row_temporary_surveilens_penyakit['kd_penyakit2'];
+                    }
+                }
+            }
 
             $query3 = "select diagnosa_pasien.no_rawat as jumlah from penyakit inner join diagnosa_pasien inner join reg_periksa inner join pasien_mati ";
             $query3 .= "inner join dokter inner join pasien inner join poliklinik inner join penjab inner join kabupaten inner join kecamatan inner join kelurahan ";
@@ -113,7 +135,7 @@ class FrekuensiPenyakitRalan
             $rows6 = $rows6->fetchAll();
 
 
-            $row['diagnosa'] = '';
+            $row['diagnosa'] = $diagnosa;
             $row['a'] = count($rows3);
             $row['c'] = count($rows4)-$row['a'];
             $row['b'] = count($rows5);
