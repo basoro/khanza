@@ -27,7 +27,7 @@ class FrekuensiPenyakitRalan
         $nm_kec = isset($_POST['cari_nm_kec']) ? $_POST['cari_nm_kec'] : '';
         $nm_kel = isset($_POST['cari_nm_kel']) ? $_POST['cari_nm_kel'] : '';
 
-        $tgl_awal = isset($_POST['cari_tgl_registrasi_start']) ? $_POST['cari_tgl_registrasi_start'] : '2023-10-15';
+        $tgl_awal = isset($_POST['cari_tgl_registrasi_start']) ? $_POST['cari_tgl_registrasi_start'] : date('Y-m-d');
         $tgl_akhir = isset($_POST['cari_tgl_registrasi_end']) ? $_POST['cari_tgl_registrasi_end'] : date('Y-m-d');
   
         $result = array();
