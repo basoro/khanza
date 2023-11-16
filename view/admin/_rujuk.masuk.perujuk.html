@@ -36,11 +36,12 @@
       onClickRow: function(){
         var row = $('#dg_RujukMasukPerujuk').datagrid('getSelected');
         $('#asal_rujukan_RegPeriksa').textbox('setValue',row.perujuk);
+        $('#dlg_window').dialog('close', 'Cari Perujuk')
 	  }
     });
 
     function keluar_RujukMasukPerujuk(){
-        $('#wu-tabs').tabs('close','Rujuk Masuk Perujuk');
+        $('#dlg_window').dialog('close', 'Cari Perujuk')
     }
 
 </script>
