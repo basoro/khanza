@@ -1,0 +1,90 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table>
+			<tr>
+				<td width="100"><span style="float:right;">Kode/Nama</span></td>
+				<td colspan="3">: <input name="kode_RujukMasuk" id="kode_RujukMasuk" class="easyui-textbox" style="width:80px;"></input> <input name="nama_RujukMasuk" id="nama_RujukMasuk" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Status</span></td>
+				<td>: 
+                    <select class="easyui-combobox" name="status_RujukMasuk" id="status_RujukMasuk" style="width:180px;">
+                        <option value="0">Aktif</option>
+                        <option value="1">Tidak Aktif</option>
+                    </select>
+                </td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_RujukMasuk" class="easyui-datagrid" footer="#toolbar_RujukMasuk">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_RujukMasuk" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_RujukMasuk()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_RujukMasuk()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_RujukMasuk()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_RujukMasuk()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_RujukMasuk()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_RujukMasuk()">Cetak</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_RujukMasuk()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/blank/?act=data&t={?=$_SESSION['token']?}';
+
+    $('#dg_RujukMasuk').datagrid({
+      url:url,
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kode',title:'Kode',width:'100',sortable:true},
+        { field:'nama',title:'Nama',width:'300',sortable:true}, 
+        { field:'status',title:'Status',width:'100',sortable:true}
+      ]],
+      onClickRow: function(){
+        var row = $('#dg_RujukMasuk').datagrid('getSelected');
+        $('#kode_RujukMasuk').textbox('setValue',row.kode);
+        $('#nama_RujukMasuk').textbox('setValue',row.nama);
+        $('#status_RujukMasuk').combobox('setValue',row.status);
+	  }
+    });
+
+    function baru_RujukMasuk(){
+        alert('Form Baru');
+    }
+
+    function simpan_RujukMasuk(){
+        alert('Form Simpan');
+    }
+
+    function ubah_RujukMasuk(){
+        alert('Form Ubah');
+    }
+
+    function hapus_RujukMasuk(){
+        alert('Form Hapus');
+    }
+
+    function cetak_RujukMasuk(){
+        alert('Form Cetak');
+    }
+
+    function keluar_RujukMasuk(){
+        $('#wu-tabs').tabs('close','Rujuk Masuk');
+    }
+
+</script>

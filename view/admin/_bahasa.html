@@ -1,0 +1,81 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table id="fm_Bahasa">
+			<tr>
+				<td width="100"><span style="float:right;">Kode/Nama</span></td>
+				<td colspan="3">: <input name="id" id="id_Bahasa" class="easyui-textbox" style="width:80px;"></input> <input name="nama_bahasa" id="nama_bahasa_Bahasa" class="easyui-textbox" style="width:245px;"></td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_Bahasa" class="easyui-datagrid" footer="#toolbar_Bahasa">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_Bahasa" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Bahasa()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Bahasa()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Bahasa()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Bahasa()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Bahasa()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_Bahasa()">Cetak</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Bahasa()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/bahasa/?act=data&t={?=$_SESSION['token']?}';
+
+    $('#dg_Bahasa').datagrid({
+      url:url,
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'id',title:'ID',width:'100',sortable:true},
+        { field:'nama_bahasa',title:'Nama Bahasa',width:'300',sortable:true}
+      ]],
+      onClickRow: function(){
+        var row = $('#dg_Bahasa').datagrid('getSelected');
+        $('#id_Bahasa').textbox('setValue',row.id);
+        $('#nama_bahasa_Bahasa').textbox('setValue',row.nama_bahasa);
+	  }
+    });
+
+    function baru_Bahasa(){
+        $('#fm_Bahasa').form('clear');
+    }
+
+    function simpan_Bahasa(){
+        alert('Form Simpan');
+    }
+
+    function ubah_Bahasa(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Bahasa(){
+        alert('Form Hapus');
+    }
+
+    function cetak_Bahasa(){
+        alert('Form Cetak');
+    }
+
+    function keluar_Bahasa(){
+        $('#wu-tabs').tabs('close','Bahasa');
+    }
+
+</script>

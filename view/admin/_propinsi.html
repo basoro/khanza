@@ -1,0 +1,90 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+		<table>
+			<tr>
+				<td width="100"><span style="float:right;">Kode/Nama</span></td>
+				<td colspan="3">: <input name="kode_Propinsi" id="kode_Propinsi" class="easyui-textbox" style="width:80px;"></input> <input name="nama_Propinsi" id="nama_Propinsi" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
+				<td width="100"><span style="float:right;">Status</span></td>
+				<td>: 
+                    <select class="easyui-combobox" name="status_Propinsi" id="status_Propinsi" style="width:180px;">
+                        <option value="0">Aktif</option>
+                        <option value="1">Tidak Aktif</option>
+                    </select>
+                </td>
+			</tr>
+		</table>
+    </div>
+    <div data-options="region:'center'" border="thin">
+        <table id="dg_Propinsi" class="easyui-datagrid" footer="#toolbar_Propinsi">
+        </table>
+    </div>
+</div>
+
+<div id="toolbar_Propinsi" style="padding:8px 0;">
+    <div style="float: left; color: #000;padding: 0 40px 0 10px;">
+        <label>Keyword</label>
+        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Propinsi()"></a>
+    </div>
+    <div style="float: left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Propinsi()">Baru</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Propinsi()">Simpan</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Propinsi()">Ubah</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Propinsi()">Hapus</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_Propinsi()">Cetak</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Propinsi()" style="margin:0 15px;">Keluar</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/blank/?act=data&t={?=$_SESSION['token']?}';
+
+    $('#dg_Propinsi').datagrid({
+      url:url,
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kode',title:'Kode',width:'100',sortable:true},
+        { field:'nama',title:'Nama',width:'300',sortable:true}, 
+        { field:'status',title:'Status',width:'100',sortable:true}
+      ]],
+      onClickRow: function(){
+        var row = $('#dg_Propinsi').datagrid('getSelected');
+        $('#kode_Propinsi').textbox('setValue',row.kode);
+        $('#nama_Propinsi').textbox('setValue',row.nama);
+        $('#status_Propinsi').combobox('setValue',row.status);
+	  }
+    });
+
+    function baru_Propinsi(){
+        alert('Form Baru');
+    }
+
+    function simpan_Propinsi(){
+        alert('Form Simpan');
+    }
+
+    function ubah_Propinsi(){
+        alert('Form Ubah');
+    }
+
+    function hapus_Propinsi(){
+        alert('Form Hapus');
+    }
+
+    function cetak_Propinsi(){
+        alert('Form Cetak');
+    }
+
+    function keluar_Propinsi(){
+        $('#wu-tabs').tabs('close','Propinsi');
+    }
+
+</script>

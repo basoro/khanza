@@ -1,6 +1,27 @@
 .icon-mlite{
 	background:url('../../img/admin/mlite_icon.png') no-repeat center center;
 }
+.icon-apotek{
+	background:url('../../img/admin/apotek.png') no-repeat center center;
+}
+.icon-igd{
+	background:url('../../img/admin/igd.png') no-repeat center center;
+}
+.icon-laboratorium{
+	background:url('../../img/admin/laboratorium.png') no-repeat center center;
+}
+.icon-radiologi{
+	background:url('../../img/admin/radiologi.png') no-repeat center center;
+}
+.icon-ralan{
+	background:url('../../img/admin/ralan.png') no-repeat center center;
+}
+.icon-ranap{
+	background:url('../../img/admin/ranap.png') no-repeat center center;
+}
+.icon-registrasi{
+	background:url('../../img/admin/registrasi.png') no-repeat center center;
+}
 .icon-blank{
 	background:url('../../img/admin/blank.gif') no-repeat center center;
 }

@@ -90,6 +90,18 @@ class RegPeriksa
             'no_rkm_medis' => $_POST['no_rkm_medis'], 
             'no_rawat' => $_POST['no_rawat']
           ));
+          $this->db('rujuk_masuk')->save([
+            'no_rawat' => $_POST['no_rawat'], 
+            'perujuk' => $_POST['asal_rujukan'], 
+            'alamat' => '-', 
+            'no_rujuk' => '-', 
+            'jm_perujuk' => '0', 
+            'dokter_perujuk' => $_POST['asal_rujukan'], 
+            'kd_penyakit' => '-', 
+            'kategori_rujuk' => '-', 
+            'keterangan' => '-', 
+            'no_balasan' => '-'
+          ]);
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
         }        

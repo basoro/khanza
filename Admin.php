@@ -18,6 +18,14 @@ use Plugins\Khanza\Src\Radiologi;
 use Plugins\Khanza\Src\Apotek;
 use Plugins\Khanza\Src\SukuBangsa;
 use Plugins\Khanza\Src\FrekuensiPenyakitRalan;
+use Plugins\Khanza\Src\Bahasa;
+use Plugins\Khanza\Src\CacatFisik;
+use Plugins\Khanza\Src\PerusahaanPasien;
+use Plugins\Khanza\Src\Propinsi;
+use Plugins\Khanza\Src\Kabupaten;
+use Plugins\Khanza\Src\Kecamatan;
+use Plugins\Khanza\Src\Kelurahan;
+use Plugins\Khanza\Src\RujukMasuk;
 
 class Admin extends AdminModule
 {
@@ -37,6 +45,14 @@ class Admin extends AdminModule
   protected $apotek;
   protected $sukubangsa;
   protected $frekuensipenyakitralan;
+  protected $bahasa;
+  protected $cacatfisik;
+  protected $perusahaanpasien;
+  protected $propinsi;
+  protected $kabupaten;
+  protected $kecamatan;
+  protected $kelurahan;
+  protected $rujukmasuk;
 
     public function init()
     {
@@ -55,6 +71,14 @@ class Admin extends AdminModule
       $this->apotek = new Apotek();
       $this->sukubangsa = new SukuBangsa();
       $this->frekuensipenyakitralan = new FrekuensiPenyakitRalan();
+      $this->bahasa = new Bahasa();
+      $this->cacatfisik = new CacatFisik();
+      $this->perusahaanpasien = new PerusahaanPasien();
+      $this->propinsi = new Propinsi();
+      $this->kabupaten = new Kabupaten();
+      $this->kecamatan = new Kecamatan();
+      $this->kelurahan = new Kelurahan();
+      $this->rujukmasuk = new RujukMasuk();
     }
     
     protected function db($table = NULL)
@@ -593,6 +617,136 @@ class Admin extends AdminModule
           $this->frekuensipenyakitralan->Data();
         break;    
       }
+      exit();
+    }
+
+    public function anyPropinsi()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_propinsi.html');
+        break;
+        case "data":  
+          $this->propinsi->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyKabupaten()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_kabupaten.html');
+        break;
+        case "data":  
+          $this->kabupaten->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyKecamatan()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_kecamatan.html');
+        break;
+        case "data":  
+          $this->kecamatan->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyKelurahan()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_kelurahan.html');
+        break;
+        case "data":  
+          $this->kelurahan->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyBahasa()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_bahasa.html');
+        break;
+        case "data":  
+          $this->bahasa->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyCacatFisik()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_cacat.fisik.html');
+        break;
+        case "data":  
+          $this->cacatfisik->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyPerusahaanPasien()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_perusahaan.pasien.html');
+        break;
+        case "data":  
+          $this->perusahaanpasien->Data();
+        break;    
+      }
+      exit();
+    }
+
+    public function anyRujukMasuk()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+          echo $this->draw('_rujuk.masuk.html');
+        break;
+        case "data":  
+          $this->rujukmasuk->Data();
+        break;    
+        case "caridata":  
+          $this->rujukmasuk->CariPerujuk();
+        break;    
+      }
+      exit();
+    }
+
+    public function getRujukMasukPerujuk()
+    {
+      $this->_getSession();
+      echo $this->draw('_rujuk.masuk.perujuk.html');
       exit();
     }
 

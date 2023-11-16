@@ -1,11 +1,31 @@
 <div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
     <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
-        <table id="dlg_Penjab">
-            <tr>
-                <td>Kode Penjab</td>
-                <td>: <input name="kd_pj" id="kd_pj_Penjab" class="easyui-textbox" style="width:300px;"></input></td>
-            </tr>
-        </table>
+		<table>
+			<tr>
+				<td width="110"><span style="float:right;">Kode</span></td>
+				<td>: 
+                    <input name="kd_pj" id="kd_pj_Penjab" class="easyui-textbox" style="width:80px;" />
+                    Asuransi : 
+                    <input name="png_jawab" id="png_jawab_Penjab" class="easyui-textbox" style="width:300px;" />
+                    Telp : 
+                    <input name="no_telp" id="no_telp_Penjab" class="easyui-textbox" style="width:100px;" />
+                </td>
+			</tr>
+			<tr>
+				<td width="110"><span style="float:right;">Nama Asuransi</span></td>
+				<td>: 
+                    <input name="nama_perusahaan" id="nama_perusahaan_Penjab" class="easyui-textbox" style="width:360px;" />
+                    Attn : 
+                    <input name="attn" id="attn_Penjab" class="easyui-textbox" style="width:200px;" />
+                </td>
+			</tr>
+			<tr>
+				<td width="110"><span style="float:right;">Alamat</span></td>
+				<td>: 
+                    <input name="alamat_asuransi" id="alamat_asuransi_Penjab" class="easyui-textbox" style="width:610px;" />
+                </td>
+			</tr>
+		</table>
     </div>
     <div data-options="region:'center'" border="thin">
         <table id="dg_Penjab" class="easyui-datagrid" footer="#toolbar_Penjab">
@@ -45,12 +65,24 @@
       columns:[[
         { field:'ck',checkbox:true},
         { field:'kd_pj',title:'Kode Penjab',sortable:true},
-        { field:'png_jawab',title:'Nama Penjab',sortable:true}
+        { field:'png_jawab',title:'Nama Penjab',sortable:true},
+        { field:'nama_perusahaan',title:'Nama Perusahaan',sortable:true},
+        { field:'alamat_asuransi',title:'Alamat Asuransi',sortable:true},
+        { field:'no_telp',title:'Nomor Telepon',sortable:true},
+        { field:'attn',title:'Attn',sortable:true},
+        { field:'status',title:'Status',sortable:true}
       ]],
       onClickRow: function(){
         var row = $('#dg_Penjab').datagrid('getSelected');
         $('#kd_pj_Penjab').textbox('setValue',row.kd_pj);
         $('#png_jawab_Penjab').textbox('setValue',row.png_jawab);
+        $('#no_telp_Penjab').textbox('setValue',row.no_telp);
+        $('#attn_Penjab').textbox('setValue',row.attn);
+        $('#nama_perusahaan_Penjab').textbox('setValue',row.nama_perusahaan);
+        $('#alamat_asuransi_Penjab').textbox('setValue',row.alamat_asuransi);
+	  },
+      onDblClickRow: function(){
+        var row = $('#dg_Penjab').datagrid('getSelected');
         $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
         $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
         $('#cari_kd_pj_FrekuensiPenyakitRalan').textbox('setValue',row.kd_pj);
@@ -61,7 +93,7 @@
                 $('#dlg_window').dialog('close', 'Penjab')
             }
         }
-	  },
+      }
     });
 
     function baru_Penjab(){

@@ -26,7 +26,7 @@
 				<td width="110"><span style="float:right;">Unit/Poli</span></td>
 				<td colspan="3">: <input name="kd_poli" id="kd_poli_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <input name="nm_poli_RegPeriksa" id="nm_poli_RegPeriksa" class="easyui-textbox" style="width:241px;"></input> <input name="registrasi_RegPeriksa" id="registrasi_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Poliklinik_RegPeriksa()"></a></td>
 				<td width="140"><span style="float:right;">Asal Rujukan</span></td>
-				<td>: <input name="asal_rujukan" id="asal_rujukan_RegPeriksa" class="easyui-textbox" style="width:344px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick=""></a> </td>
+				<td>: <input name="asal_rujukan" id="asal_rujukan_RegPeriksa" class="easyui-textbox" style="width:344px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_RujukMasuk_RegPeriksa()"></a> </td>
 			</tr>
 		</table>
 		</form>
@@ -163,11 +163,11 @@
                       var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
                       audio.play();
                   } else {
+					  $('#dg_RegPeriksa').datagrid('reload');    // reload the user data
                       $.messager.show({
                           title: 'Sukses',
                           msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah disimpan dengan nomor rawat ' + result.no_rawat
                       });
-                      $('#dg_RegPeriksa').datagrid('reload');    // reload the user data
                   }
               }
           });
@@ -213,7 +213,7 @@
 	}
 
 	function cari_Pasien_RegPeriksa() {
-        $('#wu-tabs').tabs('close','Data Pasien');
+        $('#wu-tabs').tabs('close','Pasien');
 		$('#dlg_window').dialog({
 			title: 'Cari Pasien',
 			closed: false,
@@ -253,6 +253,17 @@
 			closed: false,
 			cache: false,
 			href: '{?=url([ADMIN,'khanza','penjab'])?}',
+			modal: true
+		});
+	}
+
+	function cari_RujukMasuk_RegPeriksa()
+	{
+		$('#dlg_window').dialog({
+			title: 'Cari Perujuk',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','rujukmasukperujuk'])?}',
 			modal: true
 		});
 	}
