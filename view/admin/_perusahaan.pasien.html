@@ -3,14 +3,15 @@
 		<table>
 			<tr>
 				<td width="100"><span style="float:right;">Kode/Nama</span></td>
-				<td colspan="3">: <input name="kode_PerusahaanPasien" id="kode_PerusahaanPasien" class="easyui-textbox" style="width:80px;"></input> <input name="nama_PerusahaanPasien" id="nama_PerusahaanPasien" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
-				<td width="100"><span style="float:right;">Status</span></td>
-				<td>: 
-                    <select class="easyui-combobox" name="status_PerusahaanPasien" id="status_PerusahaanPasien" style="width:180px;">
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
-                    </select>
-                </td>
+				<td>: <input name="kode_PerusahaanPasien" id="kode_PerusahaanPasien" class="easyui-textbox" style="width:80px;"></input> Nama : <input name="nama_PerusahaanPasien" id="nama_PerusahaanPasien" class="easyui-textbox" style="width:258px;"></td>
+				<td width="100"><span style="float:right;">Kota</span></td>
+				<td>: <input name="kota_PerusahaanPasien" id="kota_PerusahaanPasien" class="easyui-textbox" style="width:80px;"></input></td>
+			</tr>
+			<tr>
+				<td width="100"><span style="float:right;">Alamat</span></td>
+				<td>: <input name="alamat_PerusahaanPasien" id="alamat_PerusahaanPasien" class="easyui-textbox" style="width:400px;"></input></td>
+				<td width="100"><span style="float:right;">Telepon</span></td>
+				<td>: <input name="no_telp_PerusahaanPasien" id="no_telp_PerusahaanPasien" class="easyui-textbox" style="width:80px;"></input></td>
 			</tr>
 		</table>
     </div>
@@ -37,7 +38,7 @@
 </div>
 
 <script type="text/javascript">
-    var url = '{?=url()?}/{?=ADMIN?}/khanza/blank/?act=data&t={?=$_SESSION['token']?}';
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/perusahaanpasien/?act=data&t={?=$_SESSION['token']?}';
 
     $('#dg_PerusahaanPasien').datagrid({
       url:url,
@@ -51,15 +52,30 @@
       fit:true,
       columns:[[
         { field:'ck',checkbox:true},
-        { field:'kode',title:'Kode',width:'100',sortable:true},
-        { field:'nama',title:'Nama',width:'300',sortable:true}, 
-        { field:'status',title:'Status',width:'100',sortable:true}
+        { field:'kode_perusahaan',title:'Kode',width:'100',sortable:true},
+        { field:'nama_perusahaan',title:'Nama Perusahaan',width:'300',sortable:true}, 
+        { field:'alamat',title:'Alamat',width:'300',sortable:true}, 
+        { field:'kota',title:'Kota',width:'100',sortable:true}, 
+        { field:'no_telp',title:'No. Telepon',width:'100',sortable:true}
       ]],
       onClickRow: function(){
         var row = $('#dg_PerusahaanPasien').datagrid('getSelected');
-        $('#kode_PerusahaanPasien').textbox('setValue',row.kode);
-        $('#nama_PerusahaanPasien').textbox('setValue',row.nama);
-        $('#status_PerusahaanPasien').combobox('setValue',row.status);
+        $('#kode_PerusahaanPasien_Pasien').textbox('setValue',row.kode_perusahaan);
+        $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
+        $('#alamat_PerusahaanPasien_Pasien').textbox('setValue',row.alamat);
+        $('#kota_PerusahaanPasien_Pasien').textbox('setValue',row.kota);
+        $('#no_telp_PerusahaanPasien_Pasien').textbox('setValue',row.no_telp);
+	  },
+      onDblClickRow: function(){
+        var row = $('#dg_PerusahaanPasien').datagrid('getSelected');
+        var dlg = $("#dlg_window").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            if(dlg.options.title == 'Cari Perusahaan Pasien') {
+                $('#dlg_window').dialog('close', 'Perusahaan Pasien')
+                $('#kode_PerusahaanPasien_Pasien').val(row.kode_perusahaan);
+                $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
+            }
+        }
 	  }
     });
 

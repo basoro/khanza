@@ -120,6 +120,8 @@ class Pasien
           echo json_encode(array(
             'no_rkm_medis' => $_POST['no_rkm_medis']
           ));
+          $this->db('set_no_rkm_medis')->delete();
+          $this->db('set_no_rkm_medis')->save(['no_rkm_medis' => $_POST['no_rkm_medis']]);
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
         }        

@@ -3,14 +3,7 @@
 		<table>
 			<tr>
 				<td width="100"><span style="float:right;">Kode/Nama</span></td>
-				<td colspan="3">: <input name="kode_Propinsi" id="kode_Propinsi" class="easyui-textbox" style="width:80px;"></input> <input name="nama_Propinsi" id="nama_Propinsi" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
-				<td width="100"><span style="float:right;">Status</span></td>
-				<td>: 
-                    <select class="easyui-combobox" name="status_Propinsi" id="status_Propinsi" style="width:180px;">
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
-                    </select>
-                </td>
+				<td>: <input name="kode_Propinsi" id="kode_Propinsi" class="easyui-textbox" style="width:80px;"></input> <input name="nama_Propinsi" id="nama_Propinsi" class="easyui-textbox" style="width:245px;"></td>
 			</tr>
 		</table>
     </div>
@@ -37,7 +30,7 @@
 </div>
 
 <script type="text/javascript">
-    var url = '{?=url()?}/{?=ADMIN?}/khanza/blank/?act=data&t={?=$_SESSION['token']?}';
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/propinsi/?act=data&t={?=$_SESSION['token']?}';
 
     $('#dg_Propinsi').datagrid({
       url:url,
@@ -51,17 +44,36 @@
       fit:true,
       columns:[[
         { field:'ck',checkbox:true},
-        { field:'kode',title:'Kode',width:'100',sortable:true},
-        { field:'nama',title:'Nama',width:'300',sortable:true}, 
-        { field:'status',title:'Status',width:'100',sortable:true}
+        { field:'kd_prop',title:'Kode',width:'100',sortable:true},
+        { field:'nm_prop',title:'Nama',width:'300',sortable:true}
       ]],
       onClickRow: function(){
         var row = $('#dg_Propinsi').datagrid('getSelected');
-        $('#kode_Propinsi').textbox('setValue',row.kode);
-        $('#nama_Propinsi').textbox('setValue',row.nama);
-        $('#status_Propinsi').combobox('setValue',row.status);
+        $('#kode_Propinsi').textbox('setValue',row.kd_prop);
+        $('#nama_Propinsi').textbox('setValue',row.nm_prop);
+	  },
+      onDblClickRow: function(){
+        var row = $('#dg_Propinsi').datagrid('getSelected');
+        var dlg = $("#dlg_window").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            if(dlg.options.title == 'Cari Propinsi') {
+                $('#dlg_window').dialog('close', 'Propinsi');
+                $('#kd_prop_Pasien').val(row.kd_prop);
+                $('#nm_prop_Pasien').textbox('setValue',row.nm_prop);
+            }
+            if(dlg.options.title == 'Cari Propinsi PJ') {
+                $('#dlg_window').dialog('close', 'Propinsi');
+                $('#propinsipj_Pasien').textbox('setValue',row.nm_prop);
+            }
+        }
 	  }
     });
+
+	function cari_Propinsi(){
+		$('#dg_Propinsi').datagrid('load',{
+            cari_keyword: $('#cari_keyword_Propinsi').val()
+		});
+	}
 
     function baru_Propinsi(){
         alert('Form Baru');

@@ -52,7 +52,7 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Tmp/Tgl. Lahir</span></td>
-                                      <td>: <input name="tmp_lahir" class="easyui-textbox" style="width:220px;"></input> <input name="tgl_lahir" class="easyui-datebox" style="width:136px;"></input></td>
+                                      <td>: <input name="tmp_lahir" class="easyui-textbox" style="width:220px;"></input> <input name="tgl_lahir" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:136px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Pendidikan</span></td>
@@ -90,15 +90,15 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Suku Bangsa</span></td>
-                                      <td>: <input name="suku_bangsa" id="suku_bangsa" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="sukuBangsa()"></a></td>
+                                      <td>: <input type="hidden" name="suku_bangsa" id="id_suku_bangsa_Pasien"></input><input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_SukuBangsa_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Bahasa Dipakai</span></td>
-                                      <td>: <input name="bahasa_pasien" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>: <input type="hidden" name="bahasa_pasien" id="id_bahasa_Pasien"></input><input id="nama_bahasa_pasien_Pasien" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Bahasa_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Cacat Fisik</span></td>
-                                      <td>: <input name="cacat_fisik" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>: <input type="hidden" name="cacat_fisik" id="id_cacat_fisik_Pasien"></input><input id="nama_cacat_fisik_Pasien" class="easyui-textbox" style="width:324px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_CacatFisik_Pasien()"></a></td>
                                   </tr>
                               </table>
                             </td>
@@ -120,7 +120,7 @@
                                 </tr>
                                   <tr>
                                       <td><span style="float:right;">Asuransi</span></td>
-                                      <td>: <input name="kd_pj" class="easyui-textbox" style="width:100px;"></input> <input name="png_jawab" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>: <input name="kd_pj" id="kd_pj_Pasien" class="easyui-textbox" style="width:100px;"></input> <input name="png_jawab" id="png_jawab_Pasien" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Penjab_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nomor Peserta</span></td>
@@ -128,7 +128,7 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">No. Telp</span></td>
-                                      <td>: <input name="no_tlp" class="easyui-textbox" style="width:150px;"></input> Tgl Daftar : <input name="tgl_daftar" class="easyui-datebox" style="width:120px;"></input></td>
+                                      <td>: <input name="no_tlp" class="easyui-textbox" style="width:150px;"></input> Tgl Daftar : <input name="tgl_daftar" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Pekerjaan</span></td>
@@ -140,11 +140,11 @@
                                   </tr>
                                   <tr>
                                       <td></td>
-                                      <td>&nbsp;&nbsp;<input name="kd_kel" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a> <input name="kd_kec" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>&nbsp;&nbsp;<input type="hidden" name="kd_kel" id="kd_kel_Pasien"></input><input name="nm_kel" id="nm_kel_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Kelurahan_Pasien()"></a> <input type="hidden" name="kd_kec" id="kd_kec_Pasien"></input><input name="nm_kec" id="nm_kec_Pasien" class="easyui-textbox" style="width:143px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Kecamatan_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td></td>
-                                      <td>&nbsp;&nbsp;<input name="kd_kab" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a> <input name="kd_prop" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>&nbsp;&nbsp;<input type="hidden" name="kd_kab" id="kd_kab_Pasien"></input><input name="nm_kab_Pasien" id="nm_kab_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Kabupaten_Pasien()"></a> <input type="hidden" name="kd_prop" id="kd_prop_Pasien"></input><input name="nm_prop" id="nm_prop_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_Propinsi_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Alamat PJ</span></td>
@@ -152,15 +152,15 @@
                                   </tr>
                                   <tr>
                                       <td></td>
-                                      <td>&nbsp;&nbsp;<input name="kelurahanpj" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a> <input name="kecamatanpj" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>&nbsp;&nbsp;<input name="kelurahanpj" id="kelurahanpj_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_KelurahanPJ_Pasien()"></a> <input name="kecamatanpj" id="kecamatanpj_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_KecamatanPJ_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td></td>
-                                      <td>&nbsp;&nbsp;<input name="kabupatenpj" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a> <input name="propinsipj" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a></td>
+                                      <td>&nbsp;&nbsp;<input name="kabupatenpj" id="kabupatenpj_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_KabupatenPJ_Pasien()"></a> <input name="propinsipj" id="propinsipj_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_PropinsiPJ_Pasien()"></a></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Instansi Pasien</span></td>
-                                      <td>: <input name="perusahaan_pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a> NIP/NRP : <input name="nip" class="easyui-textbox" style="width:100px;"></input></td>
+                                      <td>: <input type="hidden" name="perusahaan_pasien" id="kode_PerusahaanPasien_Pasien"></input><input id="nama_PerusahaanPasien_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_PerusahaanPasien_Pasien()"></a> NIP/NRP : <input name="nip" class="easyui-textbox" style="width:100px;"></input></td>
                                   </tr>
                               </table>
                             </td>
@@ -266,8 +266,186 @@
     }
 
     function simpan_Pasien(){
-        alert('Form Simpan');
+        $('#fm').form('submit',{
+            url: '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=simpan&t={?=$_SESSION['token']?}',
+            iframe: false,
+            onSubmit: function(){
+                return $(this).form('validate');
+            },
+            success: function(result){
+                var result = eval('('+result+')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                    var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                    audio.play();
+                } else {
+                    $.messager.show({
+                        title: 'Sukses',
+                        msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah disimpan!'
+                    });
+                    $('#dg_Pasien').datagrid('reload');    // reload the user data
+                }
+            }
+        });
     }
+
+    function cari_SukuBangsa_Pasien(){
+        $('#wu-tabs').tabs('close','Suku Bangsa');
+		$('#dlg_window').dialog({
+			title: 'Cari Suku Bangsa',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','sukubangsa'])?}',
+			modal: true
+		});
+    }
+
+	function cari_Bahasa_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Bahasa');
+		$('#dlg_window').dialog({
+			title: 'Cari Bahasa',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','bahasa'])?}',
+			modal: true
+		});
+	}
+
+	function cari_CacatFisik_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Cacat Fisik');
+		$('#dlg_window').dialog({
+			title: 'Cari Cacat Fisik',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','cacatfisik'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Kelurahan_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kelurahan');
+		$('#dlg_window').dialog({
+			title: 'Cari Kelurahan',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kelurahan'])?}',
+			modal: true
+		});
+	}
+
+	function cari_KelurahanPJ_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kelurahan');
+		$('#dlg_window').dialog({
+			title: 'Cari Kelurahan PJ',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kelurahan'])?}',
+			modal: true
+		});
+	}    
+
+	function cari_Kecamatan_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kecamatan');
+		$('#dlg_window').dialog({
+			title: 'Cari Kecamatan',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kecamatan'])?}',
+			modal: true
+		});
+	}
+
+	function cari_KecamatanPJ_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kecamatan');
+		$('#dlg_window').dialog({
+			title: 'Cari Kecamatan PJ',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kecamatan'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Kabupaten_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kabupaten');
+		$('#dlg_window').dialog({
+			title: 'Cari Kabupaten',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kabupaten'])?}',
+			modal: true
+		});
+	}
+
+	function cari_KabupatenPJ_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Kabupaten');
+		$('#dlg_window').dialog({
+			title: 'Cari Kabupaten PJ',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','kabupaten'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Propinsi_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Propinsi');
+		$('#dlg_window').dialog({
+			title: 'Cari Propinsi',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','propinsi'])?}',
+			modal: true
+		});
+	}
+
+	function cari_PropinsiPJ_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Propinsi');
+		$('#dlg_window').dialog({
+			title: 'Cari Propinsi PJ',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','propinsi'])?}',
+			modal: true
+		});
+	}
+
+	function cari_Penjab_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Penjab');
+		$('#dlg_window').dialog({
+			title: 'Cari Penjab',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','penjab'])?}',
+			modal: true
+		});
+	}
+
+	function cari_PerusahaanPasien_Pasien()
+	{
+        $('#wu-tabs').tabs('close','Perusahaan Pasien');
+		$('#dlg_window').dialog({
+			title: 'Cari Perusahaan Pasien',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','perusahaanpasien'])?}',
+			modal: true
+		});
+	}
 
     function ubah_Pasien(){
         alert('Form Ubah');

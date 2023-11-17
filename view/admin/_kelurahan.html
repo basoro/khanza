@@ -3,14 +3,7 @@
 		<table>
 			<tr>
 				<td width="100"><span style="float:right;">Kode/Nama</span></td>
-				<td colspan="3">: <input name="kode_Kelurahan" id="kode_Kelurahan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_Kelurahan" id="nama_Kelurahan" class="easyui-textbox" style="width:245px;"> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pegawai()"></a></td>
-				<td width="100"><span style="float:right;">Status</span></td>
-				<td>: 
-                    <select class="easyui-combobox" name="status_Kelurahan" id="status_Kelurahan" style="width:180px;">
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
-                    </select>
-                </td>
+				<td>: <input name="kode_Kelurahan" id="kode_Kelurahan" class="easyui-textbox" style="width:80px;"></input> <input name="nama_Kelurahan" id="nama_Kelurahan" class="easyui-textbox" style="width:245px;"></td>
 			</tr>
 		</table>
     </div>
@@ -23,7 +16,7 @@
 <div id="toolbar_Kelurahan" style="padding:8px 0;">
     <div style="float: left; color: #000;padding: 0 40px 0 10px;">
         <label>Keyword</label>
-        <input class="easyui-textbox" id="cari_keyword" style="width:150px;">
+        <input class="easyui-textbox" id="cari_keyword_Kelurahan" style="width:150px;">
         <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Kelurahan()"></a>
     </div>
     <div style="float: left;">
@@ -37,7 +30,7 @@
 </div>
 
 <script type="text/javascript">
-    var url = '{?=url()?}/{?=ADMIN?}/khanza/blank/?act=data&t={?=$_SESSION['token']?}';
+    var url = '{?=url()?}/{?=ADMIN?}/khanza/kelurahan/?act=data&t={?=$_SESSION['token']?}';
 
     $('#dg_Kelurahan').datagrid({
       url:url,
@@ -51,17 +44,36 @@
       fit:true,
       columns:[[
         { field:'ck',checkbox:true},
-        { field:'kode',title:'Kode',width:'100',sortable:true},
-        { field:'nama',title:'Nama',width:'300',sortable:true}, 
-        { field:'status',title:'Status',width:'100',sortable:true}
+        { field:'kd_kel',title:'Kode',width:'100',sortable:true},
+        { field:'nm_kel',title:'Nama',width:'300',sortable:true}
       ]],
       onClickRow: function(){
         var row = $('#dg_Kelurahan').datagrid('getSelected');
-        $('#kode_Kelurahan').textbox('setValue',row.kode);
-        $('#nama_Kelurahan').textbox('setValue',row.nama);
-        $('#status_Kelurahan').combobox('setValue',row.status);
+        $('#kode_Kelurahan').textbox('setValue',row.kd_kel);
+        $('#nama_Kelurahan').textbox('setValue',row.nm_kel);
+	  },
+      onDblClickRow: function(){
+        var row = $('#dg_Kelurahan').datagrid('getSelected');
+        var dlg = $("#dlg_window").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            if(dlg.options.title == 'Cari Kelurahan') {
+                $('#dlg_window').dialog('close', 'Kelurahan')
+                $('#kd_kel_Pasien').val(row.kd_kel);
+                $('#nm_kel_Pasien').textbox('setValue',row.nm_kel);
+            }
+            if(dlg.options.title == 'Cari Kelurahan PJ') {
+                $('#dlg_window').dialog('close', 'Kelurahan');
+                $('#kelurahanpj_Pasien').textbox('setValue',row.nm_kel);
+            }
+        }
 	  }
     });
+
+	function cari_Kelurahan(){
+		$('#dg_Kelurahan').datagrid('load',{
+            cari_keyword: $('#cari_keyword_Kelurahan').val()
+		});
+	}
 
     function baru_Kelurahan(){
         alert('Form Baru');
