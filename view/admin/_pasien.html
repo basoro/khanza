@@ -23,14 +23,14 @@
           <div region="center" border="false">
               <div id="tt" class="easyui-tabs" fit="true">
                   <div title="Form Pasien" style="display:none;padding:1px;">
-                    <form id="fm" method="post" novalidate style="margin:0;padding:15px">
+                    <form id="fm_Pasien" method="post" novalidate style="margin:0;padding:15px">
                         <table>
                           <tr>
                             <td>
                               <table>
                                   <tr>
                                       <td width="160"><span style="float:right;">No. Rekam Medik</span></td>
-                                      <td>: <input name="no_rkm_medis" id="no_rkm_medis_Pasien" class="easyui-textbox" style="width:150px;"></input> <input class="easyui-checkbox" name="fruit" value="Apple" checked="true"></td>
+                                      <td>: <input name="no_rkm_medis" id="no_rkm_medis_Pasien" class="easyui-textbox" style="width:150px;" disabled></input> <input class="easyui-checkbox" id="checkbox_no_rkm_medis_Pasien" checked="true"></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nama Pasien</span></td>
@@ -112,11 +112,18 @@
                                       <select class="easyui-combobox" name="agama" id="agama_Pasien" data-options="panelHeight:null" style="width:110px">
                                         <option>Islam</option>
                                         <option>Kristen</option>
+                                        <option>Protestan</option>
+                                        <option>Hindu</option>
+                                        <option>Budha</option>
+                                        <option>Konghucu</option>
+                                        <option>Kepercayaan</option>
                                       </select>
                                       Stts. Nikah :
                                       <select class="easyui-combobox" name="stts_nikah" id="stts_nikah_Pasien" data-options="panelHeight:null" style="width:150px;">
                                         <option>MENIKAH</option>
                                         <option>BELUM MENIKAH</option>
+                                        <option>JANDA</option>
+                                        <option>DUDHA</option>
                                       </select>
                                     </td>
                                 </tr>
@@ -260,10 +267,8 @@
             $('#nama_bahasa_pasien_Pasien').textbox('setValue',row.nama_bahasa);
             $('#id_cacat_fisik_Pasien').val(row.cacat_fisik);
             $('#nama_cacat_fisik_Pasien').textbox('setValue',row.nama_cacat);
-
             $('#kd_pj_Pasien').textbox('setValue',row.kd_pj);
             $('#png_jawab_Pasien').textbox('setValue',row.png_jawab);
-
             $('#alamat_Pasien').textbox('setValue',row.alamat);
             $('#kd_kel_Pasien').val(row.kd_kel);
             $('#nm_kel_Pasien').textbox('setValue',row.nm_kel);
@@ -273,16 +278,13 @@
             $('#nm_kab_Pasien').textbox('setValue',row.nm_kab);
             $('#kd_prop_Pasien').val(row.kd_prop);
             $('#nm_prop_Pasien').textbox('setValue',row.nm_prop);
-
             $('#alamatpj_Pasien').textbox('setValue',row.alamatpj);
             $('#kelurahanpj_Pasien').textbox('setValue',row.kelurahanpj);
             $('#kecamatanpj_Pasien').textbox('setValue',row.kecamatanpj);
             $('#kabupatenpj_Pasien').textbox('setValue',row.kabupatenpj);
             $('#propinsipj_Pasien').textbox('setValue',row.propinsipj);
-
             $('#kode_PerusahaanPasien_Pasien').val(row.kode_perusahaan);
             $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
-
             $('#nip_Pasien').textbox('setValue',row.nip);
             $('#no_peserta_Pasien').textbox('setValue',row.no_peserta);
             $('#no_telp_Pasien').textbox('setValue',row.no_telp);
@@ -310,12 +312,30 @@
         }
     });
 
+    $('#checkbox_no_rkm_medis_Pasien').checkbox({
+        onChange: function(){
+            $('#no_rkm_medis_Pasien').textbox('enable'); 
+        }
+    });
+
     function baru_Pasien(){
-        alert('Form Baru');
+		$('#fm_Pasien').form('clear');
+        var url = '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=get_no_rkm_medis&t={?=$_SESSION['token']?}';
+        $.post(url,{}, function(data) {
+            $('#no_rkm_medis_Pasien').textbox('setValue',data);
+            $('#no_rkm_medis_Pasien').textbox('disable'); 
+            $('#checkbox_no_rkm_medis_Pasien').checkbox({checked: true}); 
+        });
+        $('#tgl_lahir_Pasien').datebox('setValue','{?=date('Y-m-d')?}');
+        $('#tgl_daftar_Pasien').datebox('setValue','{?=date('Y-m-d')?}');
+        $('#jk_Pasien').combobox('setValue','L');
+        $('#gol_darah_Pasien').combobox('setValue','O');
+        $('#agama_Pasien').combobox('setValue','Islam');
+        $('#stts_nikah_Pasien').combobox('setValue','MENIKAH');
     }
 
     function simpan_Pasien(){
-        $('#fm').form('submit',{
+        $('#fm_Pasien').form('submit',{
             url: '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=simpan&t={?=$_SESSION['token']?}',
             iframe: false,
             onSubmit: function(){
