@@ -34,29 +34,31 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nama Pasien</span></td>
-                                      <td>: <input name="nm_pasien" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="nm_pasien" id="nm_pasien_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Jenis Kelamin</span></td>
                                       <td>:
-                                        <select class="easyui-combobox" name="jk" data-options="panelHeight:null" style="width:144px">
+                                        <select class="easyui-combobox" name="jk" id="jk_Pasien" data-options="panelHeight:null" style="width:144px">
                                           <option value="L">Laki-Laki</option>
                                           <option value="P">Perempuan</option>
                                         </select>
                                         Gol. Darah :
-                                        <select class="easyui-combobox" name="gol_darah" data-options="panelHeight:null" style="width:120px;">
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:120px;">
                                           <option>O</option>
                                           <option>A</option>
+                                          <option>B</option>
+                                          <option>AB</option>
                                         </select>
                                       </td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Tmp/Tgl. Lahir</span></td>
-                                      <td>: <input name="tmp_lahir" class="easyui-textbox" style="width:220px;"></input> <input name="tgl_lahir" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:136px;"></input></td>
+                                      <td>: <input name="tmp_lahir" id="tmp_lahir_Pasien" class="easyui-textbox" style="width:220px;"></input> <input name="tgl_lahir" id="tgl_lahir_Pasien" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:136px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Pendidikan</span></td>
-                                      <td>: <select class="easyui-combobox" name="pnd" data-options="panelHeight:null" style="width:360px;">
+                                      <td>: <select class="easyui-combobox" name="pnd" id="pnd_Pasien" data-options="panelHeight:null" style="width:360px;">
                                           <option>-</option>
                                           <option>TS</option>
                                           <option>TK</option>
@@ -70,23 +72,23 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nama Ibu Kandung</span></td>
-                                      <td>: <input name="nm_ibu" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="nm_ibu" id="nm_ibu_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Png. Jawab</span></td>
-                                      <td>: <input class="easyui-radiobutton" name="keluarga" value="AYAH" label="Ayah" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" name="keluarga" value="IBU" label="Ibu" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" name="keluarga" value="ISTRI" label="Istri" labelPosition="after" labelWidth="100"></td>
+                                      <td>: <input class="easyui-radiobutton" id="AYAH_Pasien" name="keluarga" value="AYAH" label="Ayah" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" id="IBU_Pasien" name="keluarga" value="IBU" label="Ibu" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" id="ISTRI_Pasien" name="keluarga" value="ISTRI" label="Istri" labelPosition="after" labelWidth="100"></td>
                                   </tr>
                                   <tr>
                                       <td></td>
-                                      <td>&nbsp;&nbsp;<input class="easyui-radiobutton" name="keluarga" value="SUAMI" label="Suami" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" name="keluarga" value="SAUDARA" label="Saudara" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" name="keluarga" value="ANAK" label="Anak" labelPosition="after" labelWidth="100"></td>
+                                      <td>&nbsp;&nbsp;<input class="easyui-radiobutton" id="SUAMI_Pasien" name="keluarga" value="SUAMI" label="Suami" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" id="SAUDARA_Pasien" name="keluarga" value="SAUDARA" label="Saudara" labelPosition="after" labelWidth="100"> <input class="easyui-radiobutton" id="ANAK_Pasien" name="keluarga" value="ANAK" label="Anak" labelPosition="after" labelWidth="100"></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nama Png. Jawab</span></td>
-                                      <td>: <input name="namakeluarga" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="namakeluarga" id="namakeluarga_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Pekerjaan PJ</span></td>
-                                      <td>: <input name="pekerjaanpj" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="pekerjaanpj" id="pekerjaanpj_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Suku Bangsa</span></td>
@@ -107,12 +109,12 @@
                                 <tr>
                                     <td width="160"><span style="float:right;">Agama</span></td>
                                     <td>:
-                                      <select class="easyui-combobox" name="agama" data-options="panelHeight:null" style="width:110px">
+                                      <select class="easyui-combobox" name="agama" id="agama_Pasien" data-options="panelHeight:null" style="width:110px">
                                         <option>Islam</option>
                                         <option>Kristen</option>
                                       </select>
                                       Stts. Nikah :
-                                      <select class="easyui-combobox" name="stts_nikah" data-options="panelHeight:null" style="width:150px;">
+                                      <select class="easyui-combobox" name="stts_nikah" id="stts_nikah_Pasien" data-options="panelHeight:null" style="width:150px;">
                                         <option>MENIKAH</option>
                                         <option>BELUM MENIKAH</option>
                                       </select>
@@ -124,19 +126,19 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nomor Peserta</span></td>
-                                      <td>: <input name="no_peserta" class="easyui-textbox" style="width:150px;"></input> Email : <input name="email" class="easyui-textbox" style="width:150px;"></input></td>
+                                      <td>: <input name="no_peserta" id="no_peserta_Pasien" class="easyui-textbox" style="width:150px;"></input> Email : <input name="email" id="email_Pasien" class="easyui-textbox" style="width:150px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">No. Telp</span></td>
-                                      <td>: <input name="no_tlp" class="easyui-textbox" style="width:150px;"></input> Tgl Daftar : <input name="tgl_daftar" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px;"></input></td>
+                                      <td>: <input name="no_tlp" id="no_tlp_Pasien" class="easyui-textbox" style="width:150px;"></input> Tgl Daftar : <input name="tgl_daftar" id="tgl_daftar_Pasien" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Pekerjaan</span></td>
-                                      <td>: <input name="pekerjaan" class="easyui-textbox" style="width:150px;"></input> No. KTP : <input name="no_ktp" class="easyui-textbox" style="width:133px;"></input></td>
+                                      <td>: <input name="pekerjaan" id="pekerjaan_Pasien" class="easyui-textbox" style="width:150px;"></input> No. KTP : <input name="no_ktp" id="no_ktp_Pasien" class="easyui-textbox" style="width:133px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Alamat Pasien</span></td>
-                                      <td>: <input name="alamat" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="alamat" id="alamat_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td></td>
@@ -148,7 +150,7 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Alamat PJ</span></td>
-                                      <td>: <input name="alamatpj" class="easyui-textbox" style="width:360px;"></input></td>
+                                      <td>: <input name="alamatpj" id="alamatpj_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
                                   </tr>
                                   <tr>
                                       <td></td>
@@ -160,7 +162,7 @@
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Instansi Pasien</span></td>
-                                      <td>: <input type="hidden" name="perusahaan_pasien" id="kode_PerusahaanPasien_Pasien"></input><input id="nama_PerusahaanPasien_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_PerusahaanPasien_Pasien()"></a> NIP/NRP : <input name="nip" class="easyui-textbox" style="width:100px;"></input></td>
+                                      <td>: <input type="hidden" name="perusahaan_pasien" id="kode_PerusahaanPasien_Pasien"></input><input id="nama_PerusahaanPasien_Pasien" class="easyui-textbox" style="width:143px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_PerusahaanPasien_Pasien()"></a> NIP/NRP : <input name="nip" id="nip_Pasien" class="easyui-textbox" style="width:100px;"></input></td>
                                   </tr>
                               </table>
                             </td>
@@ -238,13 +240,60 @@
         },
         onClickRow: function(){
             var row = $('#dg_Pasien').datagrid('getSelected');
-            $('#nomor_peserta').textbox('setValue',row.no_peserta);
-            $('#nomor_nik').textbox('setValue',row.no_ktp);
-            $('#bpjs_cek_kartu_dlg').dialog('close');
-            $('#bpjs_cek_nik_dlg').dialog('close');
-            $('#help_pasien_window').dialog('close');
-            $('#no_rkm_medis_RegPeriksa').textbox('setValue',row.no_rkm_medis);
             $('#no_rkm_medis_Pasien').textbox('setValue',row.no_rkm_medis);
+            $('#nm_pasien_Pasien').textbox('setValue',row.nm_pasien);
+            if(row.jk == 'Perempuan') {
+                $('#jk_Pasien').combobox('setValue','P');
+            } else {
+                $('#jk_Pasien').combobox('setValue','L');
+            }
+            $('#gol_darah_Pasien').combobox('setValue',row.gol_darah);
+            $('#tmp_lahir_Pasien').textbox('setValue',row.tmp_lahir);
+            $('#tgl_lahir_Pasien').datebox('setValue',row.tgl_lahir);
+            $('#nm_ibu_Pasien').textbox('setValue',row.nm_ibu);
+            $('#'+row.keluarga+'_Pasien').radiobutton({value: row.keluarga, checked: true});
+            $('#namakeluarga_Pasien').textbox('setValue',row.namakeluarga);
+            $('#pekerjaanpj_Pasien').textbox('setValue',row.pekerjaanpj);
+            $('#id_suku_bangsa_Pasien').val(row.suku_bangsa);
+            $('#nama_suku_bangsa_Pasien').textbox('setValue',row.nama_suku_bangsa);
+            $('#id_bahasa_Pasien').val(row.bahasa_pasien);
+            $('#nama_bahasa_pasien_Pasien').textbox('setValue',row.nama_bahasa);
+            $('#id_cacat_fisik_Pasien').val(row.cacat_fisik);
+            $('#nama_cacat_fisik_Pasien').textbox('setValue',row.nama_cacat);
+
+            $('#kd_pj_Pasien').textbox('setValue',row.kd_pj);
+            $('#png_jawab_Pasien').textbox('setValue',row.png_jawab);
+
+            $('#alamat_Pasien').textbox('setValue',row.alamat);
+            $('#kd_kel_Pasien').val(row.kd_kel);
+            $('#nm_kel_Pasien').textbox('setValue',row.nm_kel);
+            $('#kd_kec_Pasien').val(row.kd_kec);
+            $('#nm_kec_Pasien').textbox('setValue',row.nm_kec);
+            $('#kd_kab_Pasien').val(row.kd_kab);
+            $('#nm_kab_Pasien').textbox('setValue',row.nm_kab);
+            $('#kd_prop_Pasien').val(row.kd_prop);
+            $('#nm_prop_Pasien').textbox('setValue',row.nm_prop);
+
+            $('#alamatpj_Pasien').textbox('setValue',row.alamatpj);
+            $('#kelurahanpj_Pasien').textbox('setValue',row.kelurahanpj);
+            $('#kecamatanpj_Pasien').textbox('setValue',row.kecamatanpj);
+            $('#kabupatenpj_Pasien').textbox('setValue',row.kabupatenpj);
+            $('#propinsipj_Pasien').textbox('setValue',row.propinsipj);
+
+            $('#kode_PerusahaanPasien_Pasien').val(row.kode_perusahaan);
+            $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
+
+            $('#nip_Pasien').textbox('setValue',row.nip);
+            $('#no_peserta_Pasien').textbox('setValue',row.no_peserta);
+            $('#no_telp_Pasien').textbox('setValue',row.no_telp);
+            $('#pekerjaan_Pasien').textbox('setValue',row.pekerjaan);
+            $('#no_tlp_Pasien').textbox('setValue',row.no_tlp);
+            $('#no_ktp_Pasien').textbox('setValue',row.no_ktp);
+            $('#email_Pasien').textbox('setValue',row.email);
+        },
+        onDblClickRow: function(){
+            var row = $('#dg_Pasien').datagrid('getSelected');
+            $('#no_rkm_medis_RegPeriksa').textbox('setValue',row.no_rkm_medis);
             $('#nm_pasien_RegPeriksa').textbox('setValue',row.nm_pasien);
             var dlg = $("#dlg_window").data('dialog');
             if(typeof dlg !== 'undefined') {

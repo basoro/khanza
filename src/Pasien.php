@@ -22,49 +22,20 @@ class Pasien
         $alamat = isset($_POST['cari_alamat']) ? $_POST['cari_alamat'] : '';
         $keyword = isset($_POST['cari_keyword']) ? $_POST['cari_keyword'] : '';
   
-        $result = array();
-      
-        $_pasien = "select count(*) as count from pasien
-        inner join kelurahan inner join kecamatan inner join kabupaten inner join perusahaan_pasien inner join cacat_fisik inner join propinsi
-        inner join bahasa_pasien inner join suku_bangsa inner join penjab on pasien.kd_pj=penjab.kd_pj and pasien.cacat_fisik=cacat_fisik.id
-        and pasien.kd_kel=kelurahan.kd_kel and perusahaan_pasien.kode_perusahaan=pasien.perusahaan_pasien and pasien.kd_prop=propinsi.kd_prop
-        and bahasa_pasien.id=pasien.bahasa_pasien and suku_bangsa.id=pasien.suku_bangsa and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab
-        where concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%' and pasien.no_rkm_medis like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.nm_pasien like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.no_ktp like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.no_peserta like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.tmp_lahir like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.tgl_lahir like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and penjab.png_jawab like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.gol_darah like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.pekerjaan like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.stts_nikah like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.alamat like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.nip like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and cacat_fisik.nama_cacat like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.namakeluarga like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and perusahaan_pasien.nama_perusahaan like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and bahasa_pasien.nama_bahasa like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and suku_bangsa.nama_suku_bangsa like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.agama like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.nm_ibu like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.tgl_daftar like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.no_tlp like '%$keyword%'";
-        $_rows = $this->db()->pdo()->prepare($_pasien);
-        $_rows->execute();
-        $_rows = $_rows->fetchAll(\PDO::FETCH_ASSOC);          
-        $result["total"] = $_rows['0']['count'];
-
         $items = array();
+        $result = array();
+        
         $pasien = "select pasien.no_rkm_medis, pasien.nm_pasien, pasien.no_ktp,
         case pasien.jk
             when 'L' then 'Laki-Laki'
             when 'P' then 'Perempuan'
         end as jk,
-        pasien.tmp_lahir, pasien.tgl_lahir,pasien.nm_ibu, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) as alamat,
+        pasien.tmp_lahir, pasien.tgl_lahir,pasien.nm_ibu, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) as alamat_pasien,
+        pasien.alamat, pasien.kd_kel, kelurahan.nm_kel, pasien.kd_kec, kecamatan.nm_kec, pasien.kd_kab, kabupaten.nm_kab, pasien.kd_prop, propinsi.nm_prop, 
         pasien.gol_darah, pasien.pekerjaan,pasien.stts_nikah,pasien.agama,pasien.tgl_daftar,pasien.no_tlp,pasien.umur,
-        pasien.pnd, pasien.keluarga, pasien.namakeluarga,penjab.png_jawab,pasien.no_peserta,pasien.pekerjaanpj,
-        concat(pasien.alamatpj,', ',pasien.kelurahanpj,', ',pasien.kecamatanpj,', ',pasien.kabupatenpj,', ',pasien.propinsipj),
+        pasien.pnd, pasien.keluarga, pasien.namakeluarga,pasien.kd_pj,penjab.png_jawab,pasien.no_peserta,pasien.pekerjaanpj,
+        concat(pasien.alamatpj,', ',pasien.kelurahanpj,', ',pasien.kecamatanpj,', ',pasien.kabupatenpj,', ',pasien.propinsipj) as alamat_pj, 
+        pasien.alamatpj, pasien.kelurahanpj, pasien.kecamatanpj, pasien.kabupatenpj, pasien.propinsipj,         
         perusahaan_pasien.kode_perusahaan,perusahaan_pasien.nama_perusahaan,pasien.bahasa_pasien,
         bahasa_pasien.nama_bahasa,pasien.suku_bangsa,suku_bangsa.nama_suku_bangsa,pasien.nip,pasien.email,cacat_fisik.nama_cacat,pasien.cacat_fisik from pasien
         inner join kelurahan inner join kecamatan inner join kabupaten inner join perusahaan_pasien inner join cacat_fisik inner join propinsi
@@ -91,11 +62,17 @@ class Pasien
         or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.agama like '%$keyword%'
         or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.nm_ibu like '%$keyword%'
         or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.tgl_daftar like '%$keyword%'
-        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.no_tlp like '%$keyword%'
-        order by pasien.no_rkm_medis desc LIMIT $offset,$rows";
+        or  concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) like '%$alamat%'  and pasien.no_tlp like '%$keyword%' ";
+
+        $_rows = $this->db()->pdo()->prepare($pasien);
+        $_rows->execute();
+        $_rows = $_rows->fetchAll(\PDO::FETCH_ASSOC);          
+        $result["total"] = count($_rows);
+
+        $pasien .= "order by pasien.no_rkm_medis desc LIMIT $offset,$rows";
         $rows = $this->db()->pdo()->prepare($pasien);
         $rows->execute();
-        $rows = $rows->fetchAll();
+        $rows = $rows->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
             array_push($items, $row);
