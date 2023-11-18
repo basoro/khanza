@@ -30,7 +30,7 @@
                               <table>
                                   <tr>
                                       <td width="160"><span style="float:right;">No. Rekam Medik</span></td>
-                                      <td>: <input name="no_rkm_medis" id="no_rkm_medis_Pasien" class="easyui-textbox" style="width:150px;" disabled></input> <input class="easyui-checkbox" id="checkbox_no_rkm_medis_Pasien" checked="true"></td>
+                                      <td>: <input name="no_rkm_medis" id="no_rkm_medis_Pasien" class="easyui-textbox" style="width:150px;" readonly></input> <input class="easyui-checkbox" id="checkbox_no_rkm_medis_Pasien" checked="true"></td>
                                   </tr>
                                   <tr>
                                       <td><span style="float:right;">Nama Pasien</span></td>
@@ -314,7 +314,7 @@
 
     $('#checkbox_no_rkm_medis_Pasien').checkbox({
         onChange: function(){
-            $('#no_rkm_medis_Pasien').textbox('enable'); 
+            $('#no_rkm_medis_Pasien').textbox('readonly', false); 
         }
     });
 
@@ -323,8 +323,8 @@
         var url = '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=get_no_rkm_medis&t={?=$_SESSION['token']?}';
         $.post(url,{}, function(data) {
             $('#no_rkm_medis_Pasien').textbox('setValue',data);
-            $('#no_rkm_medis_Pasien').textbox('disable'); 
             $('#checkbox_no_rkm_medis_Pasien').checkbox({checked: true}); 
+            $('#no_rkm_medis_Pasien').textbox('readonly', true); 
         });
         $('#tgl_lahir_Pasien').datebox('setValue','{?=date('Y-m-d')?}');
         $('#tgl_daftar_Pasien').datebox('setValue','{?=date('Y-m-d')?}');
@@ -517,7 +517,30 @@
 	}
 
     function ubah_Pasien(){
-        alert('Form Ubah');
+        $('#fm_Pasien').form('submit',{
+            url: '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=ubah&t={?=$_SESSION['token']?}',
+            iframe: false,
+            onSubmit: function(){
+                return $(this).form('validate');
+            },
+            success: function(result){
+                var result = eval('('+result+')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                    var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                    audio.play();
+                } else {
+                    $.messager.show({
+                        title: 'Sukses',
+                        msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah diubah!'
+                    });
+                    $('#dg_Pasien').datagrid('reload');    // reload the user data
+                }
+            }
+        });
     }
 
     function hapus_Pasien(){

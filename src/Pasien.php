@@ -86,8 +86,8 @@ class Pasien
 
     public function Simpan()
     {
-        $_POST['tgl_lahir'] = date('Y-m-d', strtotime($_POST['tgl_lahir']));
-        $_POST['tgl_daftar'] = date('Y-m-d', strtotime($_POST['tgl_daftar']));
+        // $_POST['tgl_lahir'] = date('Y-m-d', strtotime($_POST['tgl_lahir']));
+        // $_POST['tgl_daftar'] = date('Y-m-d', strtotime($_POST['tgl_daftar']));
         $check_db = $this->db()->pdo()->prepare("INSERT INTO pasien VALUES (
           '{$_POST['no_rkm_medis']}', '{$_POST['nm_pasien']}', '{$_POST['no_ktp']}', '{$_POST['jk']}', '{$_POST['tmp_lahir']}', '{$_POST['tgl_lahir']}', '{$_POST['nm_ibu']}', '{$_POST['alamat']}', '{$_POST['gol_darah']}', '{$_POST['pekerjaan']}', '{$_POST['stts_nikah']}', '{$_POST['agama']}', '{$_POST['tgl_daftar']}', '{$_POST['no_tlp']}', '{$_POST['umur']}', '{$_POST['pnd']}', '{$_POST['keluarga']}', '{$_POST['namakeluarga']}', '{$_POST['kd_pj']}', '{$_POST['no_peserta']}', '{$_POST['kd_kel']}', '{$_POST['kd_kec']}', '{$_POST['kd_kab']}', '{$_POST['pekerjaanpj']}', '{$_POST['alamatpj']}', '{$_POST['kelurahanpj']}', '{$_POST['kecamatanpj']}', '{$_POST['kabupatenpj']}', '{$_POST['perusahaan_pasien']}', '{$_POST['suku_bangsa']}', '{$_POST['bahasa_pasien']}', '{$_POST['cacat_fisik']}', '{$_POST['email']}', '{$_POST['nip']}', '{$_POST['kd_prop']}', '{$_POST['propinsipj']}'
         )");
@@ -106,15 +106,55 @@ class Pasien
 
     public function Ubah()
     {
-        $no_rkm_medis = $_GET['no_rkm_medis'];
+        $no_rkm_medis = $_POST['no_rkm_medis'];
         $nm_pasien = $_POST['nm_pasien'];
-        $check_db = $this->db()->pdo()->prepare("UPDATE pasien SET nm_pasien = '$nm_pasien' WHERE no_rkm_medis = '$no_rkm_medis'");
+        $check_db = $this->db()->pdo()->prepare("
+          UPDATE 
+            pasien 
+          SET 
+            nm_pasien = '{$_POST['nm_pasien']}', 
+            no_ktp = '{$_POST['no_ktp']}', 
+            jk = '{$_POST['jk']}', 
+            tgl_lahir = '{$_POST['tgl_lahir']}', 
+            tmp_lahir = '{$_POST['tmp_lahir']}', 
+            nm_ibu = '{$_POST['nm_ibu']}', 
+            alamat = '{$_POST['alamat']}', 
+            gol_darah = '{$_POST['gol_darah']}', 
+            pekerjaan = '{$_POST['pekerjaan']}', 
+            stts_nikah = '{$_POST['stts_nikah']}', 
+            agama = '{$_POST['agama']}', 
+            tgl_daftar = '{$_POST['tgl_daftar']}', 
+            no_tlp = '{$_POST['no_tlp']}', 
+            umur = '{$this->hitungUmur($_POST['tgl_lahir'])}', 
+            pnd = '{$_POST['pnd']}', 
+            keluarga = '{$_POST['keluarga']}', 
+            namakeluarga = '{$_POST['namakeluarga']}', 
+            kd_pj = '{$_POST['kd_pj']}', 
+            no_peserta = '{$_POST['no_peserta']}', 
+            kd_kel = '{$_POST['kd_kel']}', 
+            kd_kec = '{$_POST['kd_kec']}', 
+            kd_kab = '{$_POST['kd_kab']}', 
+            pekerjaanpj = '{$_POST['pekerjaanpj']}', 
+            alamatpj = '{$_POST['alamatpj']}', 
+            kelurahanpj = '{$_POST['kelurahanpj']}', 
+            kecamatanpj = '{$_POST['kecamatanpj']}', 
+            kabupatenpj = '{$_POST['kabupatenpj']}', 
+            perusahaan_pasien = '{$_POST['perusahaan_pasien']}', 
+            suku_bangsa = '{$_POST['suku_bangsa']}', 
+            bahasa_pasien = '{$_POST['bahasa_pasien']}', 
+            cacat_fisik = '{$_POST['cacat_fisik']}', 
+            email = '{$_POST['email']}', 
+            nip = '{$_POST['nip']}', 
+            kd_prop = '{$_POST['kd_prop']}', 
+            propinsipj = '{$_POST['propinsipj']}'
+          WHERE 
+            no_rkm_medis = '{$_POST['no_rkm_medis']}'
+        ");
         $result = $check_db->execute();
         $error = $check_db->errorInfo();
         if (!empty($result)){
           echo json_encode(array(
-            'no_rkm_medis' => $no_rkm_medis,
-            'nm_pasien' => $nm_pasien
+            'no_rkm_medis' => 'Test '.$_POST['no_rkm_medis']
           ));
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
@@ -140,5 +180,20 @@ class Pasien
     {
         
     }
+
+    public function hitungUmur($tanggal_lahir)
+    {
+      	$birthDate = new \DateTime($tanggal_lahir);
+      	$today = new \DateTime("today");
+      	$umur = "0 Th 0 Bl 0 Hr";
+        if ($birthDate < $today) {
+        	$y = $today->diff($birthDate)->y;
+        	$m = $today->diff($birthDate)->m;
+        	$d = $today->diff($birthDate)->d;
+          $umur =  $y." Th ".$m." Bl ".$d." Hr";
+        }
+      	return $umur;
+    }
+
 
 }

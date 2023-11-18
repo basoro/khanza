@@ -197,6 +197,7 @@ class Admin extends AdminModule
 
         return $_next_no_reg;
     }    
+
     public function navigation()
     {
         return [
