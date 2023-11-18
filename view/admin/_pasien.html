@@ -8,8 +8,8 @@
                 <input class="easyui-textbox" id="cari_alamat" style="width:150px;">
                 <label style="margin-left: 20px;">Keyword</label>
                 <input class="easyui-textbox" id="cari_keyword_pasien" style="width:150px">
-                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch()"></a>
-                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="doSemua()"></a>
+                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pasien()"></a>
+                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="cari_semua_Pasien()"></a>
             </div>
             <div>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Pasien()">Baru</a>
@@ -517,6 +517,15 @@
 	}
 
     function ubah_Pasien(){
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        var rows = $('#dg_Pasien').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
         $('#fm_Pasien').form('submit',{
             url: '{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=ubah&t={?=$_SESSION['token']?}',
             iframe: false,
@@ -544,11 +553,104 @@
     }
 
     function hapus_Pasien(){
-        alert('Form Hapus');
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        var rows = $('#dg_Pasien').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $.messager.confirm('Confirm','Yakin menghapus data ini?',function(r){
+                if (r){
+                    $.post('{?=url()?}/{?=ADMIN?}/khanza/pasien/?act=hapus&t={?=$_SESSION['token']?}',{no_rkm_medis:row.no_rkm_medis},function(result){
+                        if (result.errorMsg){
+                        $.messager.show({    // show error message
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                        var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                        audio.play();
+                        } else {
+                        $.messager.show({    // show error message
+                            title: 'Success',
+                            msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah dihapus!'
+                        });
+                        $('#dg_Pasien').datagrid('reload');   // reload the user data
+                        }
+                    },'json');
+                }
+            });
+        }
     }
 
     function cetak_Pasien(){
-        alert('Form Cetak');
+        var cari_alamat = $('#cari_alamat').val();
+        var cari_keyword = $('#cari_keyword_pasien').val();
+        $('#dlg_window').dialog({
+            title: 'Cetak Data Pasien',
+            closed: false,
+            cache: false,
+            content: '<center><embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/pasien/?cari_alamat=' + cari_alamat + '&cari_keyword=' + cari_keyword + '&t={?=$_SESSION['token']?}"></embed></center>',
+            modal: true
+        });
+    }
+
+    function cari_Pasien(){
+        $('#dg_Pasien').datagrid('load',{
+            cari_alamat: $('#cari_alamat').val(),
+            cari_keyword: $('#cari_keyword_pasien').val()
+        });
+    }
+
+    function cari_semua_Pasien(){
+        $('#cari_alamat').textbox('clear');
+        $('#cari_keyword_pasien').textbox('clear');
+        cari_Pasien();
+    }
+
+    function getKartu(){
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        var rows = $('#dg_Pasien').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $('#dlg_window').dialog({
+                title: 'Cetak Kartu',
+                closed: false,
+                cache: false,
+                content: '<center><embed width="680" height="460" src="{?=url()?}/{?=ADMIN?}/jasper/kartu/'+row.no_rkm_medis+'?t={?=$_SESSION['token']?}"></embed></center>',
+                modal: true
+            });
+        }
+    }
+
+    function getCoverRM(){
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        var rows = $('#dg_Pasien').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $('#dlg_window').dialog({
+                title: 'Cetak Cover Rekam Medis',
+                closed: false,
+                cache: false,
+                content: '<center><embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/coverrm/'+row.no_rkm_medis+'?t={?=$_SESSION['token']?}"></embed></center>',
+                modal: true
+            });
+        }
     }
 
     function keluar_Pasien(){

@@ -154,7 +154,7 @@ class Pasien
         $error = $check_db->errorInfo();
         if (!empty($result)){
           echo json_encode(array(
-            'no_rkm_medis' => 'Test '.$_POST['no_rkm_medis']
+            'no_rkm_medis' => $_POST['no_rkm_medis']
           ));
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
@@ -174,11 +174,6 @@ class Pasien
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
         }
-    }
-
-    public function Cetak()
-    {
-        
     }
 
     public function hitungUmur($tanggal_lahir)
