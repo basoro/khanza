@@ -616,7 +616,7 @@
             title: 'Cetak Data Pasien',
             closed: false,
             cache: false,
-            content: '<center><embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/pasien/?cari_alamat=' + cari_alamat + '&cari_keyword=' + cari_keyword + '&t={?=$_SESSION['token']?}"></embed></center>',
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/pasien/?cari_alamat=' + cari_alamat + '&cari_keyword=' + cari_keyword + '&t={?=$_SESSION['token']?}"></embed>',
             modal: true
         });
     }
@@ -670,7 +670,7 @@
                 title: 'Cetak Cover Rekam Medis',
                 closed: false,
                 cache: false,
-                content: '<center><embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/coverrm/'+row.no_rkm_medis+'?t={?=$_SESSION['token']?}"></embed></center>',
+                content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/coverrm/'+row.no_rkm_medis+'?t={?=$_SESSION['token']?}"></embed>',
                 modal: true
             });
         }

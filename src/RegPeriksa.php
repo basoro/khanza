@@ -43,7 +43,7 @@ class RegPeriksa
         $total = $total->fetchAll(\PDO::FETCH_ASSOC);          
         $result["total"] = count($total);
 
-        $query .= "order by reg_periksa.tgl_registrasi asc LIMIT $offset,$rows";    
+        $query .= "order by reg_periksa.tgl_registrasi, reg_periksa.jam_reg asc LIMIT $offset,$rows";    
 
         $rows = $this->db()->pdo()->prepare($query);
         $rows->execute(['%'.$poliklinik.'%', '%'.$dokter.'%', $tgl_awal, $tgl_akhir, '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%', '%'.$keyword.'%']);
@@ -62,6 +62,31 @@ class RegPeriksa
     {   
         $tgl_registrasi = date('Y-m-d', strtotime($_POST['tgl_registrasi']));
         $jam_reg = date('H:i:s', strtotime($_POST['tgl_registrasi']));;
+
+        $pasien = $this->db('pasien')->where('no_rkm_medis', $_POST['no_rkm_medis'])->oneArray();
+
+      	$birthDate = new \DateTime($pasien['tgl_lahir']);
+      	$today = new \DateTime('today');
+      	$umurdaftar = '0';
+        $sttsumur = 'Th';
+        
+        if ($birthDate < $today) {
+        	$y = $today->diff($birthDate)->y;
+        	$m = $today->diff($birthDate)->m;
+        	$d = $today->diff($birthDate)->d;
+          if($y == 0 && $m == 0) {
+            $umurdaftar = $d;
+            $sttsumur = 'Hr';
+          }
+          if($y == 0 && $m != 0) {
+            $umurdaftar = $m;
+            $sttsumur = 'Bl';
+          }
+          if($y != 0) {
+            $umurdaftar = $y;
+          }          
+        }
+
         $check_db = $this->db()->pdo()->prepare("INSERT INTO reg_periksa VALUES (
           '{$_POST['no_reg']}', 
           '{$_POST['no_rawat']}', 
@@ -73,13 +98,13 @@ class RegPeriksa
           '-', 
           '-', 
           '-', 
-          '0', 
+          '{$_POST['biaya_reg']}', 
           'Belum', 
           '-', 
           'Ralan', 
           '{$_POST['kd_pj']}', 
-          '0', 
-          'Th', 
+          '{$umurdaftar}', 
+          '{$sttsumur}', 
           'Belum Bayar', 
           'Baru'
         )");
@@ -109,12 +134,91 @@ class RegPeriksa
 
     public function Ubah()
     {
-        
+      $tgl_registrasi = date('Y-m-d', strtotime($_POST['tgl_registrasi']));
+      $jam_reg = date('H:i:s', strtotime($_POST['tgl_registrasi']));;
+
+      $pasien = $this->db('pasien')->where('no_rkm_medis', $_POST['no_rkm_medis'])->oneArray();
+
+      $birthDate = new \DateTime($pasien['tgl_lahir']);
+      $today = new \DateTime('today');
+      $umurdaftar = '0';
+      $sttsumur = 'Th';
+      
+      if ($birthDate < $today) {
+        $y = $today->diff($birthDate)->y;
+        $m = $today->diff($birthDate)->m;
+        $d = $today->diff($birthDate)->d;
+        if($y == 0 && $m == 0) {
+          $umurdaftar = $d;
+          $sttsumur = 'Hr';
+        }
+        if($y == 0 && $m != 0) {
+          $umurdaftar = $m;
+          $sttsumur = 'Bl';
+        }
+        if($y != 0) {
+          $umurdaftar = $y;
+        }          
+      }      
+
+      $check_db = $this->db()->pdo()->prepare("
+        UPDATE 
+          reg_periksa 
+        SET 
+          no_reg = '{$_POST['no_reg']}', 
+          tgl_registrasi = '{$tgl_registrasi}', 
+          jam_reg = '{$jam_reg}', 
+          kd_dokter = '{$_POST['kd_dokter']}', 
+          kd_poli = '{$_POST['kd_poli']}', 
+          kd_pj = '{$_POST['kd_pj']}', 
+          biaya_reg = '{$_POST['biaya_reg']}', 
+          umurdaftar = '{$umurdaftar}', 
+          sttsumur = '{$sttsumur}'
+        WHERE 
+          no_rkm_medis = '{$_POST['no_rkm_medis']}' 
+        AND 
+          no_rawat = '{$_POST['no_rawat']}'
+      ");
+      $result = $check_db->execute();
+      $error = $check_db->errorInfo();
+      if (!empty($result)){
+        echo json_encode(array(
+          'no_rkm_medis' => $_POST['no_rkm_medis'], 
+          'no_rawat' => $_POST['no_rawat'], 
+          'no_reg' => $_POST['no_reg']
+        ));
+        $this->db('rujuk_masuk')->save([
+          'no_rawat' => $_POST['no_rawat'], 
+          'perujuk' => $_POST['asal_rujukan'], 
+          'alamat' => '-', 
+          'no_rujuk' => '-', 
+          'jm_perujuk' => '0', 
+          'dokter_perujuk' => $_POST['asal_rujukan'], 
+          'kd_penyakit' => '-', 
+          'kategori_rujuk' => '-', 
+          'keterangan' => '-', 
+          'no_balasan' => '-'
+        ]);
+      } else {
+        echo json_encode(array('errorMsg'=>$error['2']));
+      }         
     }
 
     public function Hapus()
     {
-        
+      $no_rkm_medis = $_POST['no_rkm_medis'];
+      $no_rawat = $_POST['no_rawat'];
+      $check_db = $this->db()->pdo()->prepare("DELETE FROM reg_periksa WHERE no_rkm_medis = '$no_rkm_medis' AND no_rawat = '$no_rawat'");
+      $result = $check_db->execute();
+      $error = $check_db->errorInfo();
+      if (!empty($result)){
+        echo json_encode(array(
+          'no_rkm_medis' => $no_rkm_medis, 
+          'no_rawat' => $no_rawat
+        ));
+      } else {
+        echo json_encode(array('errorMsg'=>$error['2']));
+      }      
     }    
 
     public function Cetak()

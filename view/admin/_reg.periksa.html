@@ -24,7 +24,7 @@
 		<table>
 			<tr>
 				<td width="110"><span style="float:right;">Unit/Poli</span></td>
-				<td colspan="3">: <input name="kd_poli" id="kd_poli_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <input name="nm_poli_RegPeriksa" id="nm_poli_RegPeriksa" class="easyui-textbox" style="width:241px;"></input> <input name="registrasi_RegPeriksa" id="registrasi_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Poliklinik_RegPeriksa()"></a></td>
+				<td colspan="3">: <input name="kd_poli" id="kd_poli_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <input name="nm_poli_RegPeriksa" id="nm_poli_RegPeriksa" class="easyui-textbox" style="width:241px;"></input> <input name="biaya_reg" id="biaya_reg_RegPeriksa" class="easyui-textbox" style="width:80px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Poliklinik_RegPeriksa()"></a></td>
 				<td width="140"><span style="float:right;">Asal Rujukan</span></td>
 				<td>: <input name="asal_rujukan" id="asal_rujukan_RegPeriksa" class="easyui-textbox" style="width:344px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_RujukMasuk_RegPeriksa()"></a> </td>
 			</tr>
@@ -41,10 +41,10 @@
 	<div style="color: #000;padding: 0 30px 10px 6px;">
 		<label style="margin-left: 24px;"><span style="width: 120px;">Dokter : </span></label>
 		<input class="easyui-textbox" id="cari_nama_dokter_RegPeriksa" style="width:210px">
-		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_NamaDokter_RegPeriksa()"></a>
 		<label style="margin-left: 19px;">Poliklinik : </label>
 		<input class="easyui-textbox" id="cari_nama_poli_RegPeriksa" style="width:210px">
-		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick=""></a>
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_NamaPoliklinik_RegPeriksa()"></a>
 	</div>
 	<div style="float: left; color: #000;padding: 0 40px 0 10px;">
 		<label style="margin-left: 16px;">Periode : </label>
@@ -52,8 +52,8 @@
 		<input class="easyui-datebox" id="cari_tgl_registrasi_end_RegPeriksa" data-options="formatter:dateformatter,parser:dateparser" value="{?=date('Y-m-d')?}" style="width:120px">
 		<label style="margin-left: 20px;">Keyword : </label>
 		<input class="easyui-textbox" id="cari_keyword_RegPeriksa" style="width:120px">
-		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="doSearch_RegPeriksa()"></a> 
-		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="doSemua_RegPeriksa()"></a>
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_RegPeriksa()"></a> 
+		<a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="cari_semua_RegPeriksa()"></a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 2px;" onclick="baru_RegPeriksa()">Baru</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 2px;" onclick="simpan_RegPeriksa()">Simpan</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 2px;" onclick="ubah_RegPeriksa()">Ubah</a>
@@ -88,17 +88,22 @@
 	  fit:true,
 	  columns:[[
 		{ field:'ck',checkbox:true},
+		{ field:'no_reg',title:'No.Reg',sortable:true},
 		{ field:'no_rawat',title:'Nomor Rawat',sortable:true},
+		{ field:'tgl_registrasi',title:'Tanggal',sortable:true},
+		{ field:'jam_reg',title:'Jam',sortable:true},
 		{ field:'kd_dokter',title:'Kode Dokter',sortable:true},
 		{ field:'nm_dokter',title:'Dokter Dituju',sortable:true},
 		{ field:'no_rkm_medis',title:'No. RM',sortable:true},
 		{ field:'nm_pasien',title:'Pasien',sortable:true},
+		{ field:'jk',title:'J.K',sortable:true},
+		{ field:'umur',title:'Umur',sortable:true}, 
 		{ field:'nm_poli',title:'Poliklinik',sortable:true},
 		{ field:'png_jawab',title:'Penanggung Jawab',sortable:true},
-		{ field:'tgl_registrasi',title:'Tanggal',sortable:true},
-		{ field:'jam_reg',title:'Jam',sortable:true},
-		{ field:'no_reg',title:'No.Reg',sortable:true},
-		{ field:'umur',title:'Umur',sortable:true}
+		{ field:'biaya_reg',title:'Biaya Registrasi',sortable:true},
+		{ field:'stts',title:'Status',sortable:true},
+		{ field:'no_tlp',title:'No. Telepon',sortable:true},
+		{ field:'status_bayar',title:'Status Bayar',sortable:true}
 	  ]],
 	  onRowContextMenu:function(e,index,row){
 		e.preventDefault();
@@ -118,6 +123,7 @@
 		$('#nm_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
 		$('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
 	    $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
+	    $('#biaya_reg_RegPeriksa').textbox('setValue',row.biaya_reg);
 	    $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
 	    $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
 	  }  
@@ -146,50 +152,114 @@
 	function simpan_RegPeriksa()
 	{
 		url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=simpan&t={?=$_SESSION['token']?}'; 
-		// alert(url);
 		$('#fm_RegPeriksa').form('submit',{
-              url: url,
-              iframe: false,
-              onSubmit: function(){
-                  return $(this).form('validate');
-              },
-              success: function(result){
-                  var result = eval('('+result+')');
-                  if (result.errorMsg){
-                      $.messager.show({
-                          title: 'Error',
-                          msg: result.errorMsg
-                      });
-                      var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
-                      audio.play();
-                  } else {
-					  $('#dg_RegPeriksa').datagrid('reload');    // reload the user data
-                      $.messager.show({
-                          title: 'Sukses',
-                          msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah disimpan dengan nomor rawat ' + result.no_rawat
-                      });
-                  }
-              }
-          });
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_RegPeriksa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Pasien dengan nomor ' + result.no_rkm_medis + ' telah disimpan dengan nomor rawat ' + result.no_rawat
+					});
+				}
+			}
+        });
 	}
 
     function ubah_RegPeriksa(){
-        alert('Form Ubah');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=ubah&t={?=$_SESSION['token']?}'; 
+		$('#fm_RegPeriksa').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_RegPeriksa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Pasien dengan nomor RM ' + result.no_rkm_medis + ' dan nomor rawat ' + result.no_rawat + ' telah diubah dengan nomor urut ' + result.no_reg
+					});
+				}
+			}
+        });
     }
 
     function hapus_RegPeriksa(){
-        alert('Form Hapus');
+        var row = $('#dg_RegPeriksa').datagrid('getSelected');
+        var rows = $('#dg_RegPeriksa').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $.messager.confirm('Confirm','Yakin menghapus data ini?',function(r){
+                if (r){
+                    $.post('{?=url()?}/{?=ADMIN?}/khanza/regperiksa/?act=hapus&t={?=$_SESSION['token']?}',{no_rkm_medis:row.no_rkm_medis,no_rawat:row.no_rawat},function(result){
+                        if (result.errorMsg){
+                        $.messager.show({    // show error message
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                        var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                        audio.play();
+                        } else {
+                        $.messager.show({    // show error message
+                            title: 'Success',
+                            msg: 'Pasien dengan nomor RM ' + result.no_rkm_medis + ' dan nomor rawat ' + result.no_rawat + ' telah dihapus!'
+                        });
+                        $('#dg_RegPeriksa').datagrid('reload');   // reload the user data
+                        }
+                    },'json');
+                }
+            });
+        }
     }
 
     function cetak_RegPeriksa(){
-        alert('Form Cetak');
+        var cari_nama_poliklinik = $('#cari_nama_poli_RegPeriksa').val();
+        var cari_nama_dokter = $('#cari_nama_dokter_RegPeriksa').val();
+        var tgl_awal = $('#cari_tgl_registrasi_start_RegPeriksa').val();
+        var tgl_akhir = $('#cari_tgl_registrasi_end_RegPeriksa').val();
+        var cari_keyword = $('#cari_keyword_RegPeriksa').val();
+        $('#dlg_window').dialog({
+            title: 'Cetak Data Registrasi',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/regperiksa/?cari_poliklinik=' + cari_nama_poliklinik + '&cari_dokter=' + cari_nama_dokter + '&tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir + '&cari_keyword=' + cari_keyword + '&t={?=$_SESSION['token']?}"></embed>',
+            modal: true
+        });
     }
 
     function keluar_RegPeriksa(){
         $('#wu-tabs').tabs('close','Registrasi');
     }
 
-	function doSearch_RegPeriksa(){
+	function cari_RegPeriksa(){
 		$('#dg_RegPeriksa').datagrid('load',{
 		  cari_nama_poli: $('#cari_nama_poli_RegPeriksa').val(), 
 		  cari_nama_dokter: $('#cari_nama_dokter_RegPeriksa').val(), 
@@ -201,15 +271,15 @@
 		});
 	}
 
-	function doSemua_RegPeriksa(){
+	function cari_semua_RegPeriksa(){
 	  $('#cari_nama_poli_RegPeriksa').textbox('clear');
 	  $('#cari_nama_dokter_RegPeriksa').textbox('clear');
 	  $('#cari_keyword_RegPeriksa').textbox('clear');
 	  $('#cari_stts_RegPeriksa').combobox('setValue', 'Semua');
 	  $('#cari_status_bayar_RegPeriksa').combobox('setValue', 'Semua');
-	  $('#cari_tgl_registrasi_start_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
-	  $('#cari_tgl_registrasi_end_RegPeriksa').datebox('setValue','{?=date('d-m-Y')?}');
-	  doSearch();
+	  $('#cari_tgl_registrasi_start_RegPeriksa').datebox('setValue','{?=date('Y-m-d')?}');
+	  $('#cari_tgl_registrasi_end_RegPeriksa').datebox('setValue','{?=date('Y-m-d')?}');
+	  cari_RegPeriksa();
 	}
 
 	function cari_Pasien_RegPeriksa() {
@@ -234,10 +304,32 @@
 		});
 	}
 
+	function cari_NamaDokter_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Data Dokter');
+		$('#dlg_window').dialog({
+			title: 'Cari Nama Dokter',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','dokter'])?}',
+			modal: true
+		});
+	}
+
 	function cari_Poliklinik_RegPeriksa() {
         $('#wu-tabs').tabs('close','Poliklinik');
 		$('#dlg_window').dialog({
 			title: 'Cari Poliklinik',
+			closed: false,
+			cache: false,
+			href: '{?=url([ADMIN,'khanza','poliklinik'])?}',
+			modal: true
+		});
+	}
+
+	function cari_NamaPoliklinik_RegPeriksa() {
+        $('#wu-tabs').tabs('close','Poliklinik');
+		$('#dlg_window').dialog({
+			title: 'Cari Nama Poliklinik',
 			closed: false,
 			cache: false,
 			href: '{?=url([ADMIN,'khanza','poliklinik'])?}',

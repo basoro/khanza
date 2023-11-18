@@ -104,8 +104,9 @@
         var row = $('#dg_Dokter').datagrid('getSelected');
         $('#kd_dokter_Dokter').textbox('setValue',row.kd_dokter);
         $('#nm_dokter_Dokter').textbox('setValue',row.nm_dokter);
-        $('#kd_dokter_RegPeriksa').textbox('setValue',row.kd_dokter);
-        $('#nm_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
+	  },
+      onDblClickRow: function(){
+        var row = $('#dg_Dokter').datagrid('getSelected');
         $('#cari_kd_dokter_FrekuensiPenyakitRalan').textbox('setValue',row.kd_dokter);
         $('#cari_nm_dokter_FrekuensiPenyakitRalan').textbox('setValue',row.nm_dokter);
         $('#agama_Dokter').combobox('setValue',row.agama);
@@ -113,10 +114,16 @@
         var dlg = $("#dlg_window").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Dokter') {
-                $('#dlg_window').dialog('close', 'Dokter')
+                $('#kd_dokter_RegPeriksa').textbox('setValue',row.kd_dokter);
+                $('#nm_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
+                $('#dlg_window').dialog('close', 'Cari Dokter')
+            }
+            if(dlg.options.title == 'Cari Nama Dokter') {
+                $('#cari_nama_dokter_RegPeriksa').textbox('setValue',row.nm_dokter);
+                $('#dlg_window').dialog('close', 'Cari Nama Dokter')
             }
         }
-	  },
+	  }
     });
 
     function baru_Dokter(){

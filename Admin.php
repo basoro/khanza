@@ -432,6 +432,12 @@ class Admin extends AdminModule
         case "simpan":  
           $this->regperiksa->Simpan();
         break;
+        case "ubah":  
+          $this->regperiksa->Ubah();
+        break;
+        case "hapus":  
+          $this->regperiksa->Hapus();
+        break;
         case "get_no_reg":  
           echo $this->setNoReg(isset_or($_POST['kd_dokter'], ''), isset_or($_POST['kd_poli'],''));
         break;

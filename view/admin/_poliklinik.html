@@ -95,28 +95,22 @@
         $('#nm_poli_Poliklinik').textbox('setValue',row.nm_poli);
         $('#registrasi_Poliklinik').textbox('setValue',row.registrasi);
         $('#registrasi_lama_Poliklinik').textbox('setValue',row.registrasi_lama);
-        $('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
-        $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
-        $('#cari_kd_poli_FrekuensiPenyakitRalan').textbox('setValue',row.kd_poli);
-        $('#cari_nm_poli_FrekuensiPenyakitRalan').textbox('setValue',row.nm_poli);
-        $('#registrasi_RegPeriksa').textbox('setValue',row.registrasi);
       }, 
       onDblClickRow: function(){
         var row = $('#dg_Poliklinik').datagrid('getSelected');
-        $('#kd_poli_Poliklinik').textbox('setValue',row.kd_poli);
-        $('#nm_poli_Poliklinik').textbox('setValue',row.nm_poli);
-        $('#registrasi_Poliklinik').textbox('setValue',row.registrasi);
-        $('#registrasi_lama_Poliklinik').textbox('setValue',row.registrasi_lama);
-        $('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
-        $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
         $('#cari_kd_poli_FrekuensiPenyakitRalan').textbox('setValue',row.kd_poli);
         $('#cari_nm_poli_FrekuensiPenyakitRalan').textbox('setValue',row.nm_poli);
-        $('#registrasi_RegPeriksa').textbox('setValue',row.registrasi);
         var dlg = $("#dlg_window").data('dialog');
         if(typeof dlg !== 'undefined') {
-            // console.log(dlg);
             if(dlg.options.title == 'Cari Poliklinik') {
-                $('#dlg_window').dialog('close', 'Poliklinik')
+                $('#kd_poli_RegPeriksa').textbox('setValue',row.kd_poli);
+                $('#nm_poli_RegPeriksa').textbox('setValue',row.nm_poli);
+                $('#biaya_reg_RegPeriksa').textbox('setValue',row.registrasi);
+                $('#dlg_window').dialog('close', 'Cari Poliklinik')
+            }
+            if(dlg.options.title == 'Cari Nama Poliklinik') {
+                $('#cari_nama_poli_RegPeriksa').textbox('setValue',row.nm_poli);
+                $('#dlg_window').dialog('close', 'Cari Nama Poliklinik')
             }
         }
       }
