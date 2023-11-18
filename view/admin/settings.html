@@ -1,11 +1,11 @@
 <div class="row">
-    <form action="{?=url(ADMIN.'/khanza/saveSettings')?}" method="POST">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{$settings.title}</h3>
                 </div>
-            	  <div class="panel-body">
+                <form action="{?=url(ADMIN.'/khanza/saveSettings')?}" method="POST">
+            	<div class="panel-body">
                     <div class="form-group">
                         <label>Host</label>
                         <input type="text" name="khanza[host]" class="form-control" value="{$settings.khanza.host}" />
@@ -28,6 +28,7 @@
                     </div>
                     <input type="submit" name="save" class="btn btn-primary" value="Simpan" />
                 </div>
+                </form>
             </div>
         </div>
         <div class="col-md-6">
@@ -81,5 +82,4 @@
                 </div>
             </div>
         </div>
-    </form>
 </div>

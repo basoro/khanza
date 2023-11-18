@@ -222,7 +222,7 @@ class Admin extends AdminModule
       exit();
     }
 
-    public function getSettings()
+    public function anySettings()
     {
         $this->assign['title'] = 'Pengaturan Modul Khanza D2W';
         $this->assign['khanza'] = htmlspecialchars_array($this->settings('khanza'));
@@ -240,11 +240,11 @@ class Admin extends AdminModule
                     ]
                 ]
             ];
-
+      
             $json = file_get_contents($url, false, stream_context_create($opts));
             $obj = json_decode($json, true);
             $new_date_format = date('Y-m-d H:i:s', strtotime($obj['commit']['author']['date']));
-
+      
             if (!is_array($obj)) {
                 $this->tpl->set('error', $obj);
             } else {
@@ -253,7 +253,10 @@ class Admin extends AdminModule
                 }
                 $this->settings('khanza', 'update_version', $new_date_format);
                 $this->settings('khanza', 'update_changelog', $obj['commit']['message']);
-            }
+            }          
+
+            redirect(url([ADMIN, 'khanza', 'settings']));
+             
         } elseif (isset($_POST['update'])) {
             if (!class_exists("ZipArchive")) {
                 $this->tpl->set('error', "ZipArchive is required to update mLITE.");
@@ -292,8 +295,10 @@ class Admin extends AdminModule
 
             // Close archive and delete all unnecessary files
             $zip->close();
-            unlink(BASE_DIR.'/tmp/latest.zip');
-            deleteDir(BASE_DIR.'/tmp/update');
+            // unlink(BASE_DIR.'/tmp/latest.zip');
+            // deleteDir(BASE_DIR.'/tmp/update');
+
+            $this->settings->reload();
 
             $this->settings('khanza', 'version', $new_date_format);
             $this->settings('khanza', 'update_version', $new_date_format);
@@ -315,6 +320,56 @@ class Admin extends AdminModule
         redirect(url([ADMIN, 'khanza', 'settings']));
     }
 
+    private function download($source, $dest)
+    {
+        set_time_limit(0);
+        $fp = fopen($dest, 'w+');
+        $ch = curl_init($source);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+    }
+
+    private function rcopy($source, $dest, $permissions = 0755, $expect = [])
+    {
+        foreach ($expect as $e) {
+            if ($e == $source) {
+                return;
+            }
+        }
+
+        if (is_link($source)) {
+            return symlink(readlink($source), $dest);
+        }
+
+        if (is_file($source)) {
+            if (!is_dir(dirname($dest))) {
+                mkdir(dirname($dest), 0777, true);
+            }
+
+            return copy($source, $dest);
+        }
+
+        if (!is_dir($dest)) {
+            mkdir($dest, $permissions, true);
+        }
+
+        $dir = dir($source);
+        while (false !== $entry = $dir->read()) {
+            if ($entry == '.' || $entry == '..') {
+                continue;
+            }
+
+            $this->rcopy("$source/$entry", "$dest/$entry", $permissions, $expect);
+        }
+
+        $dir->close();
+        return true;
+    }
+        
     public function anyBlank()
     {
       $this->_getSession();
