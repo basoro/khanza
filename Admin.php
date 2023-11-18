@@ -2,6 +2,8 @@
 namespace Plugins\Khanza;
 
 use Systems\AdminModule;
+use Systems\Lib\QRCode;
+
 use Plugins\Khanza\MySQL;
 use Plugins\Khanza\Src\Blank;
 use Plugins\Khanza\Src\Pasien;
@@ -224,6 +226,83 @@ class Admin extends AdminModule
     {
         $this->assign['title'] = 'Pengaturan Modul Khanza D2W';
         $this->assign['khanza'] = htmlspecialchars_array($this->settings('khanza'));
+
+        $this->tpl->set('allow_curl', intval(function_exists('curl_init')));
+
+        if (isset($_POST['check'])) {
+
+            $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+            $opts = [
+                'http' => [
+                    'method' => 'GET',
+                    'header' => [
+                            'User-Agent: PHP'
+                    ]
+                ]
+            ];
+
+            $json = file_get_contents($url, false, stream_context_create($opts));
+            $obj = json_decode($json, true);
+            $new_date_format = date('Y-m-d H:i:s', strtotime($obj['commit']['author']['date']));
+
+            if (!is_array($obj)) {
+                $this->tpl->set('error', $obj);
+            } else {
+                if(mb_strlen($this->settings->get('khanza.version'), 'UTF-8') < 5) {
+                  $this->settings('khanza', 'version', '2023-01-01 00:00:00');
+                }
+                $this->settings('khanza', 'update_version', $new_date_format);
+                $this->settings('khanza', 'update_changelog', $obj['commit']['message']);
+            }
+        } elseif (isset($_POST['update'])) {
+            if (!class_exists("ZipArchive")) {
+                $this->tpl->set('error', "ZipArchive is required to update mLITE.");
+            }
+
+            if (!isset($_GET['manual'])) {
+                $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+                $opts = [
+                    'http' => [
+                        'method' => 'GET',
+                        'header' => [
+                                'User-Agent: PHP'
+                        ]
+                    ]
+                ];
+
+                $json = file_get_contents($url, false, stream_context_create($opts));
+                $obj = json_decode($json, true);
+                $new_date_format = date('Y-m-d H:i:s', strtotime($obj['commit']['author']['date']));
+                $this->download('https://github.com/basoro/khanza2web/archive/master.zip', BASE_DIR.'/tmp/latest.zip');
+            } else {
+                $package = glob(BASE_DIR.'/khanza2web-master.zip');
+                if (!empty($package)) {
+                    $package = array_shift($package);
+                    $this->rcopy($package, BASE_DIR.'/tmp/latest.zip');
+                }
+            }
+
+            // Unzip latest update
+            $zip = new \ZipArchive;
+            $zip->open(BASE_DIR.'/tmp/latest.zip');
+            $zip->extractTo(BASE_DIR.'/tmp/update');
+
+            // Copy files
+            $this->rcopy(BASE_DIR.'/tmp/update/khanza2web-master', BASE_DIR.'/plugins/khanza');
+
+            // Close archive and delete all unnecessary files
+            $zip->close();
+            unlink(BASE_DIR.'/tmp/latest.zip');
+            deleteDir(BASE_DIR.'/tmp/update');
+
+            $this->settings('khanza', 'version', $new_date_format);
+            $this->settings('khanza', 'update_version', $new_date_format);
+            $this->settings('khanza', 'update_changelog', $obj['commit']['message']);
+
+            sleep(2);
+            redirect(url([ADMIN, 'khanza', 'settings']));
+        }
+
         return $this->draw('settings.html', ['settings' => $this->assign]);
     }
 
@@ -361,6 +440,7 @@ class Admin extends AdminModule
             ->join('propinsi', 'propinsi.kd_prop=pasien.kd_prop')
             ->where('reg_periksa.no_rawat', $no_rawat)
             ->oneArray();
+
           echo $this->draw('_billing.ralan.html', ['mlite' => $this->assign, 'reg_periksa' => $registrasi, 'no_rawat' => $no_rawat, 'convert_no_rawat' => $this->convertNorawat($no_rawat)]);
         break;
         case "data":
@@ -418,8 +498,19 @@ class Admin extends AdminModule
       $rows = $this->db()->pdo()->prepare($rows);
       $rows->execute();
       $billing = $rows->fetchAll(\PDO::FETCH_ASSOC);
-
       $total = '';
+      foreach($billing as $row) {
+        $total += $row['empat'];
+      }
+
+      $metadata_kasir = "Dikeluarkan di ".$this->settings->get('settings.nama_instansi').", Kabupaten/Kota ".$this->settings->get('settings.kota').". Ditandatangani secara elektronik oleh ".$this->core->getUserInfo('fullname', $_SESSION['mlite_user'], true).".";
+ 
+      unlink(BASE_DIR.'/tmp/qrcode_kasir.png');
+      $qr_kasir=QRCode::getMinimumQRCode($metadata_kasir,QR_ERROR_CORRECT_LEVEL_L);
+      $im_kasir=$qr_kasir->createImage(4,4);
+      imagepng($im_kasir,BASE_DIR.'/tmp/qrcode_kasir.png');
+      imagedestroy($im_kasir);
+
       echo $this->draw('_cetak.billing.ralan.html', ['instansi' => $setting, 'billing' => $billing, 'total' => $total]);
       exit();
     }
@@ -748,6 +839,34 @@ class Admin extends AdminModule
     {
       $this->_getSession();
       echo $this->draw('_rujuk.masuk.perujuk.html');
+      exit();
+    }
+
+    public function getCoba()
+    {
+      $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+      $opts = [
+          'http' => [
+              'method' => 'GET',
+              'header' => [
+                      'User-Agent: PHP'
+              ]
+          ]
+      ];
+
+      $json = file_get_contents($url, false, stream_context_create($opts));
+      $obj = json_decode($json, true);
+      $new_date_format = date('Y-m-d H:i:s', strtotime($obj['commit']['author']['date']));
+
+      if (!is_array($obj)) {
+          $this->tpl->set('error', $obj);
+      } else {
+          if(mb_strlen($this->settings->get('khanza.version'), 'UTF-8') < 5) {
+            $this->settings('khanza', 'version', '2023-01-01 00:00:00');
+          }
+          $this->settings('khanza', 'update_version', $new_date_format);
+          $this->settings('khanza', 'update_changelog', $obj['commit']['message']);
+      }
       exit();
     }
 

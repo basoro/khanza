@@ -56,10 +56,10 @@
         var row = $('#dg_Bahasa').datagrid('getSelected');
         $('#id_bahasa_Pasien').val(row.id);
         $('#nama_bahasa_pasien_Pasien').textbox('setValue',row.nama_bahasa);
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Bahasa') {
-                $('#dlg_window').dialog('close', 'Bahasa')
+                $('#dlg_window_Pasien').dialog('close', 'Bahasa')
             }
         }
 	  }

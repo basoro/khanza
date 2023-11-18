@@ -188,6 +188,8 @@
     </div>
   </div>
 
+  <div id="dlg_window_Pasien" class="easyui-dialog" style="width:98%;height:98%;" title="Dialog Window" data-options="closed:true,modal:true,border:'thin'"></div>
+
   <div id="klik_kanan" class="easyui-menu" style="width:250px;">
       <div onclick="getKartu()">Kartu Pasien</div>
       <div onclick="getDlgDefault()">Label Rekam Medis</div>
@@ -229,14 +231,34 @@
             { field:'ck',checkbox:true},
             { field:'no_rkm_medis',title:'Nomor RM',sortable:true},
             { field:'nm_pasien',title:'Nama Pasien',sortable:true},
-            { field:'alamat',title:'Alamat',sortable:true},
             { field:'no_ktp',title:'Nomor KTP',sortable:true},
             { field:'jk',title:'Jenis Kelamin',sortable:true},
+            { field:'tmp_lahir',title:'Tempat Lahir',sortable:true},
             { field:'tgl_lahir',title:'Tanggal Lahir',sortable:true},
+            { field:'nm_ibu',title:'Nama Ibu',sortable:true},
+            { field:'alamat_pasien',title:'Alamat',sortable:true},
+            { field:'gol_darah',title:'Gol. Darah',sortable:true},
+            { field:'pekerjaan',title:'Pekerjaan',sortable:true},
+            { field:'stts_nikah',title:'Status Nikah',sortable:true},
             { field:'umur',title:'Umur',sortable:true},
             { field:'keluarga',title:'Keluarga',sortable:true},
             { field:'stts_nikah',title:'Status',sortable:true},
-            { field:'agama',title:'Agama',sortable:true}
+            { field:'agama',title:'Agama',sortable:true},
+            { field:'tgl_daftar',title:'Tanggal Daftar',sortable:true},
+            { field:'no_tlp',title:'No. Telp',sortable:true},
+            { field:'umur',title:'Umur',sortable:true},
+            { field:'pnd',title:'Pendidikan',sortable:true},
+            { field:'keluarga',title:'Penanggung Jawab',sortable:true},
+            { field:'namakeluarga',title:'Nama Penanggung Jawab',sortable:true},
+            { field:'png_jawab',title:'Asuransi',sortable:true},
+            { field:'no_peserta',title:'No. Peserta',sortable:true},
+            { field:'pekerjaanpj',title:'Pekerjaan PJ',sortable:true},
+            { field:'alamat_pj',title:'Alamat PJ',sortable:true},
+            { field:'nama_suku_bangsa',title:'Suku Bangsa',sortable:true},
+            { field:'nama_bahasa',title:'Bahasa',sortable:true},
+            { field:'nama_perusahaan_pasien',title:'Instansi/Perusahaan',sortable:true},
+            { field:'nip',title:'NIP/NRP',sortable:true},
+            { field:'email',title:'Email',sortable:true}
         ]],
         onRowContextMenu:function(e,index,row){
             e.preventDefault();
@@ -261,6 +283,7 @@
             $('#'+row.keluarga+'_Pasien').radiobutton({value: row.keluarga, checked: true});
             $('#namakeluarga_Pasien').textbox('setValue',row.namakeluarga);
             $('#pekerjaanpj_Pasien').textbox('setValue',row.pekerjaanpj);
+            $('#stts_nikah_Pasien').combobox('setValue',row.stts_nikah);
             $('#id_suku_bangsa_Pasien').val(row.suku_bangsa);
             $('#nama_suku_bangsa_Pasien').textbox('setValue',row.nama_suku_bangsa);
             $('#id_bahasa_Pasien').val(row.bahasa_pasien);
@@ -363,7 +386,7 @@
 
     function cari_SukuBangsa_Pasien(){
         $('#wu-tabs').tabs('close','Suku Bangsa');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Suku Bangsa',
 			closed: false,
 			cache: false,
@@ -374,8 +397,8 @@
 
 	function cari_Bahasa_Pasien()
 	{
-        $('#wu-tabs').tabs('close','Bahasa');
-		$('#dlg_window').dialog({
+        $('#wu-tabs').tabs('close','Bahasa Pasien');
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Bahasa',
 			closed: false,
 			cache: false,
@@ -387,7 +410,7 @@
 	function cari_CacatFisik_Pasien()
 	{
         $('#wu-tabs').tabs('close','Cacat Fisik');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Cacat Fisik',
 			closed: false,
 			cache: false,
@@ -399,7 +422,7 @@
 	function cari_Kelurahan_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kelurahan');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kelurahan',
 			closed: false,
 			cache: false,
@@ -411,7 +434,7 @@
 	function cari_KelurahanPJ_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kelurahan');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kelurahan PJ',
 			closed: false,
 			cache: false,
@@ -423,7 +446,7 @@
 	function cari_Kecamatan_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kecamatan');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kecamatan',
 			closed: false,
 			cache: false,
@@ -435,7 +458,7 @@
 	function cari_KecamatanPJ_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kecamatan');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kecamatan PJ',
 			closed: false,
 			cache: false,
@@ -447,7 +470,7 @@
 	function cari_Kabupaten_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kabupaten');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kabupaten',
 			closed: false,
 			cache: false,
@@ -459,7 +482,7 @@
 	function cari_KabupatenPJ_Pasien()
 	{
         $('#wu-tabs').tabs('close','Kabupaten');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Kabupaten PJ',
 			closed: false,
 			cache: false,
@@ -471,7 +494,7 @@
 	function cari_Propinsi_Pasien()
 	{
         $('#wu-tabs').tabs('close','Propinsi');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Propinsi',
 			closed: false,
 			cache: false,
@@ -483,7 +506,7 @@
 	function cari_PropinsiPJ_Pasien()
 	{
         $('#wu-tabs').tabs('close','Propinsi');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Propinsi PJ',
 			closed: false,
 			cache: false,
@@ -495,7 +518,7 @@
 	function cari_Penjab_Pasien()
 	{
         $('#wu-tabs').tabs('close','Penjab');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Penjab',
 			closed: false,
 			cache: false,
@@ -507,7 +530,7 @@
 	function cari_PerusahaanPasien_Pasien()
 	{
         $('#wu-tabs').tabs('close','Perusahaan Pasien');
-		$('#dlg_window').dialog({
+		$('#dlg_window_Pasien').dialog({
 			title: 'Cari Perusahaan Pasien',
 			closed: false,
 			cache: false,
