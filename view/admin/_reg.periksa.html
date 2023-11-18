@@ -66,6 +66,14 @@
 <div id="klik_kanan_RegPeriksa" class="easyui-menu" style="width:250px;">
 	<div>Permintaan</div>
 	<div onclick="kamar_inap_RegPeriksa()">Kamar Inap</div>
+	<div>
+		<span>BPJS</span>
+		<div>
+			<div onclick="cek_nik_bpjs()">Cek NIK Peserta</div>
+			<div onclick="cek_peserta_bpjs()">Cek Nomor Peserta</div>
+		</div>
+	</div>
+	<div onclick="cetak_BuktiRegistrasi()">Cetak Bukti Registrasi</div>
 </div>
 
 <div id="help_pasien_window" class="easyui-dialog" style="width:90%;height:90%;" title="Bantuan" data-options="closed:true,modal:true,border:'thin'">
@@ -254,6 +262,17 @@
             modal: true
         });
     }
+
+	function cetak_BuktiRegistrasi(){
+        var no_rawat = $('#no_rawat_RegPeriksa').val();
+        $('#dlg_window').dialog({
+            title: 'Cetak Bukti Registrasi',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/buktiregister/?no_rawat=' + no_rawat + '&t={?=$_SESSION['token']?}"></embed>',
+            modal: true
+        });
+	}
 
     function keluar_RegPeriksa(){
         $('#wu-tabs').tabs('close','Registrasi');

@@ -28,6 +28,7 @@ use Plugins\Khanza\Src\Kabupaten;
 use Plugins\Khanza\Src\Kecamatan;
 use Plugins\Khanza\Src\Kelurahan;
 use Plugins\Khanza\Src\RujukMasuk;
+use Plugins\Khanza\Src\Bpjs;
 
 class Admin extends AdminModule
 {
@@ -55,6 +56,7 @@ class Admin extends AdminModule
   protected $kecamatan;
   protected $kelurahan;
   protected $rujukmasuk;
+  protected $bpjs;
 
     public function init()
     {
@@ -81,6 +83,7 @@ class Admin extends AdminModule
       $this->kecamatan = new Kecamatan();
       $this->kelurahan = new Kelurahan();
       $this->rujukmasuk = new RujukMasuk();
+      $this->bpjs = new Bpjs();
     }
     
     protected function db($table = NULL)
@@ -902,6 +905,29 @@ class Admin extends AdminModule
       echo $this->draw('_rujuk.masuk.perujuk.html');
       exit();
     }
+
+    public function anyBpjs()
+    {
+      $this->_getSession();
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      $nik = isset_or($_GET['nik'],'');
+      $noka = isset_or($_GET['noka'],'');
+      $tglPelayananSEP = date('Y-m-d');
+      switch($show){
+      	default:
+        break;
+        case "ceknik":
+          $result = $this->bpjs->CekNik($nik, $tglPelayananSEP);
+          echo $this->draw('_bpjs.cek.response.html', ['result' => $result]);
+        break;
+        case "ceknoka":
+          $result = $this->bpjs->CekNoka($noka, $tglPelayananSEP);
+          echo $this->draw('_bpjs.cek.response.html', ['result' => $result]);
+        break;
+      }
+      exit();
+    }
+
 
     public function getCoba()
     {

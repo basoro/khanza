@@ -612,7 +612,7 @@
     function cetak_Pasien(){
         var cari_alamat = $('#cari_alamat').val();
         var cari_keyword = $('#cari_keyword_pasien').val();
-        $('#dlg_window').dialog({
+        $('#dlg_window_Pasien').dialog({
             title: 'Cetak Data Pasien',
             closed: false,
             cache: false,
@@ -645,7 +645,7 @@
             return;
         }
         if (row){
-            $('#dlg_window').dialog({
+            $('#dlg_window_Pasien').dialog({
                 title: 'Cetak Kartu',
                 closed: false,
                 cache: false,
@@ -666,7 +666,7 @@
             return;
         }
         if (row){
-            $('#dlg_window').dialog({
+            $('#dlg_window_Pasien').dialog({
                 title: 'Cetak Cover Rekam Medis',
                 closed: false,
                 cache: false,
@@ -675,6 +675,31 @@
             });
         }
     }
+
+    function cek_peserta_bpjs()
+      {
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        $('#dlg_window_Pasien').dialog({
+          title: 'Cek Data Pasien',
+          closed: false,
+          cache: false,
+          href: '{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknoka&noka=' + row.no_peserta + '&t={?=$_SESSION['token']?}',
+          modal: true
+        });
+      }
+
+      function cek_nik_bpjs()
+      {
+        var row = $('#dg_Pasien').datagrid('getSelected');
+        $('#dlg_window_Pasien').dialog({
+          title: 'Cek Data Pasien',
+          closed: false,
+          cache: false,
+          href: '{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknik&nik=' + row.no_ktp + '&t={?=$_SESSION['token']?}',
+          modal: true
+        });
+      }
+
 
     function keluar_Pasien(){
         $('#wu-tabs').tabs('close','Pasien');
