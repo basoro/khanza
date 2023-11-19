@@ -544,6 +544,7 @@ class Admin extends AdminModule
           echo json_encode(array(
             'no_rawat' => $_POST['no_rawat']
           ));
+          $this->db('reg_periksa')->where('no_rawat', $no_rawat)->update(['status_bayar' => 'Sudah Bayar']);
         } else {
           echo json_encode(array('errorMsg'=>$error['2']));
         }            
@@ -957,6 +958,7 @@ class Admin extends AdminModule
       $show = isset($_GET['act']) ? $_GET['act'] : "";
       $nik = isset_or($_GET['nik'],'');
       $noka = isset_or($_GET['noka'],'');
+      $no_rkm_medis = isset_or($_GET['no_rkm_medis'],'');
       $tglPelayananSEP = date('Y-m-d');
       switch($show){
       	default:

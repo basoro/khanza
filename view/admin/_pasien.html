@@ -12,12 +12,12 @@
                 <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="cari_semua_Pasien()"></a>
             </div>
             <div>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin:0 5px;" onclick="baru_Pasien()">Baru</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" style="margin:0 5px;" onclick="simpan_Pasien()">Simpan</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="margin:0 5px;" onclick="ubah_Pasien()">Ubah</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" style="margin:0 5px;" onclick="hapus_Pasien()">Hapus</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" style="margin:0 5px;" onclick="cetak_Pasien()">Cetak</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Pasien()" style="margin:0 15px;">Keluar</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="margin:0 5px;" onclick="baru_Pasien()">Baru</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="margin:0 5px;" onclick="simpan_Pasien()">Simpan</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="margin:0 5px;" onclick="ubah_Pasien()">Ubah</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut'" style="margin:0 5px;" onclick="hapus_Pasien()">Hapus</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="margin:0 5px;" onclick="cetak_Pasien()">Cetak</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="keluar_Pasien()" style="margin:0 15px;">Keluar</a>
             </div>
           </div>
           <div region="center" border="false">
@@ -677,29 +677,28 @@
     }
 
     function cek_peserta_bpjs()
-      {
+    {
         var row = $('#dg_Pasien').datagrid('getSelected');
         $('#dlg_window_Pasien').dialog({
-          title: 'Cek Data Pasien',
-          closed: false,
-          cache: false,
-          content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknoka&noka=' + row.no_peserta + '&t={?=$_SESSION['token']?}"></embed>',
-          modal: true
+            title: 'Cek Data Pasien',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknoka&noka=' + row.no_peserta + '&t={?=$_SESSION['token']?}"></embed>',
+            modal: true
         });
-      }
+    }
 
-      function cek_nik_bpjs()
-      {
+    function cek_nik_bpjs()
+    {
         var row = $('#dg_Pasien').datagrid('getSelected');
         $('#dlg_window_Pasien').dialog({
-          title: 'Cek Data Pasien',
-          closed: false,
-          cache: false,
-          content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknik&nik=' + row.no_ktp + '&t={?=$_SESSION['token']?}"></embed>',
-          modal: true
+            title: 'Cek Data Pasien',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknik&nik=' + row.no_ktp + '&t={?=$_SESSION['token']?}"></embed>',
+            modal: true
         });
-      }
-
+    }
 
     function keluar_Pasien(){
         $('#wu-tabs').tabs('close','Pasien');
