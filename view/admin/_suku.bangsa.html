@@ -1,11 +1,13 @@
 <div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
     <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
+        <form id="fm_SukuBangsa" method="post" novalidate style="margin:0;padding:5px">
 		<table>
 			<tr>
 				<td width="100"><span style="float:right;">Kode/Nama</span></td>
 				<td colspan="3">: <input name="id_SukuBangsa" id="id_SukuBangsa" class="easyui-textbox" style="width:80px;"></input> <input name="nama_SukuBangsa" id="nama_SukuBangsa" class="easyui-textbox" style="width:245px;"></td>
 			</tr>
 		</table>
+        </form>
     </div>
     <div data-options="region:'center'" border="thin">
         <table id="dg_SukuBangsa" class="easyui-datagrid" footer="#toolbar_SukuBangsa">
@@ -66,19 +68,97 @@
     });
 
     function baru_SukuBangsa(){
-        alert('Form Baru');
+		$('#fm_SukuBangsa').form('clear');
     }
 
     function simpan_SukuBangsa(){
-        alert('Form Simpan');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/sukubangsa/?act=simpan&t={?=$_SESSION['token']?}'; 
+		$('#fm_SukuBangsa').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_SukuBangsa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Data suku bangsa telah disimpan'
+					});
+				}
+			}
+        });
     }
 
     function ubah_SukuBangsa(){
-        alert('Form Ubah');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/sukubangsa/?act=ubah&t={?=$_SESSION['token']?}'; 
+		$('#fm_SukuBangsa').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_SukuBangsa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Suku bangsa telah diubah!'
+					});
+				}
+			}
+        });
     }
 
     function hapus_SukuBangsa(){
-        alert('Form Hapus');
+        var row = $('#dg_SukuBangsa').datagrid('getSelected');
+        var rows = $('#dg_SukuBangsa').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $.messager.confirm('Confirm','Yakin menghapus data ini?',function(r){
+                if (r){
+                    $.post('{?=url()?}/{?=ADMIN?}/khanza/sukubangsa/?act=hapus&t={?=$_SESSION['token']?}',{id:row.id},function(result){
+                        if (result.errorMsg){
+                        $.messager.show({    // show error message
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                        var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                        audio.play();
+                        } else {
+                        $.messager.show({    // show error message
+                            title: 'Success',
+                            msg: 'Suku bangsa telah dihapus!'
+                        });
+                        $('#dg_SukuBangsa').datagrid('reload');   // reload the user data
+                        }
+                    },'json');
+                }
+            });
+        }
     }
 
     function cetak_SukuBangsa(){

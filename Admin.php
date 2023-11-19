@@ -766,6 +766,15 @@ class Admin extends AdminModule
         case "data":
           $this->sukubangsa->Data();        
         break;
+        case "simpan":
+          $this->sukubangsa->Simpan();        
+        break;
+        case "ubah":
+          $this->sukubangsa->Ubah();        
+        break;
+        case "hapus":
+          $this->sukubangsa->Hapus();        
+        break;
       }
       exit();
     }    
@@ -856,6 +865,15 @@ class Admin extends AdminModule
         case "data":  
           $this->bahasa->Data();
         break;    
+        case "simpan":  
+          $this->bahasa->Simpan();
+        break;    
+        case "ubah":  
+          $this->bahasa->Ubah();
+        break;    
+        case "hapus":  
+          $this->bahasa->Hapus();
+        break;    
       }
       exit();
     }
@@ -871,6 +889,15 @@ class Admin extends AdminModule
         case "data":  
           $this->cacatfisik->Data();
         break;    
+        case "simpan":  
+          $this->cacatfisik->Simpan();
+        break;    
+        case "ubah":  
+          $this->cacatfisik->Ubah();
+        break;    
+        case "hapus":  
+          $this->cacatfisik->Hapus();
+        break;    
       }
       exit();
     }
@@ -885,7 +912,16 @@ class Admin extends AdminModule
         break;
         case "data":  
           $this->perusahaanpasien->Data();
+        break;
+        case "simpan":  
+          $this->perusahaanpasien->Simpan();
         break;    
+        case "ubah":  
+          $this->perusahaanpasien->Ubah();
+        break;    
+        case "hapus":  
+          $this->perusahaanpasien->Hapus();
+        break;      
       }
       exit();
     }

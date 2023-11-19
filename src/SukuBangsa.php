@@ -42,17 +42,55 @@ class SukuBangsa
 
     public function Simpan()
     {
-
+        $check_db = $this->db()->pdo()->prepare("INSERT INTO suku_bangsa VALUES (
+            '{$_POST['id_SukuBangsa']}', 
+            '{$_POST['nama_SukuBangsa']}'
+        )");
+        $result = $check_db->execute();
+        $error = $check_db->errorInfo();
+        if (!empty($result)){
+        echo json_encode(array(
+            'nama_suku_bangsa' => $_POST['nama_SukuBangsa']
+        ));
+        } else {
+        echo json_encode(array('errorMsg'=>$error['2']));
+        } 
     }
 
     public function Ubah()
     {
-        
+        $check_db = $this->db()->pdo()->prepare("
+            UPDATE 
+                suku_bangsa
+            SET 
+                nama_suku_bangsa = '{$_POST['nama_SukuBangsa']}'
+            WHERE
+                id = '{$_POST['id_SukuBangsa']}'
+        ");
+        $result = $check_db->execute();
+        $error = $check_db->errorInfo();
+        if (!empty($result)){
+        echo json_encode(array(
+            'id' => $_POST['id_SukuBangsa']
+        ));
+        } else {
+        echo json_encode(array('errorMsg'=>$error['2']));
+        }           
     }
 
     public function Hapus()
     {
-        
+        $id = $_POST['id'];
+        $check_db = $this->db()->pdo()->prepare("DELETE FROM suku_bangsa WHERE id = '$id'");
+        $result = $check_db->execute();
+        $error = $check_db->errorInfo();
+        if (!empty($result)){
+          echo json_encode(array(
+            'id' => $id
+          ));
+        } else {
+          echo json_encode(array('errorMsg'=>$error['2']));
+        }         
     }    
 
     public function Cetak()

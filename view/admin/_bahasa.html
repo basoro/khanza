@@ -1,11 +1,13 @@
 <div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
     <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
-		<table id="fm_Bahasa">
+        <form id="fm_Bahasa" method="post" novalidate style="margin:0;padding:5px">
+		<table>
 			<tr>
 				<td width="100"><span style="float:right;">Kode/Nama</span></td>
 				<td colspan="3">: <input name="id" id="id_Bahasa" class="easyui-textbox" style="width:80px;"></input> <input name="nama_bahasa" id="nama_bahasa_Bahasa" class="easyui-textbox" style="width:245px;"></td>
 			</tr>
 		</table>
+        </form>
     </div>
     <div data-options="region:'center'" border="thin">
         <table id="dg_Bahasa" class="easyui-datagrid" footer="#toolbar_Bahasa">
@@ -70,15 +72,93 @@
     }
 
     function simpan_Bahasa(){
-        alert('Form Simpan');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/bahasa/?act=simpan&t={?=$_SESSION['token']?}'; 
+		$('#fm_Bahasa').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_Bahasa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Data bahasa telah disimpan'
+					});
+				}
+			}
+        });
     }
 
     function ubah_Bahasa(){
-        alert('Form Ubah');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/bahasa/?act=ubah&t={?=$_SESSION['token']?}'; 
+		$('#fm_Bahasa').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_Bahasa').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Bahasa pasien telah diubah!'
+					});
+				}
+			}
+        });
     }
 
     function hapus_Bahasa(){
-        alert('Form Hapus');
+        var row = $('#dg_Bahasa').datagrid('getSelected');
+        var rows = $('#dg_Bahasa').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $.messager.confirm('Confirm','Yakin menghapus data ini?',function(r){
+                if (r){
+                    $.post('{?=url()?}/{?=ADMIN?}/khanza/bahasa/?act=hapus&t={?=$_SESSION['token']?}',{id:row.id},function(result){
+                        if (result.errorMsg){
+                        $.messager.show({    // show error message
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                        var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                        audio.play();
+                        } else {
+                        $.messager.show({    // show error message
+                            title: 'Success',
+                            msg: 'Bahasa pasien telah dihapus!'
+                        });
+                        $('#dg_Bahasa').datagrid('reload');   // reload the user data
+                        }
+                    },'json');
+                }
+            });
+        }
     }
 
     function cetak_Bahasa(){
