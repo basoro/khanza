@@ -54,15 +54,15 @@
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Propinsi').datagrid('getSelected');
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Propinsi') {
-                $('#dlg_window').dialog('close', 'Propinsi');
+                $('#dlg_window_Pasien').dialog('close', 'Propinsi');
                 $('#kd_prop_Pasien').val(row.kd_prop);
                 $('#nm_prop_Pasien').textbox('setValue',row.nm_prop);
             }
             if(dlg.options.title == 'Cari Propinsi PJ') {
-                $('#dlg_window').dialog('close', 'Propinsi');
+                $('#dlg_window_Pasien').dialog('close', 'Propinsi');
                 $('#propinsipj_Pasien').textbox('setValue',row.nm_prop);
             }
         }

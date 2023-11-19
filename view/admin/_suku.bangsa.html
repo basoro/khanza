@@ -54,11 +54,11 @@
 	  }, 
       onDblClickRow: function(){
         var row = $('#dg_SukuBangsa').datagrid('getSelected');
-        $('#id_suku_bangsa_Pasien').val(row.id);
-        $('#nama_suku_bangsa_Pasien').textbox('setValue',row.nama_suku_bangsa);
         var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Suku Bangsa') {
+                $('#id_suku_bangsa_Pasien').val(row.id);
+                $('#nama_suku_bangsa_Pasien').textbox('setValue',row.nama_suku_bangsa);
                 $('#dlg_window_Pasien').dialog('close', 'Suku Bangsa')
             }
         }

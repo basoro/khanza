@@ -54,15 +54,15 @@
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Kecamatan').datagrid('getSelected');
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Kecamatan') {
-                $('#dlg_window').dialog('close', 'Kecamatan')
+                $('#dlg_window_Pasien').dialog('close', 'Kecamatan')
                 $('#kd_kec_Pasien').val(row.kd_kec);
                 $('#nm_kec_Pasien').textbox('setValue',row.nm_kec);
             }
             if(dlg.options.title == 'Cari Kecamatan PJ') {
-                $('#dlg_window').dialog('close', 'Kecamatan');
+                $('#dlg_window_Pasien').dialog('close', 'Kecamatan');
                 $('#kecamatanpj_Pasien').textbox('setValue',row.nm_kec);
             }
         }

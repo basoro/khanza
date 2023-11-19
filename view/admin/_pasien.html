@@ -683,7 +683,7 @@
           title: 'Cek Data Pasien',
           closed: false,
           cache: false,
-          href: '{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknoka&noka=' + row.no_peserta + '&t={?=$_SESSION['token']?}',
+          content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknoka&noka=' + row.no_peserta + '&t={?=$_SESSION['token']?}"></embed>',
           modal: true
         });
       }
@@ -695,7 +695,7 @@
           title: 'Cek Data Pasien',
           closed: false,
           cache: false,
-          href: '{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknik&nik=' + row.no_ktp + '&t={?=$_SESSION['token']?}',
+          content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=ceknik&nik=' + row.no_ktp + '&t={?=$_SESSION['token']?}"></embed>',
           modal: true
         });
       }

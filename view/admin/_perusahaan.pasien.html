@@ -60,18 +60,18 @@
       ]],
       onClickRow: function(){
         var row = $('#dg_PerusahaanPasien').datagrid('getSelected');
-        $('#kode_PerusahaanPasien_Pasien').textbox('setValue',row.kode_perusahaan);
-        $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
-        $('#alamat_PerusahaanPasien_Pasien').textbox('setValue',row.alamat);
-        $('#kota_PerusahaanPasien_Pasien').textbox('setValue',row.kota);
-        $('#no_telp_PerusahaanPasien_Pasien').textbox('setValue',row.no_telp);
+        $('#kode_PerusahaanPasien').textbox('setValue',row.kode_perusahaan);
+        $('#nama_PerusahaanPasien').textbox('setValue',row.nama_perusahaan);
+        $('#alamat_PerusahaanPasien').textbox('setValue',row.alamat);
+        $('#kota_PerusahaanPasien').textbox('setValue',row.kota);
+        $('#no_telp_PerusahaanPasien').textbox('setValue',row.no_telp);
 	  },
       onDblClickRow: function(){
         var row = $('#dg_PerusahaanPasien').datagrid('getSelected');
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Perusahaan Pasien') {
-                $('#dlg_window').dialog('close', 'Perusahaan Pasien')
+                $('#dlg_window_Pasien').dialog('close', 'Perusahaan Pasien')
                 $('#kode_PerusahaanPasien_Pasien').val(row.kode_perusahaan);
                 $('#nama_PerusahaanPasien_Pasien').textbox('setValue',row.nama_perusahaan);
             }

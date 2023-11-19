@@ -54,15 +54,15 @@
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Kelurahan').datagrid('getSelected');
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Kelurahan') {
-                $('#dlg_window').dialog('close', 'Kelurahan')
+                $('#dlg_window_Pasien').dialog('close', 'Kelurahan')
                 $('#kd_kel_Pasien').val(row.kd_kel);
                 $('#nm_kel_Pasien').textbox('setValue',row.nm_kel);
             }
             if(dlg.options.title == 'Cari Kelurahan PJ') {
-                $('#dlg_window').dialog('close', 'Kelurahan');
+                $('#dlg_window_Pasien').dialog('close', 'Kelurahan');
                 $('#kelurahanpj_Pasien').textbox('setValue',row.nm_kel);
             }
         }

@@ -54,15 +54,15 @@
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Kabupaten').datagrid('getSelected');
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Kabupaten') {
-                $('#dlg_window').dialog('close', 'Kabupaten');
+                $('#dlg_window_Pasien').dialog('close', 'Kabupaten');
                 $('#kd_kab_Pasien').val(row.kd_kab);
                 $('#nm_kab_Pasien').textbox('setValue',row.nm_kab);
             }
             if(dlg.options.title == 'Cari Kabupaten PJ') {
-                $('#dlg_window').dialog('close', 'Kabupaten');
+                $('#dlg_window_Pasien').dialog('close', 'Kabupaten');
                 $('#kabupatenpj_Pasien').textbox('setValue',row.nm_kab);
             }
         }

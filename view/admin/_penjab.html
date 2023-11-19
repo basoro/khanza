@@ -1,31 +1,33 @@
 <div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
-    <div data-options="region:'north'" border="false" style="padding:10px 0;margin:10px 0;">
-		<table>
-			<tr>
-				<td width="110"><span style="float:right;">Kode</span></td>
-				<td>: 
-                    <input name="kd_pj" id="kd_pj_Penjab" class="easyui-textbox" style="width:80px;" />
-                    Asuransi : 
-                    <input name="png_jawab" id="png_jawab_Penjab" class="easyui-textbox" style="width:300px;" />
-                    Telp : 
-                    <input name="no_telp" id="no_telp_Penjab" class="easyui-textbox" style="width:100px;" />
-                </td>
-			</tr>
-			<tr>
-				<td width="110"><span style="float:right;">Nama Asuransi</span></td>
-				<td>: 
-                    <input name="nama_perusahaan" id="nama_perusahaan_Penjab" class="easyui-textbox" style="width:360px;" />
-                    Attn : 
-                    <input name="attn" id="attn_Penjab" class="easyui-textbox" style="width:200px;" />
-                </td>
-			</tr>
-			<tr>
-				<td width="110"><span style="float:right;">Alamat</span></td>
-				<td>: 
-                    <input name="alamat_asuransi" id="alamat_asuransi_Penjab" class="easyui-textbox" style="width:610px;" />
-                </td>
-			</tr>
-		</table>
+    <div data-options="region:'north'" border="false" style="padding: 0;">
+        <form id="fm_Penjab" method="post" novalidate style="margin:0;padding:5px">
+            <table>
+                <tr>
+                    <td width="110"><span style="float:right;">Kode</span></td>
+                    <td>: 
+                        <input name="kd_pj" id="kd_pj_Penjab" class="easyui-textbox" style="width:80px;" />
+                        Asuransi : 
+                        <input name="png_jawab" id="png_jawab_Penjab" class="easyui-textbox" style="width:300px;" />
+                        Telp : 
+                        <input name="no_telp" id="no_telp_Penjab" class="easyui-textbox" style="width:100px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="110"><span style="float:right;">Nama Asuransi</span></td>
+                    <td>: 
+                        <input name="nama_perusahaan" id="nama_perusahaan_Penjab" class="easyui-textbox" style="width:360px;" />
+                        Attn : 
+                        <input name="attn" id="attn_Penjab" class="easyui-textbox" style="width:200px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="110"><span style="float:right;">Alamat</span></td>
+                    <td>: 
+                        <input name="alamat_asuransi" id="alamat_asuransi_Penjab" class="easyui-textbox" style="width:610px;" />
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div data-options="region:'center'" border="thin">
         <table id="dg_Penjab" class="easyui-datagrid" footer="#toolbar_Penjab">
@@ -48,6 +50,8 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="keluar_Penjab()" style="margin:0 15px;">Keluar</a>
     </div>
 </div>
+
+<div id="dlg_window_Penjab" class="easyui-dialog" style="width:98%;height:98%;" title="Window Penjab" data-options="closed:true,modal:true,border:'thin'"></div>
 
 <script type="text/javascript">
     var url;
@@ -83,39 +87,129 @@
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Penjab').datagrid('getSelected');
-        $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
-        $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
-        $('#kd_pj_Pasien').textbox('setValue',row.kd_pj);
-        $('#png_jawab_Pasien').textbox('setValue',row.png_jawab);
         $('#cari_kd_pj_FrekuensiPenyakitRalan').textbox('setValue',row.kd_pj);
         $('#cari_png_jawab_FrekuensiPenyakitRalan').textbox('setValue',row.png_jawab);
         var dlg = $("#dlg_window").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Penjab') {
+                $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
+                $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
                 $('#dlg_window').dialog('close', 'Penjab')
+            }
+        }
+        var dlg = $("#dlg_window_Pasien").data('dialog');
+        if(typeof dlg !== 'undefined') {
+            if(dlg.options.title == 'Cari Penjab') {
+                $('#kd_pj_Pasien').textbox('setValue',row.kd_pj);
+                $('#png_jawab_Pasien').textbox('setValue',row.png_jawab);
+                $('#dlg_window_Pasien').dialog('close', 'Penjab')
             }
         }
       }
     });
 
     function baru_Penjab(){
-        alert('Form Baru');
+		$('#fm_Penjab').form('clear');
     }
 
     function simpan_Penjab(){
-        alert('Form Simpan');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/penjab/?act=simpan&t={?=$_SESSION['token']?}'; 
+		$('#fm_Penjab').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_Penjab').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Data asuransi/penanggung jawab telah disimpan'
+					});
+				}
+			}
+        });
     }
 
     function ubah_Penjab(){
-        alert('Form Ubah');
+		url = '{?=url()?}/{?=ADMIN?}/khanza/penjab/?act=ubah&t={?=$_SESSION['token']?}'; 
+		$('#fm_Penjab').form('submit',{
+			url: url,
+			iframe: false,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+					var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+					audio.play();
+				} else {
+					$('#dg_Penjab').datagrid('reload');    // reload the user data
+					$.messager.show({
+						title: 'Sukses',
+						msg: 'Asuransi/pananggung jawab telah diubah!'
+					});
+				}
+			}
+        });
     }
 
     function hapus_Penjab(){
-        alert('Form Hapus');
+        var row = $('#dg_Penjab').datagrid('getSelected');
+        var rows = $('#dg_Penjab').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }else if(rows.length > 1){
+            $.messager.alert('Notifikasi','Pilih salah satu data saja boss!','info');
+            return;
+        }
+        if (row){
+            $.messager.confirm('Confirm','Yakin menghapus data ini?',function(r){
+                if (r){
+                    $.post('{?=url()?}/{?=ADMIN?}/khanza/penjab/?act=hapus&t={?=$_SESSION['token']?}',{kd_pj:row.kd_pj},function(result){
+                        if (result.errorMsg){
+                        $.messager.show({    // show error message
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                        var audio = new Audio('{?=url()?}/assets/sound/error.mp3');
+                        audio.play();
+                        } else {
+                        $.messager.show({    // show error message
+                            title: 'Success',
+                            msg: 'Asuransi/penanggung jawab telah dihapus!'
+                        });
+                        $('#dg_Penjab').datagrid('reload');   // reload the user data
+                        }
+                    },'json');
+                }
+            });
+        }
     }
 
     function cetak_Penjab(){
-        alert('Form Cetak');
+        $('#dlg_window_Penjab').dialog({
+            title: 'Cetak Data Asuransi',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/penjab/?t={?=$_SESSION['token']?}"></embed>',
+            modal: true
+        });
     }
 
     function keluar_Penjab(){

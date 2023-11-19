@@ -76,8 +76,9 @@
 	<div onclick="cetak_BuktiRegistrasi()">Cetak Bukti Registrasi</div>
 </div>
 
-<div id="help_pasien_window" class="easyui-dialog" style="width:90%;height:90%;" title="Bantuan" data-options="closed:true,modal:true,border:'thin'">
-</div>
+<div id="dlg_window_RegPeriksa" class="easyui-dialog" style="width:98%;height:98%;" title="Window RegPeriksa" data-options="closed:true,modal:true,border:'thin'"></div>
+
+<div id="help_pasien_window" class="easyui-dialog" style="width:90%;height:90%;" title="Bantuan" data-options="closed:true,modal:true,border:'thin'"></div>
 
 <div id="dlg_window_input_kamar_inap" class="easyui-dialog" style="width:760px;height:280px;" title="Dialog Window" data-options="closed:true,modal:true,border:'thin'"></div>
 
@@ -254,7 +255,7 @@
         var tgl_awal = $('#cari_tgl_registrasi_start_RegPeriksa').val();
         var tgl_akhir = $('#cari_tgl_registrasi_end_RegPeriksa').val();
         var cari_keyword = $('#cari_keyword_RegPeriksa').val();
-        $('#dlg_window').dialog({
+        $('#dlg_window_RegPeriksa').dialog({
             title: 'Cetak Data Registrasi',
             closed: false,
             cache: false,
@@ -265,7 +266,7 @@
 
 	function cetak_BuktiRegistrasi(){
         var no_rawat = $('#no_rawat_RegPeriksa').val();
-        $('#dlg_window').dialog({
+        $('#dlg_window_RegPeriksa').dialog({
             title: 'Cetak Bukti Registrasi',
             closed: false,
             cache: false,

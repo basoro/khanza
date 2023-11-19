@@ -56,10 +56,10 @@
         var row = $('#dg_CacatFisik').datagrid('getSelected');
         $('#id_cacat_fisik_Pasien').val(row.id);
         $('#nama_cacat_fisik_Pasien').textbox('setValue',row.nama_cacat);
-        var dlg = $("#dlg_window").data('dialog');
+        var dlg = $("#dlg_window_Pasien").data('dialog');
         if(typeof dlg !== 'undefined') {
             if(dlg.options.title == 'Cari Cacat Fisik') {
-                $('#dlg_window').dialog('close', 'Cacat Fisik')
+                $('#dlg_window_Pasien').dialog('close', 'Cacat Fisik')
             }
         }
 	  }

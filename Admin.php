@@ -704,6 +704,15 @@ class Admin extends AdminModule
         case "data":
           $this->penjab->Data();         
         break;
+        case "simpan":
+          $this->penjab->Simpan();         
+        break;
+        case "ubah":
+          $this->penjab->Ubah();         
+        break;
+        case "hapus":
+          $this->penjab->Hapus();         
+        break;
       }
       exit();
     }        
