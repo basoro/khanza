@@ -46,6 +46,45 @@ class Penjab
 
     }    
 
+    public function DataAll()
+    {
+
+        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+        $offset = ($page-1)*$rows;
+  
+        $keyword = isset($_POST['cari_keyword_penjab']) ? $_POST['cari_keyword_penjab'] : '';
+  
+        $query = "select * from penjab where kd_pj like ? and png_jawab like ? ";
+
+        $result = array();
+        
+        $total = $this->db()->pdo()->prepare($query);
+        $total->execute(['%'.$keyword.'%', '%'.$keyword.'%']);
+        $total = $total->fetchAll(\PDO::FETCH_ASSOC);          
+        $result["total"] = count($total);
+
+        $query .= "order by penjab.kd_pj asc LIMIT $offset,$rows";    
+
+        $rows = $this->db()->pdo()->prepare($query);
+        $rows->execute(['%'.$keyword.'%', '%'.$keyword.'%']);
+        $rows = $rows->fetchAll(\PDO::FETCH_ASSOC);
+  
+        $items = array();
+
+        foreach ($rows as $row) {
+            if($row['status'] == '0') {
+                $row['status'] = 'Tidak Aktif';
+            } else {
+                $row['status'] = 'Aktif';
+            }
+            array_push($items, $row);
+        }
+        $result["rows"] = $items;
+        echo json_encode($result); 
+
+    }        
+
     public function Simpan()
     {
         $check_db = $this->db()->pdo()->prepare("INSERT INTO penjab VALUES (
@@ -55,7 +94,7 @@ class Penjab
             '{$_POST['alamat_asuransi']}', 
             '{$_POST['no_telp']}', 
             '{$_POST['attn']}', 
-            '1'
+            '{$_POST['status']}' 
         )");
         $result = $check_db->execute();
         $error = $check_db->errorInfo();
@@ -78,7 +117,8 @@ class Penjab
                 nama_perusahaan = '{$_POST['nama_perusahaan']}', 
                 alamat_asuransi = '{$_POST['alamat_asuransi']}', 
                 no_telp = '{$_POST['no_telp']}', 
-                attn = '{$_POST['attn']}'
+                attn = '{$_POST['attn']}', 
+                status = '{$_POST['status']}'
             WHERE
                 kd_pj = '{$_POST['kd_pj']}'
         ");

@@ -124,8 +124,15 @@
             { field:'tgl_registrasi',title:'Tanggal',width:180,sortable:true},
             { field:'jam_reg',title:'Jam',width:180,sortable:true},
             { field:'no_reg',title:'No.Reg',width:180,sortable:true},
-            { field:'umur',title:'Umur',width:100}
+            { field:'umur',title:'Umur',width:100},
+            { field:'stts',title:'Status',width:100},
+            { field:'status_bayar',title:'Status Bayar',width:100}
           ]],
+	        rowStyler:function(index,row){
+            if (row.status_bayar == 'Sudah Bayar'){
+              return 'background-color:pink;color:blue;font-weight:bold;';
+            }
+          },
           onRowContextMenu:function(e,index,row){
             e.preventDefault();
             $('#klik_kanan_RawatJalan').menu('show', {
@@ -164,8 +171,15 @@
             { field:'tgl_registrasi',title:'Tanggal',width:180,sortable:true},
             { field:'jam_reg',title:'Jam',width:180,sortable:true},
             { field:'no_reg',title:'No.Reg',width:180,sortable:true},
-            { field:'umur',title:'Umur',width:100}
+            { field:'umur',title:'Umur',width:100},
+            { field:'stts',title:'Status',width:100},
+            { field:'status_bayar',title:'Status Bayar',width:100}
           ]],
+	        rowStyler:function(index,row){
+            if (row.status_bayar == 'Sudah Bayar'){
+              return 'background-color:pink;color:blue;font-weight:bold;';
+            }
+          },
           onRowContextMenu:function(e,index,row){
             e.preventDefault();
             $('#klik_kanan_RawatJalan').menu('show', {

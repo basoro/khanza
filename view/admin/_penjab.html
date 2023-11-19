@@ -23,7 +23,12 @@
                 <tr>
                     <td width="110"><span style="float:right;">Alamat</span></td>
                     <td>: 
-                        <input name="alamat_asuransi" id="alamat_asuransi_Penjab" class="easyui-textbox" style="width:610px;" />
+                        <input name="alamat_asuransi" id="alamat_asuransi_Penjab" class="easyui-textbox" style="width:440px;" />
+                        Status: 
+                        <select class="easyui-combobox" name="status" id="status_Penjab" style="width:110px;">
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>    
                     </td>
                 </tr>
             </table>
@@ -49,6 +54,10 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="margin:0 5px;" onclick="cetak_Penjab()">Cetak</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="keluar_Penjab()" style="margin:0 15px;">Keluar</a>
     </div>
+</div>
+
+<div id="klik_kanan_Penjab" class="easyui-menu" style="width:250px;">
+	<div onclick="tampil_semua_Penjab()">Tampil Semua</div>
 </div>
 
 <div id="dlg_window_Penjab" class="easyui-dialog" style="width:98%;height:98%;" title="Window Penjab" data-options="closed:true,modal:true,border:'thin'"></div>
@@ -84,6 +93,7 @@
         $('#attn_Penjab').textbox('setValue',row.attn);
         $('#nama_perusahaan_Penjab').textbox('setValue',row.nama_perusahaan);
         $('#alamat_asuransi_Penjab').textbox('setValue',row.alamat_asuransi);
+        $('#status_Penjab').combobox('setValue',row.status);
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Penjab').datagrid('getSelected');
@@ -105,8 +115,71 @@
                 $('#dlg_window_Pasien').dialog('close', 'Penjab')
             }
         }
+      },
+      onRowContextMenu:function(e,index,row){
+        e.preventDefault();
+        $('#klik_kanan_Penjab').menu('show', {
+          left: e.pageX,
+          top: e.pageY
+        });
       }
     });
+
+    function tampil_semua_Penjab(){
+      $('#dg_Penjab').datagrid({
+        url:'{?=url()?}/{?=ADMIN?}/khanza/penjab/?act=dataall&t={?=$_SESSION['token']?}',
+        rownumbers:true,
+        singleSelect:true,
+        pageSize:20,
+        pagination:true,
+        remoteFilter:false,
+        remoteSort:false,
+        multiSort:false,
+        fitColumns:false,
+        fit:true,
+        columns:[[
+            { field:'ck',checkbox:true},
+            { field:'kd_pj',title:'Kode Penjab',sortable:true},
+            { field:'png_jawab',title:'Nama Penjab',sortable:true},
+            { field:'nama_perusahaan',title:'Nama Perusahaan',sortable:true},
+            { field:'alamat_asuransi',title:'Alamat Asuransi',sortable:true},
+            { field:'no_telp',title:'Nomor Telepon',sortable:true},
+            { field:'attn',title:'Attn',sortable:true},
+            { field:'status',title:'Status',sortable:true}
+        ]],
+        onClickRow: function(){
+            var row = $('#dg_Penjab').datagrid('getSelected');
+            $('#kd_pj_Penjab').textbox('setValue',row.kd_pj);
+            $('#png_jawab_Penjab').textbox('setValue',row.png_jawab);
+            $('#no_telp_Penjab').textbox('setValue',row.no_telp);
+            $('#attn_Penjab').textbox('setValue',row.attn);
+            $('#nama_perusahaan_Penjab').textbox('setValue',row.nama_perusahaan);
+            $('#alamat_asuransi_Penjab').textbox('setValue',row.alamat_asuransi);
+            $('#status_Penjab').combobox('setValue',row.status);
+        },
+        onDblClickRow: function(){
+            var row = $('#dg_Penjab').datagrid('getSelected');
+            $('#cari_kd_pj_FrekuensiPenyakitRalan').textbox('setValue',row.kd_pj);
+            $('#cari_png_jawab_FrekuensiPenyakitRalan').textbox('setValue',row.png_jawab);
+            var dlg = $("#dlg_window").data('dialog');
+            if(typeof dlg !== 'undefined') {
+                if(dlg.options.title == 'Cari Penjab') {
+                    $('#kd_pj_RegPeriksa').textbox('setValue',row.kd_pj);
+                    $('#png_jawab_RegPeriksa').textbox('setValue',row.png_jawab);
+                    $('#dlg_window').dialog('close', 'Penjab')
+                }
+            }
+            var dlg = $("#dlg_window_Pasien").data('dialog');
+            if(typeof dlg !== 'undefined') {
+                if(dlg.options.title == 'Cari Penjab') {
+                    $('#kd_pj_Pasien').textbox('setValue',row.kd_pj);
+                    $('#png_jawab_Pasien').textbox('setValue',row.png_jawab);
+                    $('#dlg_window_Pasien').dialog('close', 'Penjab')
+                }
+            }
+        } 
+      });        
+    }
 
     function baru_Penjab(){
 		$('#fm_Penjab').form('clear');
