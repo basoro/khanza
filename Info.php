@@ -19,7 +19,7 @@ return [
     },
     'uninstall'     =>  function() use($core)
     {
-      $core->db()->pdo()->exec("DELETE FROM `settings` WHERE `module` = 'khanza'");
+      #$core->db()->pdo()->exec("DELETE FROM `settings` WHERE `module` = 'khanza'");
       $core->db()->pdo()->exec("DELETE FROM `mlite_settings` WHERE `module` = 'khanza'");
     }
 ];

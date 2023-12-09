@@ -1,0 +1,459 @@
+<div class="easyui-layout" border="false" fit="true" style="padding:0;margin:0;">
+    <div data-options="region:'center'" border="true" style="padding:1px;">
+      <div class="easyui-panel" border="false" style="width:100%;height:100%;">
+        <div class="easyui-layout" fit="true">
+          <div region="south" border="false" style="padding:6px 5px;background:#efefef;">
+            <div style="float: left;">
+                <label>Alamat</label>
+                <input class="easyui-textbox" id="cari_alamat" style="width:150px;">
+                <label style="margin-left: 20px;">Keyword</label>
+                <input class="easyui-textbox" id="cari_keyword_pasien" style="width:150px">
+                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-ok" onclick="cari_Pasien()"></a>
+                <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-search" onclick="cari_semua_Pasien()"></a>
+            </div>
+            <div>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="margin:0 5px;" onclick="baru_Pasien()">Baru</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="margin:0 5px;" onclick="simpan_Pasien()">Simpan</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="margin:0 5px;" onclick="ubah_Pasien()">Ubah</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut'" style="margin:0 5px;" onclick="hapus_Pasien()">Hapus</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="margin:0 5px;" onclick="cetak_Pasien()">Cetak</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="keluar_Pasien()" style="margin:0 15px;">Keluar</a>
+            </div>
+          </div>
+          <div region="center" border="false">
+              <div id="tt" class="easyui-tabs" fit="true">
+                  <div title="Input SEP" style="display:none;padding:1px;">
+                    <form id="fm_Sep" method="post" novalidate style="margin:0;padding:15px">
+                        <table>
+                          <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td width="140"><span style="float:right;">No. Rawat</span></td>
+                                        <td>: 
+                                          <input name="no_rawat" id="no_rawat_Sep" class="easyui-textbox" value="{?=isset_or($reg_periksa.no_rawat, '')?}" style="width:240px;"></input> 
+                                          <input name="nomr" id="nomr_Sep" class="easyui-textbox" value="{?=isset_or($reg_periksa.no_rkm_medis, '')?}" style="width:160px;"></input> 
+                                          <input name="nama_pasien" id="nama_pasien_Sep" class="easyui-textbox" style="width:474px;"></input>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <td><span style="float:right;">Tgl. Lahir</span></td>
+                                        <td>: <input name="tanggal_lahir" id="tanggal_lahir_Sep" class="easyui-textbox" style="width:150px;"></input> 
+                                            Peserta: <input name="peserta" id="peserta_Sep" class="easyui-textbox" style="width:200px;"></input> 
+                                            J.K : <input name="jkel" id="jkel_Sep" class="easyui-textbox" style="width:60px;"></input>
+                                            Asal Rujukan : 
+                                            <select class="easyui-combobox" name="asal_rujukan" id="asal_rujukan_Sep" data-options="panelHeight:null" style="width:250px;">
+                                                <option value="1">1. Faskes 1</option>
+                                                <option value="2">2. Fakses 2 (RS)</option>
+                                              </select>      
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <td><span style="float:right;">No. Kartu</span></td>
+                                        <td>: <input name="no_kartu" id="no_kartu_Sep" class="easyui-textbox" style="width:150px;"></input> 
+                                            Status : <input name="no_rkm_medis" id="no_rkm_medis_Pasien" class="easyui-textbox" style="width:200px;"></input> 
+                                            No. Rujukan : <input name="no_rujukan" id="no_rujukan_Sep" class="easyui-textbox" style="width:290px;"></input> 
+                                            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="histori_layanan_bpjs_Sep()"></a> 
+                                            <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="histori_rujukan_bpjs_Sep()"></a></td>
+                                    </tr>  
+                                </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <table>
+                                  <tr>
+                                      <td width="140"><span style="float:right;">Tgl. Rujukan </span></td>
+                                      <td>: <input name="tglrujukan" id="tglrujukan_Sep" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" style="width:140px;"></input> 
+                                        Tgl. SEP : <input name="tglsep" id="tglsep_Sep" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" style="width:140px;"></input> 
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><span style="float:right;">No. SKDP/SPRI</span></td>
+                                      <td>: 
+                                        <input name="noSurkon" id="noSurkon_Sep" class="easyui-textbox" style="width:290px;"></input> 
+                                        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="surat_kontrol_Sep()"></a> 
+                                        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="surat_pri_Sep()"></a></td>
+                                  </tr>
+                                  <tr>
+                                      <td><span style="float:right;">PPK Rujukan</span></td>
+                                      <td>: 
+                                        <input name="kdppkrujukan" id="kdppkrujukan_Sep" class="easyui-textbox" style="width:100px;"></input> 
+                                        <input name="nmppkrujukan" id="nmppkrujukan_Sep" class="easyui-textbox" style="width:220px;"></input> 
+                                        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_ppk_rujukan_Sep()"></a></td>
+                                  </tr>
+                                  <tr>
+                                      <td><span style="float:right;">Diagnosa Awal</span></td>
+                                      <td>: 
+                                        <input name="diagawal" id="diagawal_Sep" class="easyui-textbox" style="width:100px;"></input> 
+                                        <input name="nmdiagnosaawal" id="nmdiagnosaawal_Sep" class="easyui-textbox" style="width:220px;"></input> 
+                                        <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_diagnosa_Sep()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Poli Tujuan</span></td>
+                                    <td>: 
+                                      <input name="kdpolitujuan" id="kdpolitujuan_Sep" class="easyui-textbox" style="width:100px;"></input> 
+                                      <input name="nmpolitujuan" id="nmpolitujuan_Sep" class="easyui-textbox" style="width:220px;"></input> 
+                                      <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_poliklinik_Sep()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Dokter PJP</span></td>
+                                    <td>: 
+                                      <input name="kddpjp" id="kddpjp_Sep" class="easyui-textbox" style="width:100px;"></input> 
+                                      <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:220px;"></input> 
+                                      <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_dokter_Sep()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">PPK Pelayanan</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:100px;"></input> <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:256px;"></input></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Jns. Pelayanan</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:151px;">
+                                            <option>1. Ranap</option>
+                                            <option selected>2. Ralan</option>
+                                        </select>      
+                                        Kelas : 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:151px;">
+                                            <option>1. Kelas 1</option>
+                                            <option>2. Kelas 2</option>
+                                            <option selected>3. Kelas 3</option>
+                                        </select>      
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Naik Kelas</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:151px;">
+                                            <option>1. VVIP</option>
+                                            <option>2. VIP</option>
+                                            <option>3. Kelas 1</option>
+                                            <option>4. Kelas 2</option>
+                                            <option>5. Kelas 3</option>
+                                            <option>6. ICCU</option>
+                                            <option>7. ICU</option>
+                                            <option>8. Diatas Kelas</option>
+                                        </select>      
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:204px;">
+                                            <option>1. Pribadi</option>
+                                            <option>2. Pemberi Kerja</option>
+                                            <option>3. Asuransi Lain</option>
+                                        </select>      
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Pj. Naik Kelas</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Eksekutif</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:151px;">
+                                            <option>0. Tidak</option>
+                                            <option>1. Ya</option>
+                                        </select>      
+                                        COB : 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:157px;">
+                                            <option>0. Tidak</option>
+                                            <option>1. Ya</option>
+                                        </select>      
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Catatan</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
+                                  </tr>
+                                </table>
+                            </td>
+                            <td>
+                              <table>
+                                <tr>
+                                    <td width="140"><span style="float:right;">Katarak </span></td>
+                                    <td>:
+                                      <select class="easyui-combobox" name="agama" id="agama_Pasien" data-options="panelHeight:null" style="width:110px">
+                                        <option>0. Tidak</option>
+                                        <option>1. Iya</option>
+                                      </select>
+                                      No. Telp : <input name="kd_pj" id="kd_pj_Pasien" class="easyui-textbox" style="width:172px;"></input>
+                                    </td>
+                                </tr>
+                                  <tr>
+                                      <td><span style="float:right;">Laka Lantas</span></td>
+                                      <td>:
+                                        <select class="easyui-combobox" name="agama" id="agama_Pasien" data-options="panelHeight:null" style="width:170px">
+                                          <option>0. Bukan KLL</option>
+                                          <option>1. KLL bukan KK</option>
+                                          <option>2. KLL dan KK</option>
+                                          <option>3. KK</option>
+                                        </select>
+                                        Tgl : <input name="kd_pj" id="kd_pj_Pasien" class="easyui-datebox" data-options="formatter:dateformatter,parser:dateparser" style="width:148px;"></input>  
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td><span style="float:right;">Keterangan</span></td>
+                                      <td>: <input name="alamat" id="alamat_Pasien" class="easyui-textbox" style="width:360px;"></input></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Suplesi</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:96px;">
+                                            <option>0. Tidak</option>
+                                            <option>1. Ya</option>
+                                        </select>      
+                                        SEP Suplesi : 
+                                        <input name="alamat" id="alamat_Pasien" class="easyui-textbox" style="width:160px;"></input>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Propinsi KLL</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:100px;"></input> <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_SukuBangsa_Pasien()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Kabupaten KLL</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:100px;"></input> <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_SukuBangsa_Pasien()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Kecamatan KLL</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:100px;"></input> <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_SukuBangsa_Pasien()"></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Tujuan Kunjungan</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:360px;">
+                                            <option>0. Normal</option>
+                                            <option>1. Prosedur</option>
+                                            <option>2. Konsul Dokter</option>
+                                        </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Flag Prosedur</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:360px;">
+                                            <option>0. Prosedur Tidak Berkelanjutan</option>
+                                            <option>1. Prosedur & Terapi Berkelanjutan</option>
+                                        </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Penunjang</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:360px;">
+                                            <option>1. Radioterapi</option>
+                                            <option>2. Kemoterapi</option>
+                                            <option>3. Rehabilitasi Medik</option>
+                                            <option>4. Rehabilitasi Psikososial</option>
+                                            <option>5. Transfusi Darah</option>
+                                            <option>6. Pelayanan Gigi</option>
+                                            <option>7. Laboratorium</option>
+                                            <option>8. USG</option>
+                                            <option>9. Farmasi</option>
+                                            <option>10. Lain-Lain</option>
+                                            <option>11. MRI</option>
+                                            <option>12. Hemodialisa</option>
+                                        </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">Ass. Pelayanan</span></td>
+                                    <td>: 
+                                        <select class="easyui-combobox" name="gol_darah" id="gol_darah_Pasien" data-options="panelHeight:null" style="width:360px;">
+                                            <option>1. Poli Spesialis Tidak Tersedia</option>
+                                            <option>2. Jam Poli Telah Berakhir</option>
+                                            <option>3. Dokter Spesialis Tidak Tersedia</option>
+                                            <option>4. Atas Instruksi RS</option>
+                                            <option>5. Tujuan Kontrol</option>
+                                        </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><span style="float:right;">DPJP Pelayanan</span></td>
+                                    <td>: <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:100px;"></input> <input id="nama_suku_bangsa_Pasien" class="easyui-textbox" style="width:220px;"></input> <a href="#" class="easyui-linkbutton" style="color: #000;" iconCls="icon-edit" onclick="cari_SukuBangsa_Pasien()"></a></td>
+                                </tr>
+                            </table>
+                            </td>
+                          </tr>
+                        </table>
+                    </form>
+                  </div>
+                  <div title="Data SEP" style="overflow:auto;display:none;padding:10px;">
+                      <table id="dg_Sep" class="easyui-datagrid" border="false">
+                      </table>
+                  </div>
+                  <div title="Data SEP Internal" style="overflow:auto;display:none;padding:10px;">
+                    <table id="dg_SepInternal" class="easyui-datagrid" border="false">
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dlg_window_BridgingSEP" class="easyui-dialog" style="width:98%;height:98%;" title="Window RegPeriksa" data-options="closed:true,modal:true,border:'thin'"></div>
+
+  <div id="klik_kanan_Sep" class="easyui-menu" style="width:250px;">
+    <div onclick="cetak_Sep_Bpjs()">Cetak SEP BPJS</div>
+  </div>
+
+  <script>
+      $('#dg_Sep').datagrid({
+        url:'{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=data&t={?=$_SESSION['token']?}',
+        singleSelect:true,
+        pageSize:20,
+        pagination:true,
+        remoteFilter:false,
+        remoteSort:false,
+        multiSort:false,
+        fitColumns:false,
+        fit:true,
+        columns:[[
+            { field:'ck',checkbox:true},
+            { field:'no_sep',title:'No. SEP',width:'150',sortable:true},
+            { field:'no_rawat',title:'No. Rawat',width:'150',sortable:true},
+            { field:'nomr',title:'No. RM',width:'100',sortable:true},
+            { field:'nama_pasien',title:'Nama Pasien',width:'300',sortable:true},
+            { field:'tglsep',title:'Tgl. SEP',sortable:true},
+            { field:'tglrujukan',title:'Tgl. Rujukan',sortable:true},
+            { field:'no_rujukan',title:'No. Rujukan',sortable:true},
+            { field:'kdppkrujukan',title:'Kode PPK Rujukan',sortable:true}, 
+            { field:'nmppkrujukan',title:'Nama PPK Rujukan',sortable:true}
+        ]],
+        onRowContextMenu:function(e,index,row){
+            e.preventDefault();
+            $('#klik_kanan_Sep').menu('show', {
+            left: e.pageX,
+            top: e.pageY
+            });
+        },
+        onClickRow: function(){
+            var row = $('#dg_Pasien').datagrid('getSelected');
+        }
+    });  
+
+    $('#dg_SepInternal').datagrid({
+      url:'{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=datasep_internal&t={?=$_SESSION['token']?}',
+      singleSelect:true,
+      pageSize:20,
+      pagination:true,
+      remoteFilter:false,
+      remoteSort:false,
+      multiSort:false,
+      fitColumns:false,
+      fit:true,
+      columns:[[
+        { field:'ck',checkbox:true},
+        { field:'kode',title:'Kode',width:'100',sortable:true},
+        { field:'nama',title:'Nama',width:'300',sortable:true}, 
+        { field:'status',title:'Status',width:'100',sortable:true}
+      ]],
+      onClickRow: function(){
+        var row = $('#dg_Blank').datagrid('getSelected');
+        $('#kode_Blank').textbox('setValue',row.kode);
+        $('#nama_Blank').textbox('setValue',row.nama);
+        $('#status_Blank').combobox('setValue',row.status);
+	  }
+    });
+
+	function cetak_Sep_Bpjs(){
+        var no_sep = '1101R0180823V000017';
+        $('#dlg_window_BridgingSEP').dialog({
+            title: 'Cetak SEP',
+            closed: false,
+            cache: false,
+            content: '<embed width="100%" height="100%" src="{?=url()?}/{?=ADMIN?}/jasper/sep/?no_sep=' + no_sep + '&t={?=$_SESSION['token']?}"></embed>',
+            modal: true
+        });
+	}
+
+  function histori_layanan_bpjs_Sep(){
+      $('#dlg_window_BridgingSEP').dialog({
+            title: 'Histori Pelayanan BPJS',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+  }
+  
+  function histori_rujukan_bpjs_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Histori Rujukan BPJS',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function surat_kontrol_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Surat Kontrol BPJS',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function surat_pri_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'SPRI BPJS',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function cari_ppk_rujukan_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Cari PPK Rujukan',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function cari_diagnosa_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Cari Diagnosa Awal',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function cari_poliklinik_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Cari Poliklinik',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+  function cari_dokter_Sep(){
+    $('#dlg_window_BridgingSEP').dialog({
+            title: 'Cari Dokter',
+            closed: false,
+            cache: false,
+            href: '{?=url([ADMIN,'khanza','blank'])?}',
+            modal: true
+      });
+
+  }
+
+
+  </script>

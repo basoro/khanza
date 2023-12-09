@@ -69,6 +69,7 @@
 	<div>
 		<span>BPJS</span>
 		<div>
+			<div onclick="sep_bpjs()">SEP BPJS</div>
 			<div onclick="cek_nik_bpjs()">Cek NIK Peserta</div>
 			<div onclick="cek_peserta_bpjs()">Cek Nomor Peserta</div>
 		</div>
@@ -121,6 +122,11 @@
       }, 
 	  onRowContextMenu:function(e,index,row){
 		e.preventDefault();
+        var rows = $('#dg_RegPeriksa').datagrid('getSelections');
+        if(rows.length === 0){
+            $.messager.alert('Notifikasi','Silahkan pilih data!','info');
+            return;
+        }
 		$('#klik_kanan_RegPeriksa').menu('show', {
 		  left: e.pageX,
 		  top: e.pageY
@@ -401,6 +407,18 @@
 			modal: true
 		});
 	}
+
+    function sep_bpjs()
+    {
+        var row = $('#dg_RegPeriksa').datagrid('getSelected');
+        $('#dlg_window_RegPeriksa').dialog({
+            title: 'Data SEP',
+            closed: false,
+            cache: false,
+            href: '{?=url()?}/{?=ADMIN?}/khanza/bpjs/?act=sep&no_rawat=' + row.no_rawat + '&t={?=$_SESSION['token']?}',
+            modal: true
+        });
+    }
 
     function cek_peserta_bpjs()
     {

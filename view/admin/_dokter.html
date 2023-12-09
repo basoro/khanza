@@ -104,6 +104,8 @@
         var row = $('#dg_Dokter').datagrid('getSelected');
         $('#kd_dokter_Dokter').textbox('setValue',row.kd_dokter);
         $('#nm_dokter_Dokter').textbox('setValue',row.nm_dokter);
+        $('#agama_Dokter').combobox('setValue',row.agama);
+        $('#stts_nikah_Dokter').combobox('setValue',row.stts_nikah);
 	  },
       onDblClickRow: function(){
         var row = $('#dg_Dokter').datagrid('getSelected');

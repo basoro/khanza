@@ -12,6 +12,30 @@ class Bpjs {
         return new MySQL($table);
     }
   
+    public function Data()
+    {
+      $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+      $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+      $offset = ($page-1)*$rows;
+
+      $keyword = isset($_POST['cari_keyword_sep']) ? $_POST['cari_keyword_sep'] : '';
+
+      $row = $this->db('bridging_sep')->select(['count' => 'COUNT(*)'])->oneArray();
+      $result["total"] = $row['count'];
+
+      $items = array();
+      $query = "select * from bridging_sep where no_sep like '%$keyword%' order by tglsep asc LIMIT $offset,$rows";
+
+      $rows = $this->db()->pdo()->prepare($query);
+      $rows->execute();
+      $rows = $rows->fetchAll(\PDO::FETCH_ASSOC);
+
+      foreach ($rows as $row) {
+          array_push($items, $row);
+      }
+      $result["rows"] = $items;
+      echo json_encode($result);       
+    }
     public function CekNik($nik, $tglPelayananSEP)
     {
         $settings = array_column($this->db('mlite_settings')->where('module', 'settings')->toArray(), 'value', 'field');

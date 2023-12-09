@@ -965,6 +965,10 @@ class Admin extends AdminModule
       $tglPelayananSEP = date('Y-m-d');
       switch($show){
       	default:
+          echo $this->draw('_bpjs.sep.html');
+        break;
+        case "data":  
+          $this->bpjs->Data();
         break;
         case "ceknik":
           $result = $this->bpjs->CekNik($nik, $tglPelayananSEP);
@@ -973,6 +977,10 @@ class Admin extends AdminModule
         case "ceknoka":
           $result = $this->bpjs->CekNoka($noka, $tglPelayananSEP);
           echo $this->draw('_bpjs.cek.response.html', ['result' => $result]);
+        break;
+        case "sep":
+          $reg_periksa = $this->db('reg_periksa')->where('no_rawat', $_GET['no_rawat'])->oneArray();
+          echo $this->draw('_bpjs.sep.html', ['reg_periksa' => $reg_periksa]);
         break;
       }
       exit();
