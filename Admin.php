@@ -234,7 +234,7 @@ class Admin extends AdminModule
 
         if (isset($_POST['check'])) {
 
-            $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+            $url = "https://api.github.com/repos/basoro/khanza/commits/master";
             $opts = [
                 'http' => [
                     'method' => 'GET',
@@ -266,7 +266,7 @@ class Admin extends AdminModule
             }
 
             if (!isset($_GET['manual'])) {
-                $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+                $url = "https://api.github.com/repos/basoro/khanza/commits/master";
                 $opts = [
                     'http' => [
                         'method' => 'GET',
@@ -279,9 +279,9 @@ class Admin extends AdminModule
                 $json = file_get_contents($url, false, stream_context_create($opts));
                 $obj = json_decode($json, true);
                 $new_date_format = date('Y-m-d H:i:s', strtotime($obj['commit']['author']['date']));
-                $this->download('https://github.com/basoro/khanza2web/archive/master.zip', BASE_DIR.'/tmp/latest.zip');
+                $this->download('https://github.com/basoro/khanza/archive/master.zip', BASE_DIR.'/tmp/latest.zip');
             } else {
-                $package = glob(BASE_DIR.'/khanza2web-master.zip');
+                $package = glob(BASE_DIR.'/khanza-master.zip');
                 if (!empty($package)) {
                     $package = array_shift($package);
                     $this->rcopy($package, BASE_DIR.'/tmp/latest.zip');
@@ -294,7 +294,7 @@ class Admin extends AdminModule
             $zip->extractTo(BASE_DIR.'/tmp/update');
 
             // Copy files
-            $this->rcopy(BASE_DIR.'/tmp/update/khanza2web-master', BASE_DIR.'/plugins/khanza');
+            $this->rcopy(BASE_DIR.'/tmp/update/khanza-master', BASE_DIR.'/plugins/khanza');
 
             // Close archive and delete all unnecessary files
             $zip->close();
@@ -989,7 +989,7 @@ class Admin extends AdminModule
 
     public function getCoba()
     {
-      $url = "https://api.github.com/repos/basoro/khanza2web/commits/master";
+      $url = "https://api.github.com/repos/basoro/khanza/commits/master";
       $opts = [
           'http' => [
               'method' => 'GET',
