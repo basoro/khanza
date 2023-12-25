@@ -1,5 +1,5 @@
-# Khanza2Web
-Dibaca Khanza to Web
+# KhanzaD2W
+Dibaca Khanza Desktop to Web
 
 Adalah modul aplikasi berbasis web untuk mengakses SIMRS Khanza dengan antarmuka dan lingkungan penggunaan yang dibuat semirip mungkin dengan Versi Desktopnya. Modul ini hanya bisa dijalankan sebagai Plugins di Aplikasi Medic LITE Indonesia (mlite.id). 
 
