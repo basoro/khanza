@@ -6,6 +6,7 @@ use Systems\Lib\QRCode;
 
 use Plugins\Khanza\MySQL;
 use Plugins\Khanza\Src\Blank;
+use Plugins\Khanza\Src\Jasper;
 use Plugins\Khanza\Src\Pasien;
 use Plugins\Khanza\Src\RegPeriksa;
 use Plugins\Khanza\Src\RawatJalan;
@@ -34,6 +35,7 @@ class Admin extends AdminModule
 {
 
   protected $blank;
+  protected $jasper;
   protected $pasien;
   protected $regperiksa;
   protected $rawatjalan;
@@ -61,6 +63,7 @@ class Admin extends AdminModule
     public function init()
     {
       $this->blank = new Blank();
+      $this->jasper = new Jasper();
       $this->pasien = new Pasien();
       $this->regperiksa = new RegPeriksa();
       $this->rawatjalan = new RawatJalan();
@@ -986,6 +989,28 @@ class Admin extends AdminModule
       exit();
     }
 
+    public function anyJasper()
+    {
+      $this->_getSession();
+      $no_rkm_medis = isset_or($_GET['no_rkm_medis'],'');
+      $cari_alamat = isset_or($_GET['cari_alamat'],'');
+      $cari_keyword = isset_or($_GET['cari_keyword'],'');
+      $show = isset($_GET['act']) ? $_GET['act'] : "";
+      switch($show){
+      	default:
+        break;
+        case "kartu":  
+          $this->jasper->getKartu($no_rkm_medis);
+        break;     
+        case "coverrm":  
+          $this->jasper->getCoverRM($no_rkm_medis);
+        break;     
+        case "pasien":  
+          $this->jasper->getPasien($cari_alamat, $cari_keyword);
+        break;     
+      }
+      exit();
+    }
 
     public function getCoba()
     {

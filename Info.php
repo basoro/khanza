@@ -4,7 +4,7 @@ return [
     'name'          =>  'Khanza D2W',
     'description'   =>  'Modul SIMRS Khanza desktop ke web',
     'author'        =>  'Basoro',
-    'version'       =>  '1.0',
+    'version'       =>  '1.1',
     'compatibility' =>  '4.0.*',
     'icon'          =>  'desktop',
     'install'       =>  function () use ($core) {
