@@ -210,14 +210,24 @@ class Admin extends AdminModule
     {
         return [
             'Kelola'     => 'manage',
+            'Desktop to Web'     => 'index',
             'Pengaturan' => 'settings'
         ];
     }
-    
+
     public function getManage()
     {
+      $sub_modules = [
+        ['name' => 'Desktop to Web', 'url' => url([ADMIN, 'khanza', 'index']), 'icon' => 'desktop', 'desc' => 'Desktop to Web via mLITE'],
+        ['name' => 'Pengaturan', 'url' => url([ADMIN, 'khanza', 'settings']), 'icon' => 'wrench', 'desc' => 'Pengaturan Desktop to Web'],
+      ];
+      return $this->draw('manage.html', ['sub_modules' => $sub_modules]);
+    }
+    
+    public function getIndex()
+    {
       $this->_getHeader();
-      echo $this->draw('manage.html');
+      echo $this->draw('index.html');
       $this->_getFooter();
       exit();
     }

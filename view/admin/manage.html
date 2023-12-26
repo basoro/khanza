@@ -1,8 +1,21 @@
-
-  <div class="wu-main" data-options="region:'center',split:false,minWidth:1024">
-    <!-- begin of main -->
-    <div id="wu-tabs" class="easyui-tabs" data-options="border:false,fit:true">
-        <div title="Dashboard" data-options="href:'{?=url([ADMIN,'khanza','dashboard'])?}',closable:false,cls:'pd3'"></div>
+<article class="row">
+    <div class="col-md-12">
+        <ul class="modules" style="padding:0;margin:0;">
+            {loop: $sub_modules}
+            <li class="module">
+                <div class="panel panel-default">
+                    <a href="{$value.url}" class="panel-body text-center">
+                        <div class="panel-thumb">
+                            <i class="fa fa-{$value.icon}"></i>
+                            <div class="desc">
+                                {$value.desc}
+                            </div>
+                        </div>
+                        <h4><b>{$value.name}</b></h4>
+                    </a>
+                </div>
+            </li>
+            {/loop}
+        </ul>
     </div>
-    <!-- end of main -->
-  </div>
+</article>
